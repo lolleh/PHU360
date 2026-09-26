@@ -78,8 +78,15 @@ public class ReportApiServlet extends HttpServlet {
         try {
             List<Map<String, Object>> locations = new ArrayList<Map<String, Object>>();
             List<Map<String, Object>> types = new ArrayList<Map<String, Object>>();
+            /* Only the district health centers belong in the filter bar: the facility
+               roots (parent_location IS NULL) named "CHC", which for this deployment are
+               Falaba CHC, Mongo Bendugu CHC and Sinkunia CHC. Departments, wards and
+               pharmacies hang off these roots and are covered by subtree() when one is
+               selected. Widen the match (or switch to a location tag) to offer more. */
             List<Object[]> lrows = sess.createNativeQuery(
-                "SELECT location_id, uuid, name FROM location WHERE retired=0 ORDER BY name").list();
+                "SELECT l.location_id, l.uuid, l.name FROM location l "
+                + "WHERE l.retired=0 AND l.parent_location IS NULL AND UPPER(l.name) LIKE '%CHC' "
+                + "ORDER BY l.name").list();
             for (Object[] r : lrows) {
                 Map<String, Object> m = new LinkedHashMap<String, Object>();
                 m.put("id", ((Number) r[0]).intValue());

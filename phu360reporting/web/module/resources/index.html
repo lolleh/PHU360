@@ -68,23 +68,28 @@
 <section class="charts">
   <div class="chart-card card span2">
     <h2>Service volume trend</h2>
-    <canvas id="chartTrend"></canvas>
+    <p class="card-sub">Encounters and patients seen per day across the selected period</p>
+    <div class="chart-box chart-box-lg"><canvas id="chartTrend"></canvas><div class="chart-empty">Service volume trend<br><span>no data for this selection</span></div></div>
   </div>
   <div class="chart-card card">
     <h2>Encounters by type</h2>
-    <canvas id="chartType"></canvas>
+    <p class="card-sub">Share of encounters by visit type</p>
+    <div class="chart-box"><canvas id="chartType"></canvas><div class="chart-empty">Encounters by type<br><span>no data for this selection</span></div></div>
   </div>
   <div class="chart-card card">
     <h2 id="chartLocTitle">Encounters by health center</h2>
-    <canvas id="chartLocation"></canvas>
+    <p class="card-sub" id="chartLocSub">Volume recorded at each facility</p>
+    <div class="chart-box"><canvas id="chartLocation"></canvas><div class="chart-empty">Location breakdown<br><span>no data for this selection</span></div></div>
   </div>
   <div class="chart-card card">
     <h2>Patients by age group</h2>
-    <canvas id="chartAge"></canvas>
+    <p class="card-sub">Unique patients per age band</p>
+    <div class="chart-box"><canvas id="chartAge"></canvas><div class="chart-empty">Age group breakdown<br><span>no data for this selection</span></div></div>
   </div>
   <div class="chart-card card">
     <h2>Patients by sex</h2>
-    <canvas id="chartSex"></canvas>
+    <p class="card-sub">Unique patients by recorded sex</p>
+    <div class="chart-box"><canvas id="chartSex"></canvas><div class="chart-empty">Sex breakdown<br><span>no data for this selection</span></div></div>
   </div>
 </section>
 

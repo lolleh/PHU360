@@ -171,15 +171,43 @@ main, section { max-width: 1280px; }
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
-.chart-card { padding: 16px 18px; min-height: 280px; }
+.chart-card { padding: 16px 18px; display: flex; flex-direction: column; }
 .chart-card h2 {
   font-size: 14px;
   font-weight: 700;
-  margin: 0 0 12px;
+  margin: 0 0 2px;
   color: var(--text);
 }
+.chart-card .card-sub {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
 .span2 { grid-column: span 2; }
-canvas { width: 100% !important; }
+
+/* Chart.js needs a container with a definite height. Without one, the
+   responsive canvas grows its own parent and the page height compounds. */
+.chart-box {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 240px;
+  height: 240px;
+  width: 100%;
+}
+.chart-box-lg { min-height: 300px; height: 300px; }
+.chart-box canvas { display: block; width: 100% !important; height: 100% !important; }
+.chart-empty {
+  display: none;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.85);
+}
+.chart-box.is-empty .chart-empty { display: flex; }
 
 .table-card { max-width: 1280px; margin: 0 auto 20px; padding: 16px 18px; }
 .table-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
@@ -191,6 +219,29 @@ thead th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.4px; co
 .num { text-align: right; font-variant-numeric: tabular-nums; }
 tbody tr:hover { background: #f3eee5; }
 td.share { color: var(--muted); }
+
+.share-bar {
+  display: block;
+  width: 54px;
+  height: 5px;
+  margin-left: auto;
+  background: #e6e0d2;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.share-bar i { display: block; height: 100%; background: var(--interactive); border-radius: 999px; }
+tbody tr:hover .share-bar i { background: var(--blue); }
+
+tr.total-row td {
+  background: #f7f4ed;
+  border-top: 2px solid #d9d2c4;
+  border-bottom: none;
+  font-weight: 700;
+  color: var(--text);
+}
+tr.total-row .total-label { text-transform: uppercase; letter-spacing: 0.4px; font-size: 11.5px; }
+tr.total-row .total-value { color: var(--interactive); }
+td.empty-row { color: var(--muted); text-align: center; padding: 22px 12px; font-style: italic; }
 
 .foot {
   max-width: 1280px;
@@ -206,6 +257,7 @@ td.share { color: var(--muted); }
   .charts { grid-template-columns: 1fr; }
   .span2 { grid-column: span 1; }
   .kpis { grid-template-columns: repeat(2, 1fr); }
+  .chart-box, .chart-box-lg { height: 260px; min-height: 260px; }
 }
 
 @media (max-width: 560px) {
@@ -214,4 +266,6 @@ td.share { color: var(--muted); }
   .brand h1 { font-size: 15px; }
   .kpis { grid-template-columns: 1fr; }
   .kpi-value { font-size: 32px; }
+  .chart-box, .chart-box-lg { height: 230px; min-height: 230px; }
+  .chart-card { padding: 14px; }
 }

@@ -42,9 +42,10 @@ public class IndicatorReport {
         out.put("kpis", kpis(prevFrom, prevTo));
         out.put("monthly", monthly());
         out.put("byType", byType());
-        if (locationIds == null || locationIds.isEmpty()) {
-            out.put("byLocation", byLocation());
-        }
+        /* Always report the per-facility breakdown: with a location filter active it
+           resolves to the selected center, which the dashboard shows in place of the
+           all-centers ranking. */
+        out.put("byLocation", byLocation());
         out.put("sex", sex());
         out.put("age", age());
         return out;
