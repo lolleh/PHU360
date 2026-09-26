@@ -2,14 +2,31 @@
  * Mirrors KPI Dashboard spreadsheet structure. */
 
 const CATEGORY_COLORS = {
-  "Impact & Health Outcomes": "#d64541",
-  "RMNCAH & Service Delivery": "#0e6f4e",
-  "Health System & Readiness": "#3b82c4",
-  "Surveillance & Data": "#e8a13c"
+  "Impact & Health Outcomes": "#d43f2f",
+  "RMNCAH & Service Delivery": "#0f8a3d",
+  "Health System & Readiness": "#2563eb",
+  "Surveillance & Data": "#c9962a"
 };
+
+const DISTRICT_FILTER_LABELS = { all: "All districts", falaba: "Falaba", karena: "Karena" };
+const PERIOD_LABELS = { y2026: "Jan – Dec 2026", h1: "Jan – Jun 2026", h2: "Jul – Dec 2026" };
 
 function districtFilter() {
   return document.getElementById("districtSelect").value;
+}
+
+function periodFilter() {
+  return document.getElementById("periodSelect").value;
+}
+
+/* Indexes of the monthly columns visible for the selected period. */
+function periodMonths() {
+  const p = periodFilter();
+  const out = [];
+  if (p === "h1") { for (let i = 0; i < 6; i++) out.push(i); }
+  else if (p === "h2") { for (let i = 6; i < 12; i++) out.push(i); }
+  else { for (let i = 0; i < 12; i++) out.push(i); }
+  return out;
 }
 
 function programFilter() {
@@ -99,6 +116,7 @@ function renderLegend() {
 }
 
 function sparkline(values, width, height) {
+  if (values.length < 2) return "";
   const min = Math.min(...values), max = Math.max(...values);
   const range = max - min || 1;
   const pts = values.map((v, i) => {
@@ -106,9 +124,28 @@ function sparkline(values, width, height) {
     const y = height - 3 - ((v - min) / range) * (height - 6);
     return `${x.toFixed(1)},${y.toFixed(1)}`;
   });
-  return `<svg class="spark" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
-    <polyline fill="none" stroke="#0e6f4e" stroke-width="1.5" points="${pts.join(" ")}"/>
+  const last = pts[pts.length - 1].split(",");
+  return `<svg class="spark" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" aria-hidden="true">
+    <polyline fill="none" stroke="#0f8a3d" stroke-width="1.5" stroke-linejoin="round" points="${pts.join(" ")}"/>
+    <circle cx="${last[0]}" cy="${last[1]}" r="2" fill="#0f8a3d"/>
   </svg>`;
+}
+
+/* Keeps the month sub-headers and their group colspan in step with the
+   selected period. */
+function renderMonthHead() {
+  const idxs = periodMonths();
+  document.getElementById("monthGroupHead").colSpan = idxs.length;
+  const row = document.getElementById("monthSubRow");
+  row.innerHTML = "";
+  for (let i = 0; i < 5; i++) row.appendChild(document.createElement("th"));
+  idxs.forEach(i => {
+    const th = document.createElement("th");
+    th.className = "month-sub";
+    th.textContent = MONTHS[i];
+    row.appendChild(th);
+  });
+  for (let i = 0; i < 3; i++) row.appendChild(document.createElement("th"));
 }
 
 function renderScorecard() {
@@ -118,24 +155,26 @@ function renderScorecard() {
   const d = districtFilter();
 
   const kpis = KPI_DEFS.filter(k => prog === "all" || k.category === prog);
+  const idxs = periodMonths();
 
   kpis.forEach(kpi => {
     const actual = actualFor(kpi, d);
     const status = statusFor(kpi, actual);
     const months = districtMonthly(kpi);
-    const monthCells = months.map(v =>
-      `<td class="month-cell" title="${v}${cellSuffix(kpi)}">${fmt(v, kpi)}${cellSuffix(kpi)}</td>`
-    ).join("");
+    const monthCells = idxs.map(i => {
+      const v = months[i];
+      return `<td class="month-cell" title="${MONTHS[i]} ${v}${cellSuffix(kpi)}">${fmt(v, kpi)}${cellSuffix(kpi)}</td>`;
+    }).join("");
 
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td class="program-cell"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:${CATEGORY_COLORS[kpi.category]};margin-right:8px"></span>${kpi.category}</td>
+      <td class="program-cell"><span class="cat-dot" style="background:${CATEGORY_COLORS[kpi.category]}"></span>${kpi.category}</td>
       <td class="indicator-cell">${kpi.label}</td>
-      <td>${fmt(kpi.baseline, kpi)}${cellSuffix(kpi)}</td>
-      <td>${fmt(kpi.target, kpi)}${cellSuffix(kpi)}</td>
-      <td class="to-date"><span class="badge to-date-badge ${status.cls}">${fmt(actual, kpi)}${cellSuffix(kpi)}</span></td>
+      <td class="num">${fmt(kpi.baseline, kpi)}${cellSuffix(kpi)}</td>
+      <td class="num">${fmt(kpi.target, kpi)}${cellSuffix(kpi)}</td>
+      <td class="to-date"><span class="badge ${status.cls}" title="${status.label}">${fmt(actual, kpi)}${cellSuffix(kpi)}</span></td>
       ${monthCells}
-      <td class="trend-cell">${sparkline(months, 90, 34)}</td>
+      <td class="trend-cell">${sparkline(idxs.map(i => months[i]), 90, 34)}</td>
       <td class="source-cell">${kpi.source}</td>
       <td class="comment-cell">${kpi.comments}</td>
     `;
@@ -143,24 +182,28 @@ function renderScorecard() {
   });
 
   document.getElementById("kpiCount").textContent = `Showing ${kpis.length} indicators`;
+  document.getElementById("scoreSummary").textContent =
+    `${kpis.length} indicators · ${DISTRICT_FILTER_LABELS[d]} · ${PERIOD_LABELS[periodFilter()]}`;
 }
 
 function exportCsv() {
   const d = districtFilter();
   const prog = programFilter();
   const kpis = KPI_DEFS.filter(k => prog === "all" || k.category === prog);
+  const idxs = periodMonths();
 
   const header = ["Program", "Indicator", "Baseline", "Target", "To Date",
-    ...MONTHS, "Source", "Comments", "Status"];
+    ...idxs.map(i => MONTHS[i]), "Source", "Comments", "Status"];
   const rows = kpis.map(kpi => {
     const actual = actualFor(kpi, d);
+    const monthly = districtMonthly(kpi);
     return [
       `"${kpi.category}"`,
       `"${kpi.label}"`,
       kpi.baseline,
       kpi.target,
       actual,
-      ...districtMonthly(kpi),
+      ...idxs.map(i => monthly[i]),
       `"${kpi.source}"`,
       `"${kpi.comments}"`,
       `"${statusFor(kpi, actual).label}"`
@@ -388,10 +431,15 @@ function exportDetailCsv() {
 
 document.getElementById("exportBtn").addEventListener("click", exportCsv);
 document.getElementById("districtSelect").addEventListener("change", renderScorecard);
+document.getElementById("periodSelect").addEventListener("change", () => {
+  renderMonthHead();
+  renderScorecard();
+});
 document.getElementById("districtDetailSelect").addEventListener("change", renderFacilitySelect);
 document.getElementById("facilitySelect").addEventListener("change", () => { renderChips(); renderDetailMatrix(); });
 document.getElementById("exportDetailBtn").addEventListener("click", exportDetailCsv);
 
+renderMonthHead();
 renderLegend();
 renderTabs();
 renderScorecard();

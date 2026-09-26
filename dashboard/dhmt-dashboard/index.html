@@ -3,29 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Facility Monthly Detail Reporting</title>
+  <title>DHMT KPI Dashboard</title>
+  <link rel="icon" href="assets/moh-logo.png">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <img class="logo" src="assets/moh-heap-logo.png" alt="Ministry of Health and Sanitation and HEAP" width="150">
-        <div>
-          <h1>Facility Monthly Detail Reporting</h1>
-          <p class="subtitle">KPI Dashboard · MOH Sierra Leone · MTNDP 2024-2030</p>
-        </div>
+    <div class="brand">
+      <a class="brand-home" id="homeLink" href="../index.htm" title="Back to the OpenMRS home page" aria-label="Go to the OpenMRS home page">
+        <img class="brand-logo" src="assets/moh-heap-logo.png" alt="Ministry of Health and Sanitation and HEAP" width="150">
+      </a>
+      <div>
+        <h1>DHMT KPI Dashboard</h1>
+        <div class="subtitle">Falaba &amp; Karena &middot; Ministry of Health and Sanitation &middot; MTNDP 2024&ndash;2030</div>
       </div>
-      <div class="controls">
-        <a class="btn-home" id="homeLink" href="../index.htm" title="Back to the OpenMRS home page"><img src="assets/openmrs-logo.png" alt="OpenMRS logo"> Home</a>
-        <label class="district-label">District
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="filters card">
+      <div class="filter-grid">
+        <label>District
           <select id="districtSelect">
             <option value="all" selected>All Districts</option>
             <option value="falaba">Falaba</option>
             <option value="karena">Karena</option>
           </select>
         </label>
-        <label class="period-label">Period
+        <label>Period
           <select id="periodSelect">
             <option value="y2026" selected>Jan - Dec 2026</option>
             <option value="h1">H1 2026</option>
@@ -33,22 +38,23 @@
           </select>
         </label>
       </div>
-    </div>
-  </header>
+      <div class="filter-actions">
+        <button class="btn btn-primary" id="exportBtn">Export to CSV</button>
+        <span class="filter-summary" id="scoreSummary"></span>
+      </div>
+    </section>
 
-  <main class="container">
     <nav class="tab-nav">
       <button class="tab-btn active" data-sec="scorecardSec">KPI Scorecard</button>
       <button class="tab-btn" data-sec="detailSec">Detail Reporting</button>
     </nav>
 
     <section id="scorecardSec">
-      <div class="panel">
+      <div class="card">
       <div class="panel-top">
         <div class="program-tabs" id="programTabs"></div>
         <div class="table-actions">
           <span class="kpi-count" id="kpiCount"></span>
-          <button id="exportBtn" class="btn-export">Export to CSV</button>
         </div>
       </div>
 
@@ -63,12 +69,12 @@
               <th class="num">Baseline</th>
               <th class="num">Target</th>
               <th class="num">To Date</th>
-              <th class="month-head" colspan="12">Performance (Monthly)</th>
+              <th class="month-head" colspan="12" id="monthGroupHead">Performance (Monthly)</th>
               <th>Trends</th>
               <th>Source</th>
               <th>Comments</th>
             </tr>
-            <tr>
+            <tr id="monthSubRow">
               <th></th><th></th><th></th><th></th><th></th>
               <th class="month-sub">Jan</th>
               <th class="month-sub">Feb</th>
@@ -93,11 +99,11 @@
     </section>
 
     <section id="detailSec" hidden>
-      <div class="panel">
+      <div class="card">
         <div class="panel-top">
           <div>
             <h2 class="panel-title">Monthly Detail Reporting Form</h2>
-            <p class="subnote">CY 2025/2026 · Indicators as per the facility monthly form</p>
+            <p class="subnote">CY 2025/2026 &middot; Indicators as per the facility monthly form</p>
           </div>
           <div class="table-actions">
             <label class="inline-label">District
@@ -111,7 +117,7 @@
               <select id="facilitySelect"></select>
             </label>
             <span class="kpi-count" id="detailCount"></span>
-            <button id="exportDetailBtn" class="btn-export">Export to CSV</button>
+            <button id="exportDetailBtn" class="btn btn-primary">Export to CSV</button>
           </div>
         </div>
 
@@ -131,8 +137,8 @@
     </section>
   </main>
 
-  <footer class="footer">
-    <p>DHMT KPI Dashboard — Mockup. Data shown is illustrative sample data.</p>
+  <footer class="foot">
+    DHMT KPI Dashboard &middot; Falaba &amp; Karena &middot; indicative figures compiled from the district scorecard
   </footer>
 
   <script src="js/data.js"></script>

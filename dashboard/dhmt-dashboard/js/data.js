@@ -165,11 +165,11 @@ const DISTRICT_LABELS = ["Falaba", "Karena"];
 
 /* Status colours (matches spreadsheet legend tab) */
 const LEGEND = [
-  { color: "#2e8b57", label: "Target achieved or surpassed" },
-  { color: "#b8b8b8", label: "Unverified data" },
-  { color: "#3b3b3b", label: "KPI did not exist this month" },
-  { color: "#e8a13c", label: "Still collecting / calculating KPI" },
-  { color: "#d64541", label: "Data inconsistencies" }
+  { color: "#0f8a3d", label: "Target achieved or surpassed" },
+  { color: "#b9b1a0", label: "Unverified data" },
+  { color: "#4a4235", label: "KPI did not exist this month" },
+  { color: "#c9962a", label: "Still collecting / calculating KPI" },
+  { color: "#d43f2f", label: "Data inconsistencies" }
 ];
 
 /* =============== Detail Reporting dashboard ===============
