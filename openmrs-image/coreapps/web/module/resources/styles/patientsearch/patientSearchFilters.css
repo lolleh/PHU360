@@ -1,0 +1,171 @@
+/*
+ * Patient search column filters (Gender, Reg Facility)
+ *
+ * Companion to patientSearchFilters.js. Loaded by the patched coreapps
+ * patientSearchWidget.gsp.
+ *
+ * The dropdown is position:fixed and appended to <body> rather than living
+ * inside the column header, because the widget wraps the results table in
+ * .table-responsive (overflow-x: auto); an absolutely positioned menu inside a
+ * header would be clipped and scrolled away by that container.
+ *
+ * Palette follows the PHU360 dashboard: teal #0f5149, teal-blue #6f9792,
+ * gold #f6be00.
+ */
+
+/* ---------------------------------------------------- funnel button in th */
+.psf {
+    display: inline-block;
+    position: relative;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+.psf-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 1px solid #b8c6cb;
+    border-radius: 3px;
+    background: #f4f8f8;
+    color: #0f5149;
+    cursor: pointer;
+    line-height: 1;
+    transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+
+.psf-toggle:hover {
+    background: #6f9792;
+    border-color: #6f9792;
+    color: #fff;
+}
+
+.psf-toggle:focus {
+    outline: 2px solid #f6be00;
+    outline-offset: 1px;
+}
+
+.psf-toggle.is-active {
+    background: #0f5149;
+    border-color: #0f5149;
+    color: #fff;
+}
+
+.psf-icon {
+    width: 11px;
+    height: 11px;
+    display: block;
+    fill: currentColor;
+}
+
+/* ------------------------------------------------------------- dropdown */
+.psf-menu {
+    position: fixed;
+    z-index: 10050;
+    min-width: 168px;
+    max-width: 260px;
+    background: #fff;
+    border: 1px solid #cfdadb;
+    border-radius: 4px;
+    box-shadow: 0 6px 18px rgba(15, 40, 45, 0.22);
+    font-size: 12px;
+    line-height: 1.35;
+    color: #2c3e45;
+    text-align: left;
+}
+
+.psf-menu-title {
+    padding: 6px 10px;
+    background: #6f9792;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 3px 3px 0 0;
+}
+
+.psf-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 4px 0;
+    max-height: 232px;
+    overflow-y: auto;
+}
+
+.psf-menu-list li {
+    margin: 0;
+    padding: 0;
+}
+
+.psf-opt {
+    display: block;
+    width: 100%;
+    padding: 6px 12px;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.psf-opt:hover,
+.psf-opt:focus {
+    background: #e8f1f0;
+    outline: none;
+}
+
+.psf-opt.is-on,
+.psf-opt.is-on:hover {
+    background: #0f5149;
+    color: #fff;
+}
+
+.psf-menu-clear {
+    width: 100%;
+    padding: 6px 10px;
+    border: 0;
+    border-top: 1px solid #e3e9ea;
+    border-radius: 0 0 3px 3px;
+    background: #f6f8f8;
+    color: #8c2f2f;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.psf-menu-clear:hover:not([disabled]) {
+    background: #fbeaea;
+}
+
+.psf-menu-clear[disabled] {
+    color: #9aa7ab;
+    cursor: default;
+}
+
+/* Keep the button and menu usable on the narrow two-column phone layout. */
+@media screen and (max-width: 767px) {
+    .psf-toggle {
+        width: 24px;
+        height: 24px;
+    }
+
+    .psf-icon {
+        width: 13px;
+        height: 13px;
+    }
+
+    .psf-menu {
+        min-width: 148px;
+        max-width: 70vw;
+        font-size: 13px;
+    }
+
+    .psf-opt {
+        padding: 8px 12px;
+    }
+}

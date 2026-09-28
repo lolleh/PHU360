@@ -36,6 +36,7 @@ DELTA_DIR="$ROOT_DIR/content/configuration/backend_configuration"
 PATCHED_PIHCORE="$ROOT_DIR/openmrs-image/pihcore-2.2.0-SNAPSHOT.omod"
 PATCHED_PHU360REPORTING="$ROOT_DIR/openmrs-image/phu360reporting-1.0.0-SNAPSHOT.omod"
 PATCHED_REPORTINGUI="$ROOT_DIR/openmrs-image/reportingui-1.15.0-SNAPSHOT.omod"
+PATCHED_COREAPPS="$ROOT_DIR/openmrs-image/coreapps-4.0.0-SNAPSHOT.omod"
 EXCLUSIONS="$ROOT_DIR/content/exclusions.txt"
 
 # The OpenMRS SDK asks interactively for anonymous usage stats on first run,
@@ -93,6 +94,9 @@ bash "$ROOT_DIR/scripts/build-phu360reporting-module.sh"
 echo "==> Patching reportingui module (DASHBOARDS section on the reports page)"
 bash "$ROOT_DIR/scripts/patch-reportingui-module.sh"
 
+echo "==> Patching coreapps module (Gender / Reg Facility filters on patient search)"
+bash "$ROOT_DIR/scripts/patch-coreapps-module.sh"
+
 install_file() {
   local file="$1" group="$2" artifact="$3" version="$4" packaging="$5"
   echo "    seeding $group:$artifact:$version:$packaging"
@@ -147,6 +151,9 @@ for m in "${OMODS[@]}"; do
   fi
   if [[ "$name" == "reportingui" && -f "$PATCHED_REPORTINGUI" ]]; then
     file="$PATCHED_REPORTINGUI"
+  fi
+  if [[ "$name" == "coreapps" && -f "$PATCHED_COREAPPS" ]]; then
+    file="$PATCHED_COREAPPS"
   fi
   if [[ "$type" == "jar" ]]; then
     ext="jar"
