@@ -18,13 +18,16 @@ import org.hibernate.SessionFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.phu360reporting.report.IndicatorReport;
 import org.openmrs.module.phu360reporting.report.JsonWriter;
+import org.openmrs.module.phu360reporting.report.ReportCatalog;
+import org.openmrs.module.phu360reporting.report.ReportFilter;
 
 /**
  * Module servlet, mounted by config.xml at
  *   /openmrs/moduleServlet/phu360reporting/reportApi
  *
  * Endpoints (action query parameter):
- *   action=filters  -> health centers + encounter types for the filter bar
+ *   action=filters  -> health centers for the filter bar
+ *   action=reports  -> the REPORT TYPE options
  *   action=counts   -> indicator dashboard JSON for the selected date range
  *                      / health center / encounter type
  */
@@ -55,6 +58,8 @@ public class ReportApiServlet extends HttpServlet {
         try {
             if ("filters".equals(action)) {
                 return filters(req);
+            } else if ("reports".equals(action)) {
+                return reports();
             } else if ("counts".equals(action)) {
                 return counts(req);
             } else if ("ping".equals(action)) {
@@ -111,6 +116,46 @@ public class ReportApiServlet extends HttpServlet {
         return out;
     }
 
+    /** The REPORT TYPE options. */
+    private Map<String, Object> reports() {
+        Map<String, Object> out = new LinkedHashMap<String, Object>();
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        for (ReportCatalog.Report r : ReportCatalog.all()) {
+            Map<String, Object> m = new LinkedHashMap<String, Object>();
+            m.put("key", r.getKey());
+            m.put("label", r.getLabel());
+            m.put("mapped", r.isMapped());
+            list.add(m);
+        }
+        out.put("reports", list);
+        return out;
+    }
+
+    /** Resolves encounter type names to ids for the report filter. */
+    private ReportFilter.NameResolver nameResolver() {
+        return new ReportFilter.NameResolver() {
+            public Integer encounterTypeId(String name) {
+                return idForName("encounter_type", name);
+            }
+        };
+    }
+
+    private Integer idForName(String table, String name) {
+        Session sess = openSession();
+        try {
+            List rows = sess.createNativeQuery(
+                "SELECT " + table + "_id FROM " + table + " WHERE name = :name AND retired=0")
+                .setParameter("name", name).list();
+            if (rows.isEmpty()) {
+                return null;
+            }
+            Object o = rows.get(0);
+            return ((Number) ((o instanceof Object[]) ? ((Object[]) o)[0] : o)).intValue();
+        } finally {
+            sess.close();
+        }
+    }
+
     private Map<String, Object> counts(HttpServletRequest req) {
         java.util.Date from = parse(req.getParameter("from"));
         java.util.Date to = parse(req.getParameter("to"));
@@ -142,18 +187,53 @@ public class ReportApiServlet extends HttpServlet {
                 locIds = subtree(locId);
             }
         }
-        Integer etId = null;
-        String etUuid = req.getParameter("encounterType");
-        if (etUuid != null && etUuid.length() > 0) {
-            etId = resolveId("encounter_type", etUuid);
+
+        ReportCatalog.Report report = ReportCatalog.byKey(req.getParameter("report"));
+        if (!report.isMapped()) {
+            // Say so rather than returning the unfiltered set, which would read
+            // as a filter that silently does nothing.
+            Map<String, Object> out = new LinkedHashMap<String, Object>();
+            out.put("from", fmt(from));
+            out.put("to", fmt(to));
+            out.put("report", report.getKey());
+            out.put("reportName", report.getLabel());
+            out.put("reportMapped", Boolean.FALSE);
+            out.put("unavailable", "\"" + report.getLabel() + "\" has no data mapping configured yet.");
+            out.put("kpis", emptyKpis());
+            out.put("monthly", new ArrayList<Map<String, Object>>());
+            out.put("byType", new ArrayList<Map<String, Object>>());
+            out.put("byLocation", new ArrayList<Map<String, Object>>());
+            out.put("sex", new ArrayList<Map<String, Object>>());
+            out.put("age", new ArrayList<Map<String, Object>>());
+            return out;
         }
 
-        IndicatorReport report = new IndicatorReport(from, toExclusive, locIds, etId);
-        Map<String, Object> body = report.build();
+        ReportFilter filter = ReportFilter.resolve(report, nameResolver());
+        IndicatorReport indicatorReport = new IndicatorReport(from, toExclusive, locIds, filter);
+        Map<String, Object> body = indicatorReport.build();
         body.put("nominalTo", fmt(to));
+        body.put("report", report.getKey());
+        body.put("reportName", report.getLabel());
+        body.put("reportMapped", Boolean.TRUE);
         body.put("locationName", locUuid != null && locId != null ? nameFor("location", locId) : "All health centers");
-        body.put("encounterTypeName", etUuid != null && etId != null ? nameFor("encounter_type", etId) : "All encounter types");
         return body;
+    }
+
+    private Map<String, Object> emptyKpis() {
+        String[] keys = { "encounters", "patientsSeen", "newRegistrations", "conditions" };
+        String[] labels = { "Encounters", "Patients seen", "New registrations", "Conditions recorded" };
+        List<Map<String, Object>> items = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < keys.length; i++) {
+            Map<String, Object> m = new LinkedHashMap<String, Object>();
+            m.put("key", keys[i]);
+            m.put("label", labels[i]);
+            m.put("value", 0L);
+            m.put("delta", 0.0);
+            items.add(m);
+        }
+        Map<String, Object> out = new LinkedHashMap<String, Object>();
+        out.put("items", items);
+        return out;
     }
 
     private Integer resolveId(String table, String uuid) {

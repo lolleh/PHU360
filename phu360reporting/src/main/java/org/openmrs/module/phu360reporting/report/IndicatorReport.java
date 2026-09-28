@@ -21,13 +21,13 @@ public class IndicatorReport {
     private final java.util.Date from;
     private final java.util.Date to;
     private final java.util.Set<Integer> locationIds;
-    private final Integer encounterTypeId;
+    private final ReportFilter reportFilter;
 
-    public IndicatorReport(java.util.Date from, java.util.Date to, java.util.Set<Integer> locationIds, Integer encounterTypeId) {
+    public IndicatorReport(java.util.Date from, java.util.Date to, java.util.Set<Integer> locationIds, ReportFilter reportFilter) {
         this.from = from;
         this.to = to;
         this.locationIds = locationIds;
-        this.encounterTypeId = encounterTypeId;
+        this.reportFilter = reportFilter;
     }
 
     public Map<String, Object> build() {
@@ -91,14 +91,22 @@ public class IndicatorReport {
         return (row instanceof Object[]) ? ((Object[]) row)[0] : row;
     }
 
-    /** Base WHERE clause for encounters within the range, honoring filters. */
-    private String encounterBase(java.util.Date f, java.util.Date t, boolean includeType) {
+    /**
+     * Base WHERE clause for encounters within the range, honoring filters.
+     *
+     * The REPORT TYPE selection is applied here, so it reaches the KPI counts,
+     * the trend and every breakdown alike. It used to be gated behind an
+     * includeType flag that the "encounters by type" and "by health center"
+     * breakdowns passed as false, which left those two ignoring the filter the
+     * user had just selected.
+     */
+    private String encounterBase(java.util.Date f, java.util.Date t) {
         StringBuilder sb = new StringBuilder("e.voided=0 AND e.encounter_datetime >= :from AND e.encounter_datetime < :to");
         if (locationIds != null && !locationIds.isEmpty()) {
             sb.append(" AND e.location_id IN (:locIds)");
         }
-        if (includeType && encounterTypeId != null) {
-            sb.append(" AND e.encounter_type = :etid");
+        if (reportFilter != null) {
+            sb.append(reportFilter.sqlFragment());
         }
         return sb.toString();
     }
@@ -108,8 +116,8 @@ public class IndicatorReport {
         Session sess = session();
         try {
             StringBuilder sql = new StringBuilder("SELECT COUNT(e.encounter_id) FROM encounter e WHERE ");
-            sql.append(encounterBase(f, t, true));
-            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, f, t, true));
+            sql.append(encounterBase(f, t));
+            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, f, t));
             return ((Number) firstRow(rows.get(0))).longValue();
         } finally {
             sess.close();
@@ -117,15 +125,11 @@ public class IndicatorReport {
     }
 
     private long countEncounterRangeDistinct(java.util.Date f, java.util.Date t) {
-        return countEncounterRangeDistinct(f, t, true);
-    }
-
-    private long countEncounterRangeDistinct(java.util.Date f, java.util.Date t, boolean includeType) {
         Session sess = session();
         try {
             StringBuilder sql = new StringBuilder("SELECT COUNT(DISTINCT e.patient_id) FROM encounter e WHERE ");
-            sql.append(encounterBase(f, t, includeType));
-            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, f, t, includeType));
+            sql.append(encounterBase(f, t));
+            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, f, t));
             return ((Number) firstRow(rows.get(0))).longValue();
         } finally {
             sess.close();
@@ -138,13 +142,13 @@ public class IndicatorReport {
             StringBuilder sql = new StringBuilder(
                 "SELECT COUNT(*) FROM patient pt JOIN person p ON p.person_id=pt.patient_id "
                 + "WHERE p.voided=0 AND p.date_created >= :from AND p.date_created < :to");
-            if ((locationIds != null && !locationIds.isEmpty()) || encounterTypeId != null) {
+            if ((locationIds != null && !locationIds.isEmpty()) || reportFilter != null) {
                 sql.append(" AND EXISTS (SELECT 1 FROM encounter e WHERE e.patient_id=p.person_id AND e.voided=0");
                 if (locationIds != null && !locationIds.isEmpty()) sql.append(" AND e.location_id IN (:locIds)");
-                if (encounterTypeId != null) sql.append(" AND e.encounter_type = :etid");
+                if (reportFilter != null) sql.append(reportFilter.sqlFragment());
                 sql.append(")");
             }
-            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, f, t, true));
+            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, f, t));
             return ((Number) firstRow(rows.get(0))).longValue();
         } finally {
             sess.close();
@@ -157,13 +161,13 @@ public class IndicatorReport {
             StringBuilder sql = new StringBuilder(
                 "SELECT COUNT(*) FROM conditions c WHERE c.voided=0 "
                 + "AND COALESCE(c.onset_date, c.date_created) >= :from AND COALESCE(c.onset_date, c.date_created) < :to");
-            if ((locationIds != null && !locationIds.isEmpty()) || encounterTypeId != null) {
+            if ((locationIds != null && !locationIds.isEmpty()) || reportFilter != null) {
                 sql.append(" AND EXISTS (SELECT 1 FROM encounter e WHERE e.patient_id=c.patient_id AND e.voided=0");
                 if (locationIds != null && !locationIds.isEmpty()) sql.append(" AND e.location_id IN (:locIds)");
-                if (encounterTypeId != null) sql.append(" AND e.encounter_type = :etid");
+                if (reportFilter != null) sql.append(reportFilter.sqlFragment());
                 sql.append(")");
             }
-            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, f, t, true));
+            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, f, t));
             return ((Number) firstRow(rows.get(0))).longValue();
         } finally {
             sess.close();
@@ -175,9 +179,9 @@ public class IndicatorReport {
         try {
             StringBuilder sql = new StringBuilder(
                 "SELECT DATE_FORMAT(e.encounter_datetime,'%Y-%m') ym, COUNT(e.encounter_id) cnt, COUNT(DISTINCT e.patient_id) pats "
-                + "FROM encounter e WHERE ").append(encounterBase(from, to, true))
+                + "FROM encounter e WHERE ").append(encounterBase(from, to))
                 .append(" GROUP BY DATE_FORMAT(e.encounter_datetime,'%Y-%m') ORDER BY ym");
-            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, from, to, true));
+            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, from, to));
 
             List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
             for (int i = 11; i >= 0; i--) {
@@ -210,9 +214,9 @@ public class IndicatorReport {
             StringBuilder sql = new StringBuilder(
                 "SELECT et.name, COUNT(e.encounter_id) cnt FROM encounter e "
                 + "JOIN encounter_type et ON et.encounter_type_id=e.encounter_type WHERE ")
-                .append(encounterBase(from, to, false))
+                .append(encounterBase(from, to))
                 .append(" GROUP BY et.name ORDER BY cnt DESC LIMIT 12");
-            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, from, to, false));
+            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, from, to));
             return labelCounts(rows);
         } finally {
             sess.close();
@@ -225,9 +229,9 @@ public class IndicatorReport {
             StringBuilder sql = new StringBuilder(
                 "SELECT l.name, COUNT(e.encounter_id) cnt FROM encounter e "
                 + "JOIN location l ON l.location_id=e.location_id WHERE ")
-                .append(encounterBase(from, to, true))
+                .append(encounterBase(from, to))
                 .append(" GROUP BY l.name ORDER BY cnt DESC LIMIT 12");
-            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, from, to, true));
+            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, from, to));
             return labelCounts(rows);
         } finally {
             sess.close();
@@ -240,9 +244,9 @@ public class IndicatorReport {
             StringBuilder sql = new StringBuilder(
                 "SELECT p.gender, COUNT(DISTINCT e.patient_id) cnt FROM encounter e "
                 + "JOIN person p ON p.person_id=e.patient_id WHERE ")
-                .append(encounterBase(from, to, true))
+                .append(encounterBase(from, to))
                 .append(" GROUP BY p.gender");
-            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, from, to, true));
+            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, from, to));
             List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
             for (Object[] r : rows) {
                 String g = String.valueOf(r[0]);
@@ -274,9 +278,9 @@ public class IndicatorReport {
                 + "WHEN TIMESTAMPDIFF(YEAR, p.birthdate, :to) < 50 THEN '35-49' "
                 + "ELSE '50+' END age, COUNT(DISTINCT e.patient_id) cnt "
                 + "FROM encounter e JOIN person p ON p.person_id=e.patient_id WHERE ")
-                .append(encounterBase(from, to, true))
+                .append(encounterBase(from, to))
                 .append(" GROUP BY age");
-            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, from, to, true));
+            List<Object[]> rows = query(sess, sql.toString(), q -> setRange(q, from, to));
             List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
             for (Object[] r : rows) {
                 Map<String, Object> m = new LinkedHashMap<String, Object>();
@@ -301,13 +305,13 @@ public class IndicatorReport {
         return list;
     }
 
-    private void setRange(NativeQuery q, java.util.Date f, java.util.Date t, boolean includeType) {
+    private void setRange(NativeQuery q, java.util.Date f, java.util.Date t) {
         q.setParameter("from", f).setParameter("to", t);
         if (locationIds != null && !locationIds.isEmpty()) {
             q.setParameterList("locIds", locationIds);
         }
-        if (includeType && encounterTypeId != null) {
-            q.setParameter("etid", encounterTypeId);
+        if (reportFilter != null) {
+            reportFilter.bind(q);
         }
     }
 

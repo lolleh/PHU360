@@ -15,7 +15,7 @@
     </a>
     <div>
       <h1>Facility Reporting Dashboard</h1>
-      <div class="subtitle">PHU360 &middot; Ministry of Health and Sanitation &middot; MTNDP 2024&ndash;2030</div>
+      <div class="subtitle">PHU360 &middot; Ministry of Health 2024&ndash;2030</div>
     </div>
   </div>
 </header>
@@ -31,8 +31,8 @@
     <label>Health center
       <select id="fLocation"><option value="">All health centers</option></select>
     </label>
-    <label>Encounter type
-      <select id="fEncType"><option value="">All encounter types</option></select>
+    <label>REPORT TYPE
+      <select id="fReport"></select>
     </label>
   </div>
   <div class="filter-actions">
@@ -40,6 +40,7 @@
     <button class="btn" id="btnReset">Reset</button>
     <span class="filter-summary" id="filterSummary"></span>
   </div>
+  <p class="report-notice" id="reportNotice" hidden></p>
 </section>
 
 <section class="kpis">
@@ -100,7 +101,7 @@
   </div>
   <div class="table-wrap">
     <table id="typeTable">
-      <thead><tr><th>Encounter type</th><th class="num">Encounters</th><th class="num">Share</th></tr></thead>
+      <thead><tr><th>Report type breakdown</th><th class="num">Encounters</th><th class="num">Share</th></tr></thead>
       <tbody></tbody>
     </table>
   </div>

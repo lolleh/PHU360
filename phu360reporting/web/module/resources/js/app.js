@@ -5,7 +5,7 @@
 
   var PALETTE = ["#2563eb", "#0f8a3d", "#f6be00", "#323372", "#3ab4b1", "#e8a13c", "#0f5149", "#5b5c8e", "#0077ff", "#3e3e3e", "#8e6a53", "#9999b9"];
 
-  var state = { from: null, to: null, location: "", encounterType: "" };
+  var state = { from: null, to: null, location: "", report: "all-encounter" };
 
   var charts = {};
   var dataCache = null;
@@ -47,21 +47,43 @@
         o.textContent = l.name;
         loc.appendChild(o);
       });
-      var et = $("fEncType");
-      (j.encounterTypes || []).forEach(function (t) {
-        var o = document.createElement("option");
-        o.value = t.uuid;
-        o.textContent = t.name;
-        et.appendChild(o);
-      });
     }, function (e) { console.error("filters failed", e); setSummary("Failed to load filters"); });
+  }
+
+  function loadReports() {
+    fetchJson(API + "?action=reports", function (j) {
+      var sel = $("fReport");
+      (j.reports || []).forEach(function (r) {
+        var o = document.createElement("option");
+        o.value = r.key;
+        o.textContent = r.label;
+        // Reports with no data mapping yet are still listed, but marked so the
+        // page can say so instead of implying a filter is in effect.
+        if (!r.mapped) { o.setAttribute("data-unmapped", "1"); }
+        sel.appendChild(o);
+      });
+      sel.addEventListener("change", warnIfUnmapped);
+    }, function (e) { console.error("reports failed", e); setSummary("Failed to load reports"); });
+  }
+
+  /* Reports the catalog lists but has no data mapping for. Selecting one
+     returns the unfiltered set, which reads as a filter that silently does
+     nothing - so say so as soon as it is picked, not just once the counts
+     come back. */
+  function warnIfUnmapped() {
+    var opt = $("fReport").selectedOptions[0];
+    if (opt && opt.getAttribute("data-unmapped")) {
+      renderNotice('"' + opt.textContent + '" has no data mapping configured yet, so the counts below are not filtered by it.');
+    } else {
+      renderNotice("");
+    }
   }
 
   function collectState() {
     state.from = $("fFrom").value;
     state.to = $("fTo").value;
     state.location = $("fLocation").value;
-    state.encounterType = $("fEncType").value;
+    state.report = $("fReport").value;
   }
 
   function setSummary() {
@@ -70,7 +92,7 @@
       parts.push(state.from + " \u2192 " + state.to);
     }
     parts.push(state.location ? $("fLocation").selectedOptions[0].textContent : "All health centers");
-    parts.push(state.encounterType ? $("fEncType").selectedOptions[0].textContent : "All encounter types");
+    parts.push(state.report ? $("fReport").selectedOptions[0].textContent : "All Encounter");
     $("filterSummary").textContent = parts.join(" \u00B7 ");
   }
 
@@ -79,6 +101,7 @@
   function render(data) {
     dataCache = data;
     setSummary();
+    renderNotice(data.unavailable);
     renderKpis(data.kpis);
     renderTrend(data.monthly);
     renderDonut("chartType", data.byType || []);
@@ -86,6 +109,18 @@
     renderAge(data.age || []);
     renderSex(data.sex || []);
     renderTable(data.byType || []);
+  }
+
+  function renderNotice(message) {
+    var el = $("reportNotice");
+    if (!el) return;
+    if (message) {
+      el.textContent = message;
+      el.hidden = false;
+    } else {
+      el.textContent = "";
+      el.hidden = true;
+    }
   }
 
   function renderKpis(kpis) {
@@ -355,7 +390,7 @@
     if (state.from) url += "&from=" + state.from;
     if (state.to) url += "&to=" + state.to;
     if (state.location) url += "&location=" + state.location;
-    if (state.encounterType) url += "&encounterType=" + state.encounterType;
+    if (state.report) url += "&report=" + encodeURIComponent(state.report);
     fetchJson(url, function (j) { render(j); setLoading(false); },
       function (e) { setLoading(false); setSummary(); console.error(e); setSummary("Data failed to load: " + e.message); });
   }
@@ -373,9 +408,9 @@
     var lines = ["report,value"];
     lines.push("period," + state.from + " to " + state.to);
     lines.push("health center," + ($("fLocation").selectedOptions[0] ? $("fLocation").selectedOptions[0].textContent : "All"));
-    lines.push("encounter type," + ($("fEncType").selectedOptions[0] ? $("fEncType").selectedOptions[0].textContent : "All"));
+    lines.push("report type," + ($("fReport").selectedOptions[0] ? $("fReport").selectedOptions[0].textContent : "All Encounter"));
     lines.push("");
-    lines.push("encounter type,encounters,share %");
+    lines.push("report type breakdown,encounters,share %");
     var total = rows.reduce(function (s, r) { return s + r.count; }, 0);
     rows.forEach(function (r) {
       lines.push(r.label + "," + r.count + "," + (total ? (r.count / total * 100).toFixed(1) : "0"));
@@ -401,6 +436,7 @@
     state.to = d.to;
 
     loadFilters();
+    loadReports();
 
     $("btnApply").addEventListener("click", function () {
       collectState();
@@ -409,7 +445,7 @@
     });
     $("btnReset").addEventListener("click", function () {
       $("fLocation").value = "";
-      $("fEncType").value = "";
+      $("fReport").value = "all-encounter";
     });
     $("btnCsv").addEventListener("click", exportCsv);
 
