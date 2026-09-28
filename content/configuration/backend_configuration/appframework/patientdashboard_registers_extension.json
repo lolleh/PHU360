@@ -1,46 +1,68 @@
 [
   {
-    "id": "patientdashboard.aboveFiveTreatmentRegister",
+    "id": "patientdashboard.motherAndNeonateRegister",
     "extensionPointId": "patientDashboard.overallActions",
     "type": "link",
-    "label": "Above Five General Treatment Register",
-    "url": "htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId={{patient.uuid}}&personId={{patient.uuid}}&htmlFormId=185&returnUrl=coreapps/clinicianfacing/patient.page?patientId={{patient.uuid}}",
+    "label": "Mother and Neonate Health Register",
+    "url": "htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId={{patient.uuid}}&personId={{patient.uuid}}&formUuid=3f2b7c14-9d6a-4e58-b0c3-71a4d9e25f86&returnUrl=coreapps/clinicianfacing/patient.page?patientId={{patient.uuid}}",
     "icon": "icon-edit",
     "requiredPrivilege": "App: coreapps.summaryDashboard",
-    "require": "patient.person.age != null && patient.person.age >= 5",
-    "order": 201
+    "require": "patient.person.age != null && patient.person.age >= 10 && patient.person.age <= 49 && patient.person.gender == 'F'",
+    "order": 203
   },
   {
-    "id": "patientdashboard.underFiveRegister",
+    "id": "patientdashboard.motherAndNeonateRegisterVisit",
+    "extensionPointId": "patientDashboard.visitActions",
+    "type": "link",
+    "label": "Mother and Neonate Health Register",
+    "url": "htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId={{patient.uuid}}&personId={{patient.uuid}}&formUuid=3f2b7c14-9d6a-4e58-b0c3-71a4d9e25f86&returnUrl=coreapps/clinicianfacing/patient.page?patientId={{patient.uuid}}",
+    "icon": "icon-edit",
+    "requiredPrivilege": "App: coreapps.summaryDashboard",
+    "require": "patient.person.age != null && patient.person.age >= 10 && patient.person.age <= 49 && patient.person.gender == 'F'",
+    "order": 303
+  },
+  {
+    "id": "patientdashboard.deliveryRegister",
     "extensionPointId": "patientDashboard.overallActions",
     "type": "link",
-    "label": "Under Five (General) Register",
-    "url": "htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId={{patient.uuid}}&personId={{patient.uuid}}&htmlFormId=184&returnUrl=coreapps/clinicianfacing/patient.page?patientId={{patient.uuid}}",
+    "label": "Delivery Register",
+    "url": "htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId={{patient.uuid}}&personId={{patient.uuid}}&formUuid=dc288387-522e-5506-9607-ef2d20fdd7ef&returnUrl=coreapps/clinicianfacing/patient.page?patientId={{patient.uuid}}",
     "icon": "icon-edit",
     "requiredPrivilege": "App: coreapps.summaryDashboard",
-    "require": "patient.person.age != null && patient.person.age < 5",
-    "order": 202
+    "require": "patient.person.age != null && patient.person.age >= 10 && patient.person.age <= 49 && patient.person.gender == 'F'",
+    "order": 204
   },
   {
-    "id": "patientdashboard.aboveFiveTreatmentRegisterVisit",
+    "id": "patientdashboard.deliveryRegisterVisit",
     "extensionPointId": "patientDashboard.visitActions",
     "type": "link",
-    "label": "Above Five General Treatment Register",
-    "url": "htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId={{patient.uuid}}&personId={{patient.uuid}}&htmlFormId=185&returnUrl=coreapps/clinicianfacing/patient.page?patientId={{patient.uuid}}",
+    "label": "Delivery Register",
+    "url": "htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId={{patient.uuid}}&personId={{patient.uuid}}&formUuid=dc288387-522e-5506-9607-ef2d20fdd7ef&returnUrl=coreapps/clinicianfacing/patient.page?patientId={{patient.uuid}}",
     "icon": "icon-edit",
     "requiredPrivilege": "App: coreapps.summaryDashboard",
-    "require": "patient.person.age != null && patient.person.age >= 5",
-    "order": 301
+    "require": "patient.person.age != null && patient.person.age >= 10 && patient.person.age <= 49 && patient.person.gender == 'F'",
+    "order": 304
   },
   {
-    "id": "patientdashboard.underFiveRegisterVisit",
-    "extensionPointId": "patientDashboard.visitActions",
+    "id": "patientdashboard.familyPlanningRegister",
+    "extensionPointId": "patientDashboard.overallActions",
     "type": "link",
-    "label": "Under Five (General) Register",
-    "url": "htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId={{patient.uuid}}&personId={{patient.uuid}}&htmlFormId=184&returnUrl=coreapps/clinicianfacing/patient.page?patientId={{patient.uuid}}",
+    "label": "Family Planning Register",
+    "url": "htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId={{patient.uuid}}&personId={{patient.uuid}}&formUuid=6ed8a9e5-1341-5193-9882-c1e0600f1d48&returnUrl=coreapps/clinicianfacing/patient.page?patientId={{patient.uuid}}",
     "icon": "icon-edit",
     "requiredPrivilege": "App: coreapps.summaryDashboard",
-    "require": "patient.person.age != null && patient.person.age < 5",
-    "order": 302
+    "require": "patient.person.age != null && patient.person.age >= 10 && patient.person.age <= 49 && patient.person.gender == 'F'",
+    "order": 205
+  },
+  {
+    "id": "patientdashboard.familyPlanningRegisterVisit",
+    "extensionPointId": "patientDashboard.visitActions",
+    "type": "link",
+    "label": "Family Planning Register",
+    "url": "htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId={{patient.uuid}}&personId={{patient.uuid}}&formUuid=6ed8a9e5-1341-5193-9882-c1e0600f1d48&returnUrl=coreapps/clinicianfacing/patient.page?patientId={{patient.uuid}}",
+    "icon": "icon-edit",
+    "requiredPrivilege": "App: coreapps.summaryDashboard",
+    "require": "patient.person.age != null && patient.person.age >= 10 && patient.person.age <= 49 && patient.person.gender == 'F'",
+    "order": 305
   }
 ]
