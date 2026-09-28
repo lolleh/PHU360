@@ -96,6 +96,47 @@ One caveat: the 11 entries in `home_extension.json` are bound to
 `referenceapplication` module, which is not part of this distribution. They load
 without error and stay invisible; nothing in PIH SL reads that point.
 
+## Program Dashboards page: hiding the per-program tiles
+
+`/openmrs/coreapps/applist/appList.page?app=pih.app.programSummaryList` starts out
+with a tile per Program — AYFS, Family Planning, Gynecology, PMTCT, Pregnancy
+Mental Health, Pregnancy, Infant, Mental Health, NCD. PHU360 wants only the
+DHMT KPI and PHU360 Reporting dashboards, so the page ends up with two tiles.
+
+Those nine are not config, so no appframework JSON can remove them. pihcore
+builds them in Java at startup: `CustomAppLoaderUtil.addToProgramSummaryListPage()`
+adds a `<program app id>.appLink` extension, pointed at
+`pih.app.programSummaryList.apps`, to **each per-program app descriptor**. The
+program app ids themselves end in `.programSummary.dashboard`, so the extension
+ids end in `.programSummary.dashboard.appLink` — visible in the page HTML, where
+the GSP turns dots into dashes (`pih-app-<uuid>-programSummary-dashboard-appLink-app`).
+
+`Phu360ReportingActivator.started()` walks `AppFrameworkService.getAllApps()` and
+drops every extension whose extension point is `pih.app.programSummaryList.apps`
+and whose id ends in `.programSummary.dashboard.appLink`, leaving the two
+`programDashboard.*` links from `program_dashboards_extension.json` untouched.
+Two details make this work:
+
+- The extensions hang off the per-program apps, not off
+  `pih.app.programSummaryList`, so every app has to be visited. Pruning the
+  programSummaryList descriptor alone matches nothing and silently does nothing.
+- Editing the descriptors is enough, because apps live only in memory (there is
+  no app/extension table) and `AppFrameworkServiceImpl.getAllEnabledExtensions()`
+  re-reads `app.getExtensions()` on every page render.
+
+`phu360reporting/module/config.xml` therefore requires **both** pihcore (so its
+activator has finished registering apps first) and appframework (module
+classloaders do not see each other's APIs otherwise, and the activator dies with
+`NoClassDefFoundError: AppFrameworkService`). `require_module` only takes effect
+inside a `<require_modules>` wrapper, and the version must match the installed
+module's version string exactly — pihcore is `2.2.0-SNAPSHOT`, not `2.2.0`.
+
+Two operational notes: the module build has to be re-run and the container
+restarted for the change to take effect (`docker compose up -d --build`; the omod
+is copied into the image, not bind-mounted), and the module's own log lines do
+not reach `openmrs.log` because the module classloader's logger context is not
+attached to the webapp's — verify the page HTML, not the log.
+
 ## Under Five, Above Five & Mother/Neonate registers
 
 The patient dashboard ships three register buttons (Overall + Visit Actions), all
@@ -321,6 +362,20 @@ the volume, not in the build tree.
   inert unless the module carries them on the classpath; see "Where app
   definitions have to live". A `did you rebuild the omod` check:
   `unzip -l distro/target/distro/web/openmrs_modules/phu360reporting-*.omod | grep apps/`.
+- **The per-program tiles are still on the Program Dashboards page** — the
+  activator in the omod is what removes them, so re-run
+  `scripts/build-phu360reporting-module.sh`, `scripts/build-distro.sh` and
+  `docker compose up -d --build`, then confirm the count in the page HTML. Do not
+  wait for a log line, the module's logger does not reach `openmrs.log`. See
+  "Program Dashboards page: hiding the per-program tiles".
+- **`Module PHU360 Reporting cannot be started because it requires ...`** — a
+  `require_module` version in `phu360reporting/module/config.xml` no longer
+  matches the installed module. Check the version in the installed omod's
+  `config.xml`; `2.2.0` and `2.2.0-SNAPSHOT` are not interchangeable, and the
+  entries only count inside a `<require_modules>` wrapper.
+- **`NoClassDefFoundError: ...appframework.service.AppFrameworkService`** — the
+  appframework `require_module` is missing, so the module classloader cannot see
+  appframework's API and the activator never runs.
 - **`Illegal mix of collations`** — pihcore's Liquibase crashes on non-`utf8_general_ci` DBs. The compose DB passes `--character-set-server=utf8 --collation-server=utf8_general_ci`; replicate for ad-hoc MySQL.
 - **`HTTP Status 500` / `Error loading PIH config`** — the `OPENMRS_PIH_CONFIG` chain references a profile the image doesn't ship. Fix `.env`, wipe the half-initialized DB, and let first boot run cleanly (`docker compose stop`, `docker volume rm <prefix>_phu360-data <prefix>_phu360-db-data`, `docker compose up -d openmrs && docker compose logs -f openmrs`).
 - **Ports** — `8090` (OpenMRS) and `3307` (MySQL) are the compose defaults.

@@ -15,6 +15,17 @@
 
 	<require_version>2.8.9</require_version>
 
+	<!-- pihcore registers the per-program dashboard apps during its own
+	     startup, and the activator trims them off the Program Dashboards
+	     page. Requiring it guarantees that ordering, and declaring the
+	     appframework dependency is what puts AppFrameworkService on this
+	     module's classloader - the module's own lib/ is empty, so without
+	     this the activator dies with NoClassDefFoundError. -->
+	<require_modules>
+		<require_module version="2.2.0-SNAPSHOT">org.openmrs.module.pihcore</require_module>
+		<require_module version="2.20.0-SNAPSHOT">org.openmrs.module.appframework</require_module>
+	</require_modules>
+
 	<activator>org.openmrs.module.phu360reporting.Phu360ReportingActivator</activator>
 
 	<servlet>

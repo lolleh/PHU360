@@ -34,12 +34,19 @@ mkdir -p "$CP_DIR"
   for j in openmrs-api-2.8.9.jar openmrs-web-2.8.9.jar hibernate-core-5.6.15.Final.jar slf4j-api-1.7.36.jar commons-logging-1.3.5.jar javax.persistence-api-2.2.jar; do
     unzip -o -q "$WAR" "WEB-INF/lib/$j"
   done
+  # appframework-api is not in WEB-INF/lib - modules resolve it from the
+  # lib cache - so lift it out of the running container's lib cache instead.
+  if [[ ! -f "$CP_DIR/appframework-api.jar" ]]; then
+    docker cp phu360-openmrs-1:/openmrs/data/.openmrs-lib-cache/appframework/lib/appframework-api-2.20.0-SNAPSHOT.jar \
+      "$CP_DIR/appframework-api.jar" >/dev/null 2>&1 ||
+      echo "    WARNING: could not copy appframework-api from the container; the module will not compile"
+  fi
 )
 if [[ ! -f "$MOD_DIR/lib/servlet-api.jar" ]]; then
   echo "    extracting servlet-api.jar from the running container"
   docker cp phu360-openmrs-1:/usr/local/tomcat/lib/servlet-api.jar "$MOD_DIR/lib/servlet-api.jar"
 fi
-CP="$(echo "$CP_DIR"/WEB-INF/lib/*.jar "$MOD_DIR"/lib/*.jar | tr ' ' ':')"
+CP="$(echo "$CP_DIR"/WEB-INF/lib/*.jar "$CP_DIR"/*.jar "$MOD_DIR"/lib/*.jar | tr ' ' ':')"
 
 echo "==> Compiling module classes (release 8)"
 (
