@@ -1,0 +1,67 @@
+[
+  {
+    "where": "Past Pregnancy History, row 15",
+    "problem": "H8 has no label at all - only the word 'Number' in the value column.",
+    "resolution": "Kept as a numeric field labelled 'H8 (unlabelled in source register)'. A placeholder label is preferable to dropping the column, because the source sheet clearly allocates a cell to it."
+  },
+  {
+    "where": "Present Pregnancy, row 7",
+    "problem": "'LMP' and 'EDD' appear above the numbering and carry no PP code, so the PP series starts at PP1 = 'Gestational age (weeks)'. The sheet implies LMP/EDD should be PP1/PP2.",
+    "resolution": "PP numbering left exactly as in the source (PP1 = Gestational age). LMP and EDD are captured as separate, separately-labelled date fields so no existing PP code is silently shifted."
+  },
+  {
+    "where": "Baby block, rows 39-42",
+    "problem": "'D29' is used twice: once for 'Neverapine syrup administered to baby' and again for 'Partograph/Labour Care Guide was used'. That makes 20 items in a 19-slot D13-D31 range.",
+    "resolution": "Partograph has Baby 1 and Baby 2 columns in the source, so it belongs to the baby block. The block is renumbered sequentially D13-D32; only Partograph, Kangaroo Mother Care and Skin to Skin shift (D30/D31/D32). D13-D29 are unchanged."
+  },
+  {
+    "where": "Back tab, MOTHER block, D29-D48",
+    "problem": "The Back tab numbers the mother's immediate post-partum check D29-D48, but the Front tab already uses D29-D32 for the first baby's postnatal check, so the two blocks share codes.",
+    "resolution": "Renumbered into their own M1-M20 series, which keeps the Back tab's reading order while removing the collision. Recorded against the register owner, who agreed the renumbering. The three inline prompts in D37 (actual BP), D39 (temperature) and D48 (name of person conducting the check) become M9v1, M11v1 and M20v1, giving 23 mother fields from 20 source columns."
+  },
+  {
+    "where": "Back tab, MOTHER block, D42",
+    "problem": "The label reads 'Number of Td doses taken so far' but the cells printed beside it are Yes and No, not a number.",
+    "resolution": "Captured as Yes/No, matching the cells the sheet actually prints rather than the wording of the label, so the register keeps the shape its users know. Flagged to the register owner as a likely wording error in the source; if it should count doses, the field type changes to numeric and the Yes/No answers are dropped."
+  },
+  {
+    "where": "Back tab, PR1-PR16 and NN1-NN26",
+    "problem": "A single 'Y / N' header spans the whole postnatal block, so each individual column is not marked as yes/no in the workbook.",
+    "resolution": "Treated every PR and NN column as Yes/No, matching the block header. They reuse the stock Yes / No concepts rather than creating per-column answers. Each block is repeated for the three visit windows '<24 hrs', '2-7 days' and '8-42 days'."
+  },
+  {
+    "where": "Family Planning, Q3-U5",
+    "problem": "'Post Partum Family Planning' is printed as a Client Type tick-box, but the three cells to its right on row 5 ('<48 hours after delivery', '49 hours-6 weeks', '7 weeks-1 year') are its sub-choices. Read left to right they look like additional Client Type values.",
+    "resolution": "Parsed as a subgroup rather than flattened, and emitted as its own field 'Client Type - Post Partum Family Planning'. Client Type keeps its four genuine values."
+  },
+  {
+    "where": "Family Planning, M4 and AW3",
+    "problem": "Two printed labels contain spelling errors: 'Speeech and Language Impairment' and 'Rererred Out to other facility ( Y / N )'.",
+    "resolution": "Corrected to 'Speech and Language Impairment' and 'Referred out to other facility'. The corrections are applied in parse-time so the source text is never retyped, and the coverage check reports each one."
+  },
+  {
+    "where": "Delivery Register, AN4, AP3, AO3 and BC4-BI4",
+    "problem": "Several labels print their own answer marker into the text: 'Was Parto graph/Labour care Guide used? (Y / N)', 'Heat - stable Carbetocin (HSC) Y/N', 'Uterotonic given immediately after birth? (Oxytocin / Misoprostol) ( Y / N )', and similar across the newborn and family-planning rows. 'Parto graph' is also split across two lines.",
+    "resolution": "The '( Y / N )' marker is stripped from labels rendered as Yes/No fields, which reuse the stock Yes / No concepts. The split word is joined and 'Heat-stable Carbetocin (HSC)' is spelled correctly. Recorded in DR_LABEL_FIXES in source_spec.py."
+  },
+  {
+    "where": "Delivery Register, N3-BN4 and Family Planning, Q3-W5",
+    "problem": "Many columns are headed only by a bare sub-word such as 'Date', 'Time', 'From', 'To' or 'Method Used', which is meaningless without the group heading above it.",
+    "resolution": "Each such label is prefixed with its group, so the Delivery Register renders 'Admission - Date', 'Delivery - Time', 'Referred - From', 'Safe Termination of Pregnancy - Method Used' and so on. The group headings themselves are carried on the fields as 'group' and are checked as consumed by verify_source_coverage.py."
+  },
+  {
+    "where": "Delivery Register, G3 and AS4",
+    "problem": "'Marital Status (S/M/W/D)' and 'Sex (M/F)' print their choices inside the label instead of as tick-boxes beneath it, unlike the equivalent Family Planning columns.",
+    "resolution": "Read as choices with options S/M/W/D and M/F, and the redundant marker removed from the label."
+  },
+  {
+    "where": "All four tabs, row 2",
+    "problem": "Each register repeats a banner - Facility Name, Type, Ownership, Chiefdom/Zone, Year, Month, In Facility, Outreach. The components differ per tab: the Front and Back MNR sheets print no Ownership line, and the Delivery Register prints no In Facility or Outreach.",
+    "resolution": "Mapped to encounter/location metadata rather than captured per client: OpenMRS already records the location and encounter date for every visit, and duplicating them per row would let the printed banner disagree with the encounter. The existing In Facility / Outreach concepts are already on the MNR form. The coverage check records which components each tab actually prints."
+  },
+  {
+    "where": "Front tab, row 4",
+    "problem": "The client header mixes data the patient record already holds (Client Name, Age, Address) with the register's own identifiers (Client Number, NIN) and one column covered by neither: 'Name and Contact of Responsible Person'.",
+    "resolution": "Name, age and address are read from the OpenMRS patient header per the register owner's decision, and Client Number and NIN stay as form fields so a client can still be matched to the paper register. 'Name and Contact of Responsible Person' is captured as a field of its own, since it is not on the patient header."
+  }
+]

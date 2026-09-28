@@ -1,0 +1,2488 @@
+[
+  {
+    "name": "MNR H1 Sickler",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H2 Age 18-35 yrs",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H3 Height below150 cm or 5 ft",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H4 Gravida",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H5 Parity",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H6 Number of children Alive",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H7 EVD Survivor",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H8 (unlabelled in source register)",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H9 Multiple Delivery",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H10 Still Birth",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H11 Miscarriages",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H12 Induced Abortion",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H13 Previous C/S",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H14 Prolong/Obstructed Labour",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H15 APH",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H16 PPH",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H17 Retained Placenta",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H18 Eclamptic FIT",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H19 Death of Child within 7 days",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H20 Cough above 4 weeks",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H21 High Puerperial Fever",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H22 Breech Delivery",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H23 Ectopic Pregnancy",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR H24 Diabetes",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Past Pregnancy History",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR BG Client Blood Group",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Client",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR BG Client Blood Group :: A+",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR BG Client Blood Group :: A-",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR BG Client Blood Group :: B+",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR BG Client Blood Group :: B-",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR BG Client Blood Group :: AB+",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR BG Client Blood Group :: AB-",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR BG Client Blood Group :: O+",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR BG Client Blood Group :: O-",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR LMP LMP",
+    "datatype": "Date",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR EDD EDD",
+    "datatype": "Date",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP1 Gestational age (weeks)",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP2 Date of ANC Contact",
+    "datatype": "Date",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP3 Stage of ANC Contact",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP3 Stage of ANC Contact :: 1",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP3 Stage of ANC Contact :: 2",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP3 Stage of ANC Contact :: 3",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP3 Stage of ANC Contact :: 4",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP3 Stage of ANC Contact :: 5",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP3 Stage of ANC Contact :: 6",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP3 Stage of ANC Contact :: 7",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP3 Stage of ANC Contact :: 8",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP4 Screen with BP (if 130/90 and above refer)",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP5 Oedema",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP6 Pitting Oedema",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP7 Urine Albumin",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP8 Disability",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP9 Unusually thin Patient",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP10 Unusually large Abdomen",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP11 Severe Pallor / Anaemia",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP12 Vaginal Bleeding",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP13 Transverse / Oblique Lie",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP14 Mutiple Pregnancy",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP15 Foetal Movements",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP16 Foetal Heartbeats (Indicate Number)",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP17 Iron and Folic Acid",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP18 Multiple Micronutrient Suplement (MMS)",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP19 Intermittent preventive therapy (IPTp) malaria",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP20 Screen with Ultrasound Scan",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP21 Weight (kg)",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP22 Height (cm)",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP23 Mother's Delivery Kit",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP24 LLINs given at ANC",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP25 Albendazole",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP26 Tested for Syphilis",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP27 Tested for HIV",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP27DT HIV Test date",
+    "datatype": "Date",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP28 HIV results Received",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP29 Refer for eMTCT",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP30 ARV Treatment Started",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP31 Haemoglobin (below12g/dl)",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PP32 Screen for Hepatitis B",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Present Pregnancy (ANC)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D1 Normal Duration (0-12hrs)",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D2 Cephalic Presentation",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D3 Date of Labour onset",
+    "datatype": "Date",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D4 Time of Labour onset (HH:MM)",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D5 Date of Delivery",
+    "datatype": "Date",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D6 Time of Delivery (HH:MM)",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D7 Delivery Type",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D7 Delivery Type :: Normal",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D7 Delivery Type :: Assisted (vacuum)",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D7 Delivery Type :: Elective CS",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D7 Delivery Type :: Emergency CS",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D8 Bleeding (500mls or more)",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D9 Breech Delivery",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D10 Delivery Conducted By",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D10 Delivery Conducted By :: Doctor",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D10 Delivery Conducted By :: Midwife",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D10 Delivery Conducted By :: CHO",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D10 Delivery Conducted By :: CHA",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D10 Delivery Conducted By :: SACHO",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D10 Delivery Conducted By :: BSN",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D10 Delivery Conducted By :: SECHN",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D10 Delivery Conducted By :: MCHA",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D10 Delivery Conducted By :: TBA",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D10 Delivery Conducted By :: Other",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D10 Delivery Conducted By :: SRN",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D10 Delivery Conducted By :: NS",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D11 Delivered at",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D11 Delivered at :: PHU",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D11 Delivered at :: Hospital",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D11 Delivered at :: Community",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D12 Mother Survived Delivery",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Labour / Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D13 Live Birth",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D14 (If NO to D13) Macerated still birth",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D15 (If NO to D13) Fresh still birth",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D16 State of baby - normal?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D17 Gestational age 36wks or less",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D18 Multiple birth",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D19 Sex of Baby",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D19 Sex of Baby :: Male",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D19 Sex of Baby :: Female",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D20 Apgar score at 5 min after birth",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D21 Birth weight under 2.5kg",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D22 Actual weight (kg)",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D23 Delayed crying",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D24 Difficult Breathing",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D25 If YES at D23/D24 new born resuscitated?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D26 Live born breastfed within 1 hrs.",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D27 Baby alive after 24 hrs?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D28 Baby referred to Doctor",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D29 Neverapine syrup administered to baby - if HIV exposed",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D30 Partograph/Labour Care Guide was used",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D31 Initiation to Kangaroo Mother Care",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR D32 Immediate Skin to Skin Care",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR BABY1 Baby 1",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr",
+    "note": "separates one repeated block from the next"
+  },
+  {
+    "name": "MNR BABY2 Baby 2",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Baby (Neonate)",
+    "form": "mnr",
+    "note": "separates one repeated block from the next"
+  },
+  {
+    "name": "MNR CLNO Client Number",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Client Identifiers",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NIN NIN",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Client Identifiers",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR RESP Name and Contact of Responsible Person",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Client Identifiers",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M1 Is Mother alive 24 hrs after delivery",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M2 State of the Perineum",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M2 State of the Perineum :: Episotomy",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M2 State of the Perineum :: Tear",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M2 State of the Perineum :: Intact",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M3 If Tear in M2",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M3 If Tear in M2 :: 1 Deg",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M3 If Tear in M2 :: 2 Deg",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M3 If Tear in M2 :: 3 Deg",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M3 If Tear in M2 :: 4 Deg",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M4 Placenta and Membrane complete",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M5 Has there been excessive IPH (15mls or more)",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M6 Was expulsion of placenta difficult?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M7 Post-Partum Haemorrage?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M8 Is lochia offensive?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M9 Is BP 130/90 and above?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M9v1 Actual BP",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M10 General condition of mother",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M10 General condition of mother :: Good",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M10 General condition of mother :: Fair",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M10 General condition of mother :: Poor",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M10 General condition of mother :: Very poor",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M11 Symptoms observed?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M11 Symptoms observed? :: None",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M11 Symptoms observed? :: Anaemia",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M11 Symptoms observed? :: Eclampsia",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M11 Symptoms observed? :: Fever",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M11v1 Temp (C)",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M12 Has lactation been established?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M13 Does mother eat normally?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M14 Number of Td doses taken so far",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M15 Has there been education about family planning?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M16 Acceptance with a Method",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M17 Type of Contraceptive method Accepted (write method)",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M18 Is mother referred to Doctor?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M19 Is mother referred to (Hosp./CHC/CHP)",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M19 Is mother referred to (Hosp./CHC/CHP) :: Hosp",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M19 Is mother referred to (Hosp./CHC/CHP) :: CHC",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M19 Is mother referred to (Hosp./CHC/CHP) :: CHP",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M20 If yes, has the Incharge/doctor been informed?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR M20v1 Name Doctor/Incharge",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Mother - Check Within 24 hrs of Delivery",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PR1 Mother alive",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PR2 If NO - Date of death",
+    "datatype": "Date",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PR3 Cause of death",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PR4 Mother's BP (If above130/90 refer)",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PR5 If yes to PR1, weight",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PR6 Condition of breast good?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PR7 Vaginal Bleeding?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PR8 Sepsis?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PR9 Eclampsia?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PR10 Albuminuria present?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PR11 Involution of uterus normal?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PR12 Fever present?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PR13 Anaemia?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PR14 Persistent cough?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PR15 Refer to Doctor?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PR16 If yes, Date -",
+    "datatype": "Date",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PNCM1 Postnatal Mother Visit 1",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr",
+    "note": "separates one repeated block from the next"
+  },
+  {
+    "name": "MNR PNCM2 Postnatal Mother Visit 2",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr",
+    "note": "separates one repeated block from the next"
+  },
+  {
+    "name": "MNR PNCM3 Postnatal Mother Visit 3",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "MOTHER'S Postnatal Care",
+    "form": "mnr",
+    "note": "separates one repeated block from the next"
+  },
+  {
+    "name": "MNR NN1 Baby alive?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN2 If NO - Date of death",
+    "datatype": "Date",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN3 Cause of death",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN4 Death registered",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN5 New Born - Birth registered?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN6 If yes to NN1, weight in Kg",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN7 Fever present?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN8 If yes to NN7, state temperature",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN9 Date of BCG",
+    "datatype": "Date",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN10 Breastfeeding?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN11 If yes to NN10, is it exclusive?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN12 Sucking ability normal?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN13 Congenital defect?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN14 If yes to NN13, specify",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN15 Any perinatal illness?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN16 If yes to NN15, specify",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN17 Neonatal Sepsis?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN18 Diarrhoea?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN19 Jaundice?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN20 Cord Healing Satisfactory?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN21 Scalp Injuries?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN22 Bone Injuries?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN23 Nerve Injuries?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN24 Visual Injuries?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN25 Referred to Doctor?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR NN26 If referred, date of referral",
+    "datatype": "Date",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR PNCB1 Postnatal Baby Visit 1",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr",
+    "note": "separates one repeated block from the next"
+  },
+  {
+    "name": "MNR PNCB2 Postnatal Baby Visit 2",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr",
+    "note": "separates one repeated block from the next"
+  },
+  {
+    "name": "MNR PNCB3 Postnatal Baby Visit 3",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "BABY'S Postnatal Care",
+    "form": "mnr",
+    "note": "separates one repeated block from the next"
+  },
+  {
+    "name": "MNR INFAC In Facility",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Facility",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR OUTRCH Outreach",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Facility",
+    "form": "mnr"
+  },
+  {
+    "name": "MNR DR1 Reg. No",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR2 NIN",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR3 Marital Status",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR3 Marital Status :: S",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR3 Marital Status :: M",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR3 Marital Status :: W",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR3 Marital Status :: D",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR4 Occupation",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR5 Disability",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR5 Disability :: Physical",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR5 Disability :: Visual Impairment",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR5 Disability :: Hearing Impairment",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR5 Disability :: Learning Impairment",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR5 Disability :: Multiple",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR10 Gravidity",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR11 Parity",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR12 Gestational age",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR15 Time of start of labour",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR16 Presentation and position",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR22 Uterotonic given immediately after birth? (Oxytocin / Misoprostol)",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR23 Heat-stable Carbetocin (HSC)",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR24 Tranexamic Acid (TXA)",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR26 New born condition - Sex",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR26 New born condition - Sex :: M",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR26 New born condition - Sex :: F",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Labour Details",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR6 Admission - Date",
+    "datatype": "Date",
+    "conceptClass": "Misc",
+    "section": "Admission",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR7 Admission - Time",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Admission",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR8 Referred - From",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Referred",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR9 Referred - To",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Referred",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR13 Safe Termination of Pregnancy - Method Used",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Safe Termination of Pregnancy",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR13 Safe Termination of Pregnancy - Method Used :: Miso",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Safe Termination of Pregnancy",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR13 Safe Termination of Pregnancy - Method Used :: Combo (Miso + Mife)",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Safe Termination of Pregnancy",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR13 Safe Termination of Pregnancy - Method Used :: MVA",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Safe Termination of Pregnancy",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR13 Safe Termination of Pregnancy - Method Used :: Surgical (D and E)",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Safe Termination of Pregnancy",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR14 Post-Abortion Care (PAC) - PAC Type",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Post-Abortion Care (PAC)",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR14 Post-Abortion Care (PAC) - PAC Type :: Miso",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Post-Abortion Care (PAC)",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR14 Post-Abortion Care (PAC) - PAC Type :: Combo (Miso + Mife)",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Post-Abortion Care (PAC)",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR14 Post-Abortion Care (PAC) - PAC Type :: MVA",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Post-Abortion Care (PAC)",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR14 Post-Abortion Care (PAC) - PAC Type :: Surgical (D and E)",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Post-Abortion Care (PAC)",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR17 Delivery - Date",
+    "datatype": "Date",
+    "conceptClass": "Misc",
+    "section": "Delivery",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR18 Delivery - Time",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Delivery",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR19 Delivery type",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Delivery",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR19 Delivery type :: Normal",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Delivery",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR19 Delivery type :: Assisted (vacuum)",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Delivery",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR19 Delivery type :: CS (Elective)",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Delivery",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR19 Delivery type :: CS (Emergency)",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Delivery",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR20 Delivery outcome",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Delivery",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR20 Delivery outcome :: Alive",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Delivery",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR20 Delivery outcome :: FSB",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Delivery",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR20 Delivery outcome :: MSB",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Delivery",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR21 Partograph / Labour Care Guide used?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Delivery",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR25 New born condition - Alive",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "New born condition",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR27 New born condition - Weight (kg)",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "New born condition",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR28 New born condition - APGAR Score",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "New born condition",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR29 New born condition - Breast feeding initiated within one hour after birth",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "New born condition",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR30 New born condition - Brachial Plexus Injuries",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "New born condition",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR31 New born condition - Fracture clavicle",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "New born condition",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR32 New born condition - Hypoxic ischemic encephalopathy",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "New born condition",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR33 New born condition - Other birth injuries",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "New born condition",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR34 Maternal diagnosis - Initial diagnosis",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Maternal diagnosis",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR35 Maternal diagnosis - Final diagnosis",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Maternal diagnosis",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR36 Oxygen given?",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Oxygen Therapy",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR37 Post Abortion Family Planning - Counselled on family planning before discharge",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Post Abortion Family Planning",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR38 Post Abortion Family Planning - Accepted and received family planning before discharge",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Post Abortion Family Planning",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR39 Post Abortion Family Planning - Type of F/P Services received",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Post Abortion Family Planning",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR40 Post-Partum Family Planning - Counselled on family planning before discharge",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Post-Partum Family Planning",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR41 Post-Partum Family Planning - Accepted and received family planning before discharge",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Post-Partum Family Planning",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR42 Post-Partum Family Planning - Type of F/P Services received",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Post-Partum Family Planning",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR43 Maternal outcome - Date",
+    "datatype": "Date",
+    "conceptClass": "Misc",
+    "section": "Maternal outcome",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR44 Maternal outcome - Discharged, Referral, or Death",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Maternal outcome",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR45 Delivery conducted by - HCW Name",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Delivery conducted by",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR46 Delivery conducted by - HCW Cadre",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Delivery conducted by",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR47 Place of delivery",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Place of delivery",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR47 Place of delivery :: In Facility",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Place of delivery",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR47 Place of delivery :: In Community",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Place of delivery",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR DR47 Place of delivery :: In Transit",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Place of delivery",
+    "form": "delivery"
+  },
+  {
+    "name": "MNR FP1 Reg. No",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP2 Date (yyyy-mm-dd)",
+    "datatype": "Date",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP3 Marital Status (S/M/D/W)",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP4 Occupation",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP5 Disability",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP5 Disability :: Physical",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP5 Disability :: Visual Impairment",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP5 Disability :: Speech and Language Impairment",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP5 Disability :: Hearing Impairment",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP5 Disability :: Learning Impairment",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP5 Disability :: Multiple",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP6 Client Type",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP6 Client Type :: New Client (First time user)",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP6 Client Type :: Continuing Client",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP6 Client Type :: Method Switch",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP6 Client Type :: Post Abortion",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP8 Blood Pressure",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP9 Weight (kg)",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP10 Height",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP19 Lactation Amenorhea Method (LAM)",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP20 Method Switch",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP21 Other FP method specify",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP22 Date of next Appointment (yyyy-mm-dd)",
+    "datatype": "Date",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP23 Referred in from CHW/Facility",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP24 Referred out to other facility",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Client and Visit",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP7 Client Type - Post Partum Family Planning",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Client Type",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP7 Client Type - Post Partum Family Planning :: below48 hours after delivery",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client Type",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP7 Client Type - Post Partum Family Planning :: 49 hours-6 weeks",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client Type",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP7 Client Type - Post Partum Family Planning :: 7 weeks-1 year",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Client Type",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP11 COMBINED ORAL CONTRACEPTIVE",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "COMBINED ORAL CONTRACEPTIVE",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP11 COMBINED ORAL CONTRACEPTIVE :: Microgynon",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "COMBINED ORAL CONTRACEPTIVE",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP11 COMBINED ORAL CONTRACEPTIVE :: Other oral specify",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "COMBINED ORAL CONTRACEPTIVE",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP12 PROGESTIN ONLY ORALS",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "PROGESTIN ONLY ORALS",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP12 PROGESTIN ONLY ORALS :: Microlut",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "PROGESTIN ONLY ORALS",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP12 PROGESTIN ONLY ORALS :: Other specify",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "PROGESTIN ONLY ORALS",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP13 INJECTABLES",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "INJECTABLES",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP13 INJECTABLES :: Depo provera",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "INJECTABLES",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP13 INJECTABLES :: Sayana press",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "INJECTABLES",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP13 INJECTABLES :: Other injectible specify",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "INJECTABLES",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP14 IUCD",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "IUCD",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP14 IUCD :: Copper - t",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "IUCD",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP14 IUCD :: Hormonal",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "IUCD",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP15 IMPLANTS",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "IMPLANTS",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP15 IMPLANTS :: 5 yr implant (ie. jadelle)",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "IMPLANTS",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP15 IMPLANTS :: 3 yr implant (ie. levoplant)",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "IMPLANTS",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP15 IMPLANTS :: Other implant specify",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "IMPLANTS",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP16 CONDOM",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "CONDOM",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP16 CONDOM :: Male",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "CONDOM",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP16 CONDOM :: Female",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "CONDOM",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP17 Emergency contraceptive",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Emergency contraceptive",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP18 PERMANENT METHOD",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "PERMANENT METHOD",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP18 PERMANENT METHOD :: Tubal ligation",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "PERMANENT METHOD",
+    "form": "family_planning"
+  },
+  {
+    "name": "MNR FP18 PERMANENT METHOD :: Vasectomy",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "PERMANENT METHOD",
+    "form": "family_planning"
+  }
+]

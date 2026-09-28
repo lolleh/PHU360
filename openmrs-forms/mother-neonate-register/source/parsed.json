@@ -1,0 +1,1017 @@
+{
+  "Mother & Neonate (Back)": {
+    "mother": [
+      {
+        "code": "D29",
+        "label": "Is Mother alive 24 hrs after delivery",
+        "type": "yn",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D30",
+        "label": "State of the Perineum -",
+        "type": "choice",
+        "options": [
+          "Episotomy",
+          "Tear",
+          "Intact"
+        ],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D31",
+        "label": "If Tear in D30",
+        "type": "choice",
+        "options": [
+          "1 Deg",
+          "2 Deg",
+          "3 Deg",
+          "4 Deg"
+        ],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D32",
+        "label": "Placenta and Membrane complete",
+        "type": "yn",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D33",
+        "label": "Has there been excessive IPH (15mls or more)",
+        "type": "yn",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D34",
+        "label": "Was expulsion of placenta difficult?",
+        "type": "yn",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D35",
+        "label": "Post-Partum Haemorrage?",
+        "type": "yn",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D36",
+        "label": "Is lochia offensive?",
+        "type": "yn",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D37",
+        "label": "Is BP 130/90 and above?",
+        "type": "yn",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "prompts": [
+          {
+            "label": "Actual BP",
+            "type": "text"
+          }
+        ],
+        "hints": [
+          "sys/dia"
+        ]
+      },
+      {
+        "code": "D38",
+        "label": "General condition of mother",
+        "type": "choice",
+        "options": [
+          "Good",
+          "Fair",
+          "Poor",
+          "Very poor"
+        ],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D39",
+        "label": "Symptoms observed?",
+        "type": "choice",
+        "options": [
+          "None",
+          "Anaemia",
+          "Eclampsia",
+          "Fever"
+        ],
+        "prompts": [
+          {
+            "label": "Temp (C)",
+            "type": "text"
+          }
+        ],
+        "hints": []
+      },
+      {
+        "code": "D40",
+        "label": "Has lactation been established?",
+        "type": "yn",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D41",
+        "label": "Does mother eat normally?",
+        "type": "yn",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D42",
+        "label": "Number of Td doses taken so far",
+        "type": "yn",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D43",
+        "label": "Has there been education about family planning?",
+        "type": "yn",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D44",
+        "label": "Acceptance with a Method",
+        "type": "yn",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D45",
+        "label": "Type of Contraceptive method Accepted (write method)",
+        "type": "text",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D46",
+        "label": "Is mother referred to Doctor?",
+        "type": "yn",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D47",
+        "label": "Is mother referred to (Hosp./CHC/CHP)",
+        "type": "choice",
+        "options": [
+          "Hosp",
+          "CHC",
+          "CHP"
+        ],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "D48",
+        "label": "If yes, has the Incharge/doctor been informed?",
+        "type": "yn",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "prompts": [
+          {
+            "label": "Name Doctor/Incharge",
+            "type": "text"
+          }
+        ],
+        "hints": []
+      }
+    ],
+    "postnatal_mother": [
+      {
+        "code": "PR1",
+        "label": "Mother alive",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "PR2",
+        "label": "If NO - Date of death",
+        "type": "date",
+        "options": [],
+        "prompts": [],
+        "hints": [
+          "yyyy-mm-dd",
+          "Time of Death"
+        ]
+      },
+      {
+        "code": "PR3",
+        "label": "Cause of death",
+        "type": "text",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "PR4",
+        "label": "Mother's BP (If >130/90 refer)",
+        "type": "number",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "PR5",
+        "label": "If yes to PR1, weight",
+        "type": "number",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "PR6",
+        "label": "Condition of breast good?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "PR7",
+        "label": "Vaginal Bleeding?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "PR8",
+        "label": "Sepsis?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "PR9",
+        "label": "Eclampsia?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "PR10",
+        "label": "Albuminuria present?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "PR11",
+        "label": "Involution of uterus normal?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "PR12",
+        "label": "Fever present?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "PR13",
+        "label": "Anaemia?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "PR14",
+        "label": "Persistent cough?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "PR15",
+        "label": "Refer to Doctor?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "PR16",
+        "label": "If yes, Date -",
+        "type": "date",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      }
+    ],
+    "postnatal_baby": [
+      {
+        "code": "NN1",
+        "label": "Baby alive?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN2",
+        "label": "If NO - Date of death",
+        "type": "date",
+        "options": [],
+        "prompts": [],
+        "hints": [
+          "yyyy-mm-dd"
+        ]
+      },
+      {
+        "code": "NN3",
+        "label": "Cause of death",
+        "type": "text",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN4",
+        "label": "Death registered",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN5",
+        "label": "New Born - Birth registered?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN6",
+        "label": "If yes to NN1, weight in Kg",
+        "type": "number",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN7",
+        "label": "Fever present?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN8",
+        "label": "If yes to NN7, state temperature",
+        "type": "number",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN9",
+        "label": "Date of BCG",
+        "type": "date",
+        "options": [],
+        "prompts": [],
+        "hints": [
+          "yyyy-mm-dd"
+        ]
+      },
+      {
+        "code": "NN10",
+        "label": "Breastfeeding?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN11",
+        "label": "If yes to NN10, is it exclusive?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN12",
+        "label": "Sucking ability normal?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN13",
+        "label": "Congenital defect?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN14",
+        "label": "If yes to NN13, specify",
+        "type": "text",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN15",
+        "label": "Any perinatal illness?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN16",
+        "label": "If yes to NN15, specify",
+        "type": "text",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN17",
+        "label": "Neonatal Sepsis?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN18",
+        "label": "Diarrhoea?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN19",
+        "label": "Jaundice?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN20",
+        "label": "Cord Healing Satisfactory?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN21",
+        "label": "Scalp Injuries?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN22",
+        "label": "Bone Injuries?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN23",
+        "label": "Nerve Injuries?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN24",
+        "label": "Visual Injuries?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN25",
+        "label": "Referred to Doctor?",
+        "type": "yn",
+        "options": [],
+        "prompts": [],
+        "hints": []
+      },
+      {
+        "code": "NN26",
+        "label": "If referred, date of referral",
+        "type": "date",
+        "options": [],
+        "prompts": [],
+        "hints": [
+          "yyyy-mm-dd"
+        ]
+      }
+    ],
+    "visit_windows": [
+      "<24 hrs",
+      "2-7 days",
+      "8-42 days"
+    ]
+  },
+  "Family Planning": [
+    {
+      "label": "S. No",
+      "column": "A",
+      "options": []
+    },
+    {
+      "label": "Reg. No",
+      "column": "B",
+      "options": []
+    },
+    {
+      "label": "Date (yyyy-mm-dd)",
+      "column": "C",
+      "options": []
+    },
+    {
+      "label": "Name of Client",
+      "column": "D",
+      "options": []
+    },
+    {
+      "label": "Present Address",
+      "column": "E",
+      "options": []
+    },
+    {
+      "label": "Contact Details",
+      "column": "F",
+      "options": []
+    },
+    {
+      "label": "Sex",
+      "column": "G",
+      "options": []
+    },
+    {
+      "label": "Age",
+      "column": "H",
+      "options": []
+    },
+    {
+      "label": "Marital Status (S/M/D/W)",
+      "column": "I",
+      "options": []
+    },
+    {
+      "label": "Occupation",
+      "column": "J",
+      "options": []
+    },
+    {
+      "label": "Disability",
+      "column": "K",
+      "options": [
+        "Physical",
+        "Visual Impairment",
+        "Speeech and Language Impairment",
+        "Hearing Impairment",
+        "Learning Impairment",
+        "Multiple"
+      ]
+    },
+    {
+      "label": "Client Type",
+      "column": "Q",
+      "options": [
+        "New Client (First time user)",
+        "Continuing Client",
+        "Method Switch",
+        "Post Abortion"
+      ],
+      "subgroups": [
+        {
+          "label": "Post Partum Family Planning",
+          "column": "U",
+          "options": [
+            "<48 hours after delivery",
+            "49 hours-6 weeks",
+            "7 weeks-1 year"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Blood Pressure",
+      "column": "X",
+      "options": []
+    },
+    {
+      "label": "Weight (kg)",
+      "column": "Y",
+      "options": []
+    },
+    {
+      "label": "Height",
+      "column": "Z",
+      "options": []
+    },
+    {
+      "label": "COMBINED ORAL CONTRACEPTIVE",
+      "column": "AA",
+      "options": [
+        "Microgynon",
+        "Other oral specify"
+      ]
+    },
+    {
+      "label": "PROGESTIN ONLY ORALS",
+      "column": "AC",
+      "options": [
+        "Microlut",
+        "Other specify"
+      ]
+    },
+    {
+      "label": "INJECTABLES",
+      "column": "AE",
+      "options": [
+        "Depo provera",
+        "Sayana press",
+        "Other injectible specify"
+      ]
+    },
+    {
+      "label": "IUCD",
+      "column": "AH",
+      "options": [
+        "Copper - t",
+        "Hormonal"
+      ]
+    },
+    {
+      "label": "IMPLANTS",
+      "column": "AJ",
+      "options": [
+        "5 yr implant (ie. jadelle)",
+        "3 yr implant (ie. levoplant)",
+        "Other implant specify"
+      ]
+    },
+    {
+      "label": "CONDOM",
+      "column": "AM",
+      "options": [
+        "Male",
+        "Female"
+      ]
+    },
+    {
+      "label": "Emergency contraceptive",
+      "column": "AO",
+      "options": []
+    },
+    {
+      "label": "PERMANENT METHOD",
+      "column": "AP",
+      "options": [
+        "Tubal ligation",
+        "Vasectomy"
+      ]
+    },
+    {
+      "label": "Lactation Amenorhea Method (LAM)",
+      "column": "AR",
+      "options": []
+    },
+    {
+      "label": "Method Switch",
+      "column": "AS",
+      "options": []
+    },
+    {
+      "label": "Other FP method specify",
+      "column": "AT",
+      "options": []
+    },
+    {
+      "label": "Date of next Appointment (yyyy-mm-dd)",
+      "column": "AU",
+      "options": []
+    },
+    {
+      "label": "Referred in from CHW/Facility ( Y / N )",
+      "column": "AV",
+      "options": []
+    },
+    {
+      "label": "Rererred Out to other facility ( Y / N )",
+      "column": "AW",
+      "options": []
+    }
+  ],
+  "Delivery Register": [
+    {
+      "label": "S No.",
+      "column": "A",
+      "options": []
+    },
+    {
+      "label": "Reg. No",
+      "column": "B",
+      "options": []
+    },
+    {
+      "label": "NIN",
+      "column": "C",
+      "options": []
+    },
+    {
+      "label": "Name of Client",
+      "column": "D",
+      "options": []
+    },
+    {
+      "label": "Age",
+      "column": "E",
+      "options": []
+    },
+    {
+      "label": "Address",
+      "column": "F",
+      "options": []
+    },
+    {
+      "label": "Marital Status (S/M/W/D)",
+      "column": "G",
+      "options": []
+    },
+    {
+      "label": "Occupation",
+      "column": "H",
+      "options": []
+    },
+    {
+      "label": "Disability",
+      "column": "I",
+      "options": [
+        "Physical",
+        "Visual Impairment",
+        "Hearing Impairment",
+        "Learning Impairment",
+        "Multiple"
+      ]
+    },
+    {
+      "label": "Admission",
+      "column": "N",
+      "options": [
+        "Date",
+        "Time"
+      ]
+    },
+    {
+      "label": "Referred",
+      "column": "P",
+      "options": [
+        "From",
+        "To"
+      ]
+    },
+    {
+      "label": "Gravidity",
+      "column": "R",
+      "options": []
+    },
+    {
+      "label": "Parity",
+      "column": "S",
+      "options": []
+    },
+    {
+      "label": "Gestational age",
+      "column": "T",
+      "options": []
+    },
+    {
+      "label": "Safe Termination of Pregnancy",
+      "column": "U",
+      "options": [
+        "Method Used",
+        "Miso",
+        "Combo (Miso + Mife)",
+        "MVA",
+        "Surgical (D & E)"
+      ]
+    },
+    {
+      "label": "Post-Abortion Care (PAC)",
+      "column": "Y",
+      "options": [
+        "PAC Type",
+        "Miso",
+        "Combo (Miso + Mife)",
+        "MVA",
+        "Surgical (D & E)"
+      ]
+    },
+    {
+      "label": "Time of start of labour",
+      "column": "AC",
+      "options": []
+    },
+    {
+      "label": "Presentation and position",
+      "column": "AD",
+      "options": []
+    },
+    {
+      "label": "Delivery",
+      "column": "AE",
+      "options": [
+        "Date",
+        "Time",
+        "Delivery type",
+        "Normal",
+        "Assisted (vacuum)",
+        "CS (Elective)",
+        "CS (Emergency)",
+        "Delivery outcome",
+        "Alive",
+        "FSB",
+        "MSB",
+        "Was Parto graph/Labour care Guide used? (Y / N)"
+      ]
+    },
+    {
+      "label": "Uterotonic given immediately after birth? (Oxytocin / Misoprostol) ( Y / N )",
+      "column": "AO",
+      "options": []
+    },
+    {
+      "label": "Heat - stable Carbetocin (HSC) Y/N",
+      "column": "AP",
+      "options": []
+    },
+    {
+      "label": "Tranexamic Acid (TXA) Y/N",
+      "column": "AQ",
+      "options": []
+    },
+    {
+      "label": "New born condition",
+      "column": "AR",
+      "options": [
+        "Alive (Y/N)",
+        "Sex (M/F)",
+        "Weight (kg)",
+        "APGAR Score",
+        "Breast feeding initiated within one hour after birth (Y/N)",
+        "Brachial Plexus Injuries (Y/N)",
+        "Fracture clavicle (Y/N)",
+        "Hypoxic ischemic encephalopathy (Y/N)",
+        "Other birth injuries (Y/N)"
+      ]
+    },
+    {
+      "label": "Maternal diagnosis",
+      "column": "BA",
+      "options": [
+        "Initial diagnosis",
+        "Final diagnosis"
+      ]
+    },
+    {
+      "label": "Oxygen Therapy",
+      "column": "BC",
+      "options": [
+        "Oxygen given? (Y/N)"
+      ]
+    },
+    {
+      "label": "Post Abortion Family Planning",
+      "column": "BD",
+      "options": [
+        "Counselled on family planning before discharge (Y/N)",
+        "Accepted and received family planning before discharge (Y/N)",
+        "Type of F/P Services received"
+      ]
+    },
+    {
+      "label": "Post-Partum Family Planning",
+      "column": "BG",
+      "options": [
+        "Counselled on family planning before discharge (Y/N)",
+        "Accepted and received family planning before discharge (Y/N)",
+        "Type of F/P Services received"
+      ]
+    },
+    {
+      "label": "Maternal outcome",
+      "column": "BJ",
+      "options": [
+        "Date",
+        "Discharged, Referral, or Death"
+      ]
+    },
+    {
+      "label": "Delivery conducted by",
+      "column": "BL",
+      "options": [
+        "HCW Name",
+        "HCW Cadre"
+      ]
+    },
+    {
+      "label": "Delivery",
+      "column": "BN",
+      "options": [
+        "In Facility",
+        "In Communiity",
+        "In Transit"
+      ]
+    }
+  ]
+}
