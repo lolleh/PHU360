@@ -1,14 +1,24 @@
 /*
  * PIH Labs look-and-feel overlay for the O3 ES dispensing SPA.
- * Target: match labOrderList.page styling — labs blue-gray title band
- * (#6f9792 teal-blue, white text, 6px gold bottom border), zebra data
- * rows, gold/teal table header, purple links, teal focus ring.
  *
- * Loaded AFTER sl.css via the same SPA stylesheets mechanism
- * (config.json "stylesheets" -> single-spa config "stylesheets"), served
- * from /openmrs/ms/uiframework/resource/file/pih/styles/global/dispensing-labs-theme.css
+ * Every colour/padding value below was read off the real rendered DOM of
+ * /openmrs/pihapps/labs/labOrderList.page (computed styles, not guesses):
  *
- * Selector strategy (IMPORTANT — verified against the real rendered DOM):
+ *   section band    background #1d3d5c, white text, padding 8px 14px
+ *   card            background #fff, 1px solid #d9d2c4, padding 0 14px 14px
+ *   table thead th  background #e6e6e6, colour #555, 1px solid #d3d3d3,
+ *                   padding 5px 10px, font-weight 400
+ *   table tbody td  colour #003f5e, 1px solid #eee, padding 5px 10px
+ *   striped rows    odd #fff, even #f9f9f9
+ *   links           #4a4235, no underline; action links #1d3d5c
+ *   tabs/buttons    #fff bg + #1d3d5c text, 1px solid #fff, padding 4px 8px
+ *   form controls   #faf7f0 bg, #4a4235 text, 1px solid #c8bfae
+ *
+ * Loaded globally from the O3 app shell (spa/index.html) via a
+ * <link rel="stylesheet"> alongside moh-login.css, served from
+ * /openmrs/ms/uiframework/resource/file/pih/styles/global/dispensing-labs-theme.css
+ *
+ * Selector strategy (verified against the real rendered DOM):
  *   The O3 SPA renders Carbon (cds--) classes plus hashed CSS-module
  *   classes that share a STABLE prefix:
  *       -esm-dispensing__pharmacy-header__header___<hash>
@@ -21,30 +31,31 @@
  *   leaks into other O3 routes.
  * ==========================================================================*/
 
-/* -------- labs palette (redeclared here for this tree) -------- */
+/* -------- labs palette (measured on labOrderList.page) -------- */
 [id*="esm-dispensing-app"] {
-  --brand-teal: #0f5149;
-  --brand-teal-hover: #0b3d37;
-  --brand-blue-gray: #6f9792;
-  --brand-blue-gray-hover: #5f8a84;
-  --brand-gold: #f6be00;
-  --brand-gold-hover: #e0ac00;
-  --brand-purple: #323372;
-  --brand-purple-hover: #5b5c8e;
-  --action-green: #34c00b;
-  --action-green-hover: #2da60a;
-  --danger: #f1394d;
-  --text-ink: #3e3e3f;
-  --row-zebra: #f7f7f7;
-  --border-soft: #e3e3e3;
+  --lab-navy: #1d3d5c;
+  --lab-navy-hover: #14304a;
+  --lab-navy-soft: rgba(255, 255, 255, 0.6);
+  --lab-row-ink: #003f5e;
+  --lab-th-bg: #e6e6e6;
+  --lab-th-ink: #555555;
+  --lab-th-border: #d3d3d3;
+  --lab-row-border: #eeeeee;
+  --lab-zebra: #f9f9f9;
+  --lab-white: #ffffff;
+  --lab-card-border: #d9d2c4;
+  --lab-input-bg: #faf7f0;
+  --lab-input-ink: #4a4235;
+  --lab-input-border: #c8bfae;
+  --lab-link: #4a4235;
 }
 
-/* -------- header band: labs blue-gray with gold underline -------- */
+/* -------- section band: navy, white text (was teal + gold rule) -------- */
 [id*="esm-dispensing-app"] [class*="-esm-dispensing__pharmacy-header__header"] {
-  background: var(--brand-blue-gray);
+  background: var(--lab-navy);
   color: #fff;
-  border-bottom: 6px solid var(--brand-gold);
-  padding: 1rem 1.25rem;
+  border-bottom: 0;
+  padding: 8px 14px;
 }
 
 [id*="esm-dispensing-app"] [class*="-esm-dispensing__pharmacy-header"] * {
@@ -55,76 +66,160 @@
   font-size: 1.35rem;
   font-weight: 600;
   margin: 0;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 [id*="esm-dispensing-app"] [class*="-esm-dispensing__pharmacy-header__pageLabels"] {
   font-size: 0.85rem;
-  opacity: 0.92;
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
 
-/* -------- table chrome: gold/teal header + zebra rows (labs striped table) -------- */
+[id*="esm-dispensing-app"] [class*="-esm-dispensing__pharmacy-header__middot"],
+[id*="esm-dispensing-app"] [class*="-esm-dispensing__pharmacy-header__dateAndLocation"] {
+  opacity: 0.9;
+}
+
+/* -------- table chrome: light grey header + subtle striping -------- */
 [id*="esm-dispensing-app"] .cds--data-table thead th,
 [id*="esm-dispensing-app"] [class*="-esm-dispensing"] .cds--data-table thead th {
-  background: var(--brand-teal);
-  color: #fff;
-  font-weight: 600;
+  background: var(--lab-th-bg);
+  background-image: none;
+  color: var(--lab-th-ink);
+  font-weight: 400;
   text-align: left;
-  padding: 0.55rem 0.75rem;
-  border-bottom: 3px solid var(--brand-gold);
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--lab-th-border);
+  font-size: 1rem;
 }
 
 [id*="esm-dispensing-app"] .cds--data-table tbody td,
 [id*="esm-dispensing-app"] [class*="-esm-dispensing"] .cds--data-table tbody td {
-  padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid var(--border-soft);
-  color: var(--text-ink);
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--lab-row-border);
+  color: var(--lab-row-ink);
+  background: transparent;
+  font-size: 1rem;
 }
 
 [id*="esm-dispensing-app"] .cds--data-table tbody tr:nth-child(odd),
 [id*="esm-dispensing-app"] [class*="-esm-dispensing"] .cds--data-table tbody tr:nth-child(odd) {
-  background: var(--row-zebra);
+  background: var(--lab-white);
+}
+
+[id*="esm-dispensing-app"] .cds--data-table tbody tr:nth-child(even),
+[id*="esm-dispensing-app"] [class*="-esm-dispensing"] .cds--data-table tbody tr:nth-child(even) {
+  background: var(--lab-zebra);
 }
 
 [id*="esm-dispensing-app"] .cds--data-table tbody tr:hover,
 [id*="esm-dispensing-app"] [class*="-esm-dispensing"] .cds--data-table tbody tr:hover {
-  background: color-mix(in srgb, var(--brand-blue-gray) 12%, #fff);
+  background: var(--lab-th-bg);
 }
 
-/* -------- links: labs purple, gold hover underline -------- */
+/* Carbon paints a solid white table surface; let the striping through. */
+[id*="esm-dispensing-app"] .cds--data-table,
+[id*="esm-dispensing-app"] .cds--data-table-container {
+  background: transparent;
+}
+
+[id*="esm-dispensing-app"] .cds--data-table thead {
+  background: transparent;
+}
+
+/* -------- links: labs ink, no underline until hover -------- */
 [id*="esm-dispensing-app"] a,
 [id*="esm-dispensing-app"] [class*="-esm-dispensing"] a {
-  color: var(--brand-purple);
-  text-decoration: underline;
+  color: var(--lab-link);
+  text-decoration: none;
 }
 
 [id*="esm-dispensing-app"] a:hover,
 [id*="esm-dispensing-app"] [class*="-esm-dispensing"] a:hover {
-  color: var(--brand-purple-hover);
-  text-decoration: underline overline solid var(--brand-gold);
+  color: var(--lab-navy);
+  text-decoration: underline;
 }
 
-/* -------- fields: teal focus ring (labs inputs) -------- */
+/* -------- tabs / buttons: white pill, navy text; selected = navy -------- */
+[id*="esm-dispensing-app"] [class*="-esm-dispensing__prescriptions__tabsContainer"] .cds--tabs__nav,
+[id*="esm-dispensing-app"] [class*="-esm-dispensing__prescriptions__tabsContainer"] .cds--tabs__nav-link {
+  background: transparent;
+}
+
+[id*="esm-dispensing-app"] [class*="-esm-dispensing__prescriptions__tabsContainer"] .cds--tabs__nav-link {
+  color: var(--lab-navy);
+  background: var(--lab-white);
+  border: 1px solid var(--lab-white);
+  border-radius: 2px;
+  padding: 4px 8px;
+  font-size: 0.875rem;
+  margin-right: 2px;
+}
+
+[id*="esm-dispensing-app"] [class*="-esm-dispensing__prescriptions__tabsContainer"] .cds--tabs__nav-link:hover {
+  background: var(--lab-th-bg);
+  color: var(--lab-navy);
+}
+
+[id*="esm-dispensing-app"] [class*="-esm-dispensing__prescriptions__tabsContainer"] .cds--tabs__nav-link[aria-selected="true"],
+[id*="esm-dispensing-app"] [class*="-esm-dispensing__prescriptions__tabsContainer"] .cds--tabs__nav-link--selected {
+  background: var(--lab-navy);
+  color: #fff;
+  border: 1px solid var(--lab-navy-soft);
+}
+
+[id*="esm-dispensing-app"] .cds--btn {
+  border-radius: 2px;
+  font-size: 0.875rem;
+  padding: 4px 8px;
+}
+
+[id*="esm-dispensing-app"] .cds--btn--primary {
+  background: var(--lab-navy);
+  border-color: var(--lab-navy);
+  color: #fff;
+}
+
+[id*="esm-dispensing-app"] .cds--btn--primary:hover {
+  background: var(--lab-navy-hover);
+}
+
+/* -------- fields: labs cream surface, navy focus ring -------- */
+[id*="esm-dispensing-app"] input,
+[id*="esm-dispensing-app"] select,
+[id*="esm-dispensing-app"] .cds--search__input,
+[id*="esm-dispensing-app"] .cds--text-input,
+[id*="esm-dispensing-app"] .cds--select-input {
+  background: var(--lab-input-bg);
+  color: var(--lab-input-ink);
+  border: 1px solid var(--lab-input-border);
+  border-radius: 2px;
+}
+
+[id*="esm-dispensing-app"] input::placeholder,
+[id*="esm-dispensing-app"] .cds--search__input::placeholder {
+  color: var(--lab-input-border);
+}
+
 [id*="esm-dispensing-app"] input:focus,
-[id*="esm-dispensing-app"] [class*="-esm-dispensing"] input:focus,
-[id*="esm-dispensing-app"] [class*="-esm-dispensing"] .cds--search__input:focus,
-[id*="esm-dispensing-app"] .cds--search__input:focus {
+[id*="esm-dispensing-app"] select:focus,
+[id*="esm-dispensing-app"] .cds--search__input:focus,
+[id*="esm-dispensing-app"] .cds--text-input:focus,
+[id*="esm-dispensing-app"] .cds--select-input:focus {
   outline: 0;
-  border-color: var(--brand-teal);
-  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--brand-teal) 25%, #fff);
+  border-color: var(--lab-navy);
+  box-shadow: 0 0 0 0.2rem rgba(29, 61, 92, 0.25);
 }
 
-/* -------- severity / attention rows: labs gold / red -------- */
+/* -------- severity rows: keep legible on the cream surface -------- */
 [id*="esm-dispensing-app"] tr.warning,
 [id*="esm-dispensing-app"] [class*="-esm-dispensing"] tr.warning {
-  background: color-mix(in srgb, var(--brand-gold) 25%, #fff);
+  background: #fdf3d0;
 }
 
 [id*="esm-dispensing-app"] tr.danger,
 [id*="esm-dispensing-app"] tr.urgent,
 [id*="esm-dispensing-app"] [class*="-esm-dispensing"] tr.danger,
 [id*="esm-dispensing-app"] [class*="-esm-dispensing"] tr.urgent {
-  background: color-mix(in srgb, var(--danger) 12%, #fff);
+  background: #fbe0e3;
 }
