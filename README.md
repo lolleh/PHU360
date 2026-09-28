@@ -260,6 +260,64 @@ addressed by `formUuid`:
   sources & patched-WAR build scripts target an older referenceapplication-based
   OpenMRS and are not consumed by this 2.8.9 build.
 
+## Outpatient & Mental Health forms and their encounter types
+
+Four htmlforms are not part of PHU360: `outpatientConsultInitial.xml`,
+`outpatient-followup.xml`, `mentalHealth.xml` and `mentalHealthFollowup.xml`
+(plus the `_v1.0` revisions of the mental-health pair). Their encounter types
+were the only thing still offering them, because an encounter type is what the
+visit UI lists, not a form.
+
+| Encounter type | uuid | shipped by |
+|----------------|------|------------|
+| PHU360 Outpatient Initial | `7d5853d4-67b7-4742-8492-fcf860690ed5` | `sierraLeoneEncounterTypes.csv` |
+| PHU360 Outpatient Followup | `d8a038b5-90d2-43dc-b94b-8338b76674f3` | `sierraLeoneEncounterTypes.csv` |
+| Mental Health Follow-up | `9d701a81-bb83-40ea-9efc-af50f05575f2` | `sierraLeoneEncounterTypes.csv` |
+| Mental Health Consult | `a8584ab8-cc2a-11e5-9956-625662870761` | stock `encounterTypes.csv` |
+
+They are **retired, not deleted** — the same pattern the programs already use:
+
+- the three PHU360-ships rows are gone from
+  `content/configuration/backend_configuration/encountertypes/sierraLeoneEncounterTypes.csv`;
+- `sierraLeoneEncounterTypes_retired.csv` re-declares all four with
+  `Void/Retire=true`, so a fresh install retires them on first boot and an
+  existing install picks them up when that file's checksum changes;
+- the file has to sort **after** `encounterTypes.csv` or the stock
+  `Mental Health Consult` row is (re-)created after the retirement on a fresh
+  install. `sierraLeoneEncounterTypes_retired.csv` does.
+
+Check with the REST API the visit UI reads — the default view hides retired
+types, so all four should be missing while `/encountertype?retired=true` lists
+them:
+
+```
+curl -su admin:Admin123 'http://127.0.0.1:8090/openmrs/ws/rest/v1/encountertype?v=default&limit=200'
+```
+
+The eight `pih/htmlforms/documentation/*.csv` files that documented those forms
+are removed from the tracked config and added to `content/exclusions.txt` (they
+also ship with the stock config, so the delta deleting them is not enough on
+its own), and their rows are gone from
+`documentation/_section_to_form_mapping.csv`.
+
+What deliberately **stays**:
+
+- the mental-health *subforms*. `triage.xml` embeds
+  `configuration/pih/subforms/mental-health-phq2.xml`, so removing the mental
+  health forms does not license removing that widget.
+- `pih/scripts/visit/encounterTypeConfig.js` still has the bindings for the four
+  types. It is stock config, and retiring the encounter types makes the entries
+  unreachable; it is only worth overriding if the visit UI is still seen
+  offering the forms.
+- the mental-health *report descriptors* were already excluded (see
+  `content/exclusions.txt`).
+
+Note that the two Above Five reporting definitions still name
+`PHU360 Outpatient Initial` / `PHU360 Outpatient Followup` as encounter types.
+That is harmless — those reports are already reported as unmapped, and
+`ReportFilter` only resolves encounter types that are not retired, so the names
+simply resolve to nothing.
+
 ## Configuration
 
 Copy `.env.example` to `.env` and adjust:

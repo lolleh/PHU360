@@ -25,3 +25,31 @@ reports/reportdescriptors/dataexports/nicuDischargeList.yml
 reports/reportdescriptors/dataexports/surgery.yml
 reports/reportdescriptors/dataexports/triage.yml
 reports/reportdescriptors/dataexports/vitals.yml
+
+# The Outpatient and Mental Health HTML forms. PHU360 does not use them: only the
+# 15 form XMLs on the KEEP list in scripts/prune-runtime-config.sh are shipped, so
+# the stock forms (and the _v1.0 revisions of the mental-health pair) are stripped
+# from the materialized config. Their encounter types are retired declaratively
+# instead, see encountertypes/sierraLeoneEncounterTypes_retired.csv - retiring is
+# what stops the visit UI offering the forms, an encounter type is what it lists.
+# The mental-health *subforms* stay: triage.xml embeds
+# pih/subforms/mental-health-phq2.xml.
+pih/htmlforms/mentalHealth.xml
+pih/htmlforms/mentalHealth_v1.0.xml
+pih/htmlforms/mentalHealthFollowup.xml
+pih/htmlforms/mentalHealthFollowup_v1.0.xml
+pih/htmlforms/outpatient-initial.xml
+pih/htmlforms/outpatient-initial_v1.0.xml
+pih/htmlforms/outpatient-followup.xml
+pih/htmlforms/outpatient-followup_v1.0.xml
+
+# Documentation for those same forms, for the same reason: the CSVs describe
+# forms that are no longer shipped.
+pih/htmlforms/documentation/mentalHealth.csv
+pih/htmlforms/documentation/mentalHealth_v1.0.csv
+pih/htmlforms/documentation/mentalHealthFollowup.csv
+pih/htmlforms/documentation/mentalHealthFollowup_v1.0.csv
+pih/htmlforms/documentation/outpatient-initial.csv
+pih/htmlforms/documentation/outpatient-initial_v1.0.csv
+pih/htmlforms/documentation/outpatient-followup.csv
+pih/htmlforms/documentation/outpatient-followup_v1.0.csv

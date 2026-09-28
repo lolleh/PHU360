@@ -26,10 +26,6 @@ laborDeliverySummary.xml,configuration/pih/htmlforms/laborDeliverySummary.xml,LA
 laborProgress.xml,configuration/pih/htmlforms/laborProgress.xml,SIERRA_LEONE_LABOR_PROGRESS (site-specific labor progress mapping),Labor Progress
 maternalAdmission.xml,configuration/pih/htmlforms/maternalAdmission.xml,MATERNAL_ADMISSION,Maternal Admission
 maternalDischarge.xml,configuration/pih/htmlforms/maternalDischarge.xml,MATERNAL_DISCHARGE,Maternal Discharge
-mentalHealth.xml,configuration/pih/htmlforms/mentalHealth.xml,MENTAL_HEALTH_ASSESSMENT,Mental Health
-mentalHealthFollowup.xml,configuration/pih/htmlforms/mentalHealthFollowup.xml,MENTAL_HEALTH_FOLLOWUP,Mental Health Followup
-mentalHealthFollowup_v1.0.xml,configuration/pih/htmlforms/mentalHealthFollowup_v1.0.xml,MENTAL_HEALTH_FOLLOWUP,Mental Health Followup v1.0
-mentalHealth_v1.0.xml,configuration/pih/htmlforms/mentalHealth_v1.0.xml,MENTAL_HEALTH_ASSESSMENT,Mental Health v1.0
 ncd-followup-part-1.xml,configuration/pih/htmlforms/ncd-followup-part-1.xml,NCD_FOLLOWUP_CONSULT,NCD Followup Part 1
 ncd-followup-part-1_v1.0.xml,configuration/pih/htmlforms/ncd-followup-part-1_v1.0.xml,NCD_FOLLOWUP_CONSULT,NCD Followup Part 1 v1.0
 ncd-followup-part-2.xml,configuration/pih/htmlforms/ncd-followup-part-2.xml,NCD_FOLLOWUP_2_CONSULT,NCD Followup Part 2
@@ -49,10 +45,6 @@ newbornDischarge.xml,configuration/pih/htmlforms/newbornDischarge.xml,NEWBORN_DI
 newbornInitial.xml,configuration/pih/htmlforms/newbornInitial.xml,NEWBORN_INITIAL,Newborn Initial
 newbornInitial_v1.0.xml,configuration/pih/htmlforms/newbornInitial_v1.0.xml,NEWBORN_INITIAL,Newborn Initial v1.0
 nicuTriage.xml,configuration/pih/htmlforms/nicuTriage.xml,,NICU Triage
-outpatient-followup.xml,configuration/pih/htmlforms/outpatient-followup.xml,OUTPATIENT_FOLLOWUP (site-specific mapping),Outpatient Followup
-outpatient-followup_v1.0.xml,configuration/pih/htmlforms/outpatient-followup_v1.0.xml,OUTPATIENT_FOLLOWUP_V1 (site-specific mapping),Outpatient Followup v1.0
-outpatient-initial.xml,configuration/pih/htmlforms/outpatient-initial.xml,CONSULTATION_INITIAL,Outpatient Initial
-outpatient-initial_v1.0.xml,configuration/pih/htmlforms/outpatient-initial_v1.0.xml,CONSULTATION_INITIAL,Outpatient Initial v1.0
 pacuFollowup.xml,configuration/pih/htmlforms/pacuFollowup.xml,SIERRA_LEONE_PACU_FOLLOWUP (PACU Followup),PACU Followup
 patientRegistration-localAddress.xml,configuration/pih/htmlforms/patientRegistration-localAddress.xml,PATIENT_REGISTRATION,Patient Registration Local Address
 patientRegistration-social.xml,configuration/pih/htmlforms/patientRegistration-social.xml,PATIENT_REGISTRATION,Patient Registration Social
