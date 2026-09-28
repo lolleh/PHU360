@@ -35,6 +35,41 @@ openmrs-forms/                 register form sources + generators (mother-neonat
 - **`distro/openmrs-distro.properties`** — the distribution manifest: `omod.*` pins identical to the stock PIH SL baseline plus the branded SPA coordinates and `content.phu360-content`. `build-distro.sh` cleans `distro/target/distro` before each SDK run so stale output never masks edits.
 - **`distro/Dockerfile`** — pins `openmrs/openmrs-core:2.8.9` and copies the six distribution outputs from `target/distro/web`.
 
+## Reporting dashboard: REPORT TYPE
+
+`/openmrs/moduleResources/phu360reporting/index.html` reads its options from
+`ReportCatalog` (`phu360reporting/src/main/java/.../report/ReportCatalog.java`).
+A report is a set of encounter type names and/or obs concept ids; `ReportFilter`
+resolves them against the running database and emits one SQL fragment
+(`encounter_type IN (...)` and/or an `EXISTS` on `obs`) that is ANDed onto the KPI,
+trend and breakdown queries, so one selection filters every number on the page.
+
+| Key | Label | Defined by |
+|-----|-------|------------|
+| `all-encounter` | All Encounter | no restriction |
+| `above-five-morbidity` | Above Five Register - Morbidity Summary | morbidity concept ids 8838–8852, coded "Yes" 8853 |
+| `above-five-patient-list` | Above Five Register - Patient List | PHU360 Outpatient Initial/Followup + the same concepts |
+| `under-five-register` | Under Five Register | 15 pediatric / vaccination / newborn / infant encounter type **names** |
+| `hf1/hf2/hf3/hf5/hf12-summary` | HF1, HF2, HF3, HF5, HF12 Summary | not mapped |
+| `mother-and-neonate` | Mother and Neonate | 22 maternal and newborn encounter type names |
+
+Two decisions worth knowing before editing this file:
+
+- **Names, not ids, for encounter types.** Every encounter type name is resolved
+  to an id at request time and unknown names are skipped, so a catalog entry
+  survives a data package that loads a different id set. The Under Five register
+  is deliberately defined this way: `underFiveRegister.xml` is not shipped (80
+  concept ids, 8 of which ever existed), so the report is scoped by the encounter
+  types under-five children are actually seen under.
+- **Concept ids are checked against the database.** `ReportFilter.obsConceptsMissing()`
+  reports a report as unmapped when it is defined by obs concepts and this
+  database has none of them, and `resolve()` drops the ids that are absent rather
+  than filtering on them. Without that, the two Above Five entries - whose
+  concepts were never exported - would have answered every date range with a
+  confident `0` encounters. They now come back with `reportMapped: false` and
+  `"… has no data mapping configured yet."`, which is what the `mapped` flag in
+  `action=reports` and the notice under the filter bar are for.
+
 ## Reports page: the DASHBOARDS category
 
 `/openmrs/reportingui/reportsapp/home.page` lists the dashboards under a

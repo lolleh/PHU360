@@ -116,26 +116,31 @@ public class ReportApiServlet extends HttpServlet {
         return out;
     }
 
-    /** The REPORT TYPE options. */
+    /** The REPORT TYPE options, with the mapping checked against this database. */
     private Map<String, Object> reports() {
         Map<String, Object> out = new LinkedHashMap<String, Object>();
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        ReportFilter.NameResolver resolver = nameResolver();
         for (ReportCatalog.Report r : ReportCatalog.all()) {
             Map<String, Object> m = new LinkedHashMap<String, Object>();
             m.put("key", r.getKey());
             m.put("label", r.getLabel());
-            m.put("mapped", r.isMapped());
+            m.put("mapped", r.isMapped() && !ReportFilter.obsConceptsMissing(r, resolver));
             list.add(m);
         }
         out.put("reports", list);
         return out;
     }
 
-    /** Resolves encounter type names to ids for the report filter. */
+    /** Resolves encounter type names and obs concept ids for the report filter. */
     private ReportFilter.NameResolver nameResolver() {
         return new ReportFilter.NameResolver() {
             public Integer encounterTypeId(String name) {
                 return idForName("encounter_type", name);
+            }
+
+            public boolean conceptExists(int conceptId) {
+                return countFor("concept", conceptId) > 0;
             }
         };
     }
@@ -149,6 +154,20 @@ public class ReportApiServlet extends HttpServlet {
             if (rows.isEmpty()) {
                 return null;
             }
+            Object o = rows.get(0);
+            return ((Number) ((o instanceof Object[]) ? ((Object[]) o)[0] : o)).intValue();
+        } finally {
+            sess.close();
+        }
+    }
+
+    /** How many non-retired rows of {@code table} carry {@code id}. */
+    private int countFor(String table, int id) {
+        Session sess = openSession();
+        try {
+            List rows = sess.createNativeQuery(
+                "SELECT COUNT(*) FROM " + table + " WHERE " + table + "_id = :id AND retired = 0")
+                .setParameter("id", id).list();
             Object o = rows.get(0);
             return ((Number) ((o instanceof Object[]) ? ((Object[]) o)[0] : o)).intValue();
         } finally {
@@ -189,7 +208,8 @@ public class ReportApiServlet extends HttpServlet {
         }
 
         ReportCatalog.Report report = ReportCatalog.byKey(req.getParameter("report"));
-        if (!report.isMapped()) {
+        ReportFilter.NameResolver resolver = nameResolver();
+        if (!report.isMapped() || ReportFilter.obsConceptsMissing(report, resolver)) {
             // Say so rather than returning the unfiltered set, which would read
             // as a filter that silently does nothing.
             Map<String, Object> out = new LinkedHashMap<String, Object>();
@@ -208,7 +228,7 @@ public class ReportApiServlet extends HttpServlet {
             return out;
         }
 
-        ReportFilter filter = ReportFilter.resolve(report, nameResolver());
+        ReportFilter filter = ReportFilter.resolve(report, resolver);
         IndicatorReport indicatorReport = new IndicatorReport(from, toExclusive, locIds, filter);
         Map<String, Object> body = indicatorReport.build();
         body.put("nominalTo", fmt(to));

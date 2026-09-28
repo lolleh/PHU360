@@ -20,16 +20,18 @@ public final class ReportFilter {
     private final List<Integer> obsConceptIds = new ArrayList<Integer>();
     private final int obsValueId;
 
-    private ReportFilter(List<Integer> encounterTypeIds, int[] obsConceptIds, int obsValueId) {
+    private ReportFilter(List<Integer> encounterTypeIds, List<Integer> obsConceptIds, int obsValueId) {
         this.encounterTypeIds.addAll(encounterTypeIds);
-        for (int id : obsConceptIds) {
-            this.obsConceptIds.add(id);
-        }
+        this.obsConceptIds.addAll(obsConceptIds);
         this.obsValueId = obsValueId;
     }
 
     /**
      * Resolves a catalog entry against this database.
+     *
+     * <p>Encounter type names and obs concept ids are both resolved here, so a
+     * report whose concepts this database does not have ends up without that
+     * part of its restriction rather than filtering on ids that match nothing.
      *
      * @return the filter, or null when the report places no restriction on the
      *         encounter set ("All Encounter").
@@ -42,16 +44,41 @@ public final class ReportFilter {
                 ids.add(id);
             }
         }
-        boolean hasObs = report.getObsConceptIds().length > 0;
-        if (ids.isEmpty() && !hasObs) {
+        List<Integer> concepts = new ArrayList<Integer>();
+        for (int id : report.getObsConceptIds()) {
+            if (resolver.conceptExists(id)) {
+                concepts.add(id);
+            }
+        }
+        if (ids.isEmpty() && concepts.isEmpty()) {
             return null;
         }
-        return new ReportFilter(ids, report.getObsConceptIds(), report.getObsValueId());
+        return new ReportFilter(ids, concepts, report.getObsValueId());
     }
 
-    /** Resolves names to ids; kept as an interface so this class needs no session. */
+    /**
+     * True when a report is defined by obs concepts and this database has none
+     * of them. Such a report cannot filter on its defining data, so it is
+     * reported as unmapped instead of as a confident zero.
+     */
+    public static boolean obsConceptsMissing(ReportCatalog.Report report, NameResolver resolver) {
+        if (report.getObsConceptIds().length == 0) {
+            return false;
+        }
+        for (int id : report.getObsConceptIds()) {
+            if (resolver.conceptExists(id)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /** Resolves names and ids against the database; kept as an interface so this
+     *  class needs no session. */
     public interface NameResolver {
         Integer encounterTypeId(String name);
+
+        boolean conceptExists(int conceptId);
     }
 
     /** ANDed onto a query whose encounter table is aliased {@code e}. */

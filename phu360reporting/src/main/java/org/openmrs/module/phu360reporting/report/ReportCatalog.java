@@ -19,7 +19,9 @@ import java.util.Map;
  * actually defined. Selecting an unmapped report is reported back to the UI as
  * such, rather than quietly returning every encounter - an indicator that looks
  * like it is filtering but is not is worse than one that says it has nothing
- * configured yet.
+ * configured yet. A mapping that exists here but not in the running database
+ * (the Above Five morbidity concepts, which were never exported) counts as
+ * unmapped too; see {@link ReportFilter#obsConceptsMissing}.
  */
 public final class ReportCatalog {
 
@@ -105,6 +107,33 @@ public final class ReportCatalog {
         "SCBU Newborn Register"
     };
 
+    /**
+     * Pediatric, vaccination and newborn/infant encounter types. The Under Five
+     * register form itself is not shipped (its 80 concept ids were never
+     * exported), so this report is defined by the encounter types under-five
+     * children are actually seen under rather than by the register's obs
+     * concepts. Names absent from a given database are skipped at request time.
+     */
+    private static final String[] UNDER_FIVE_TYPES = {
+        // pediatric
+        "Primary Care Pediatric Initial Consult",
+        "Primary Care Pediatric Followup Consult",
+        "Pediatric Home Assessment",
+        "Vaccination",
+        // newborn / infant
+        "Newborn Initial",
+        "Newborn Assessment",
+        "Newborn Daily Progress",
+        "Newborn Discharge",
+        "Newborn Observations",
+        "Newborn Referral",
+        "NICU Triage",
+        "NICU Followup",
+        "SCBU Newborn Register",
+        "HIV Infant Documentation",
+        "HIV-exposed Infant Followup"
+    };
+
     private static Map<String, Report> index;
 
     private static synchronized Map<String, Report> index() {
@@ -116,6 +145,7 @@ public final class ReportCatalog {
             add(m, new Report("above-five-patient-list", "Above Five Register - Patient List", true,
                     new String[] { "PHU360 Outpatient Initial", "PHU360 Outpatient Followup" },
                     ABOVE_FIVE_MORBIDITY, CODED_YES));
+            add(m, new Report("under-five-register", "Under Five Register", true, UNDER_FIVE_TYPES, null, 0));
             add(m, new Report("hf1-summary", "HF1 Summary", false, null, null, 0));
             add(m, new Report("hf2-summary", "HF2 Summary", false, null, null, 0));
             add(m, new Report("hf3-summary", "HF3 Summary", false, null, null, 0));
