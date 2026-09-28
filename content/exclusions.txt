@@ -4,6 +4,12 @@
 # so the rebuilt distribution matches the served Sierra Leone EMR config byte-for-byte.
 #
 # Each path is relative to configuration/backend_configuration.
+#
+# A descriptor listed here must not be linked to from the tracked config: the
+# report would 404 at runtime. The three maternal handoff / NICU discharge
+# entries below used to be linked from appframework/home_extension.json; those
+# links were removed rather than the exclusions, so the home screen does not
+# offer a report that does not exist.
 reports/reportdescriptors/dataexports/allergies.yml
 reports/reportdescriptors/dataexports/eveningMaternalHandoff.yml
 reports/reportdescriptors/dataexports/hospitalizations.yml

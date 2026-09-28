@@ -1,58 +1,5 @@
 [
   {
-    "id": "home.app.dhmtDashboard",
-    "extensionPointId": "org.openmrs.module.reportingui.reports.dashboards",
-    "type": "link",
-    "label": "DHMT KPI Dashboard",
-    "url": "dashboard/index.html",
-    "icon": "fas fa-fw fa-chart-line",
-    "requiredPrivilege": "App: reportingui.reports",
-    "order": 20
-  },
-  {
-    "id": "home.app.phu360reportingDashboard",
-    "extensionPointId": "org.openmrs.module.reportingui.reports.dashboards",
-    "type": "link",
-    "label": "PHU360 Reporting Dashboard",
-    "url": "moduleResources/phu360reporting/index.html",
-    "icon": "fas fa-fw fa-chart-pie",
-    "requiredPrivilege": "App: reportingui.reports",
-    "order": 21
-  },
-  {
-    "id": "home.app.morningMaternalHandoff",
-    "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
-    "type": "link",
-    "label": "Morning Maternal Handoff",
-    "url": "pihcore/reports/interactiveRenderer.page?reportDefinition=9c3d2a6f-8e5a-4c6b-b8c4-9f7e2a1d6e0b",
-    "icon": "fas fa-fw fa-handshake",
-    "requiredPrivilege": "App: coreapps.summaryDashboard",
-    "require": "hasMemberWithProperty(sessionLocation.tags, 'display', 'Admission Location')",
-    "order": 181
-  },
-  {
-    "id": "home.app.eveningMaternalHandoff",
-    "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
-    "type": "link",
-    "label": "Evening Maternal Handoff",
-    "url": "pihcore/reports/interactiveRenderer.page?reportDefinition=2aacf9f0-5545-4ba9-add3-83a3183fc8b2",
-    "icon": "fas fa-fw fa-handshake",
-    "requiredPrivilege": "App: coreapps.summaryDashboard",
-    "require": "hasMemberWithProperty(sessionLocation.tags, 'display', 'Admission Location')",
-    "order": 182
-  },
-  {
-    "id": "home.app.nicuDischargeList",
-    "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
-    "type": "link",
-    "label": "NICU Discharge List",
-    "url": "pihcore/reports/interactiveRenderer.page?reportDefinition=7c575650-bf72-46f2-9eb9-dc8f6f414faf",
-    "icon": "fas fa-fw fa-sign-out-alt",
-    "requiredPrivilege": "App: coreapps.summaryDashboard",
-    "require": "hasMemberWithProperty(sessionLocation.tags, 'display', 'NICU Location')",
-    "order": 183
-  },
-  {
     "id": "home.app.postnatalDischargeList",
     "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
     "type": "link",

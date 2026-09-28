@@ -55,6 +55,25 @@ cp -a "$MOD_DIR/module/moduleApplicationContext.xml" "$STAGE/moduleApplicationCo
 cp -a "$CLASSES/." "$STAGE/"
 cp -a "$MOD_DIR/web/module/resources/." "$STAGE/web/module/resources/"
 
+# The appframework only reads app definitions from the classpath
+# (classpath*:/apps/*app.json and classpath*:/apps/*extension.json), and the
+# config package is installed as a plain directory under
+# /openmrs/data/configuration - not on the classpath. Without this copy every
+# appframework/*.json in the config is inert: no home links, no patient-dashboard
+# register buttons, no Program Dashboards entries, no reportingui DASHBOARDS
+# section. Carrying them in this module is what makes the tracked config
+# authoritative; the config copies stay as the reviewed source of truth.
+#
+# File names are load-bearing and already match the two patterns
+# (`*_app.json` -> app map, `*_extension.json` -> free-standing extension).
+APPS_SRC="$ROOT_DIR/content/configuration/backend_configuration/appframework"
+if compgen -G "$APPS_SRC/*.json" >/dev/null; then
+  mkdir -p "$STAGE/apps"
+  cp -a "$APPS_SRC"/./*.json "$STAGE/apps/"
+  echo "==> Carried $(ls -1 "$STAGE/apps" | wc -l) app definition file(s) from $APPS_SRC"
+  ls -1 "$STAGE/apps" | sed 's/^/      apps\//'
+fi
+
 mkdir -p "$(dirname "$OUT")"
 rm -f "$OUT"
 (

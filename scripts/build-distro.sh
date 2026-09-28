@@ -57,11 +57,27 @@ mvn -q org.apache.maven.plugins:maven-install-plugin:3.1.2:install-file \
   -DgroupId="org.openmrs.module" -DartifactId="reportingui-omod" \
   -Dversion="1.15.0-SNAPSHOT" -Dpackaging=omod -DgeneratePom=true
 
+echo "==> Patch coreapps module (Gender / Reg Facility filters on patient search)"
+bash "$ROOT_DIR/scripts/patch-coreapps-module.sh"
+mvn -q org.apache.maven.plugins:maven-install-plugin:3.1.2:install-file \
+  -Dfile="$ROOT_DIR/openmrs-image/coreapps-4.0.0-SNAPSHOT.omod" \
+  -DgroupId="org.openmrs.module" -DartifactId="coreapps-omod" \
+  -Dversion="4.0.0-SNAPSHOT" -Dpackaging=omod -DgeneratePom=true
+
 echo "==> Build distro (OpenMRS SDK build-distro)"
 # The SDK writes its extraction into target/distro and does NOT clean it between
 # runs, so edits to the content package/config would silently not take effect.
 rm -rf "$ROOT_DIR/distro/target/distro"
 mvn "${OFFLINE[@]}" -q -pl distro package
+
+echo "==> Overlay tracked SPA shell files (openmrs-image/spa -> openmrs_spa)"
+# openmrs_spa is extracted from the branded SPA zip in ~/.m2, which is only
+# written by the seed script. The seed script is skipped once content/build
+# exists (and must stay skipped: it rm -rf's distro/template, where the
+# prebuilt openmrs-esm-dispensing-app bundle lives). Without this overlay,
+# edits to openmrs-image/spa/index.html - e.g. the dispensing labs theme
+# <link> - are silently dropped from every build after the first seed.
+cp -a "$ROOT_DIR/openmrs-image/spa/." "$ROOT_DIR/distro/target/distro/web/openmrs_spa/"
 
 echo "==> Brand printed ID card / labels (MOH + HEAP logos)"
 bash "$ROOT_DIR/scripts/brand-zpl.sh"
@@ -75,7 +91,9 @@ echo "    openmrs_core/openmrs.war : $([ -f "$WEB_DIR/openmrs_core/openmrs.war" 
 echo "    modules                  : $(find "$WEB_DIR/openmrs_modules" -name '*.omod' | wc -l)"
 echo "    phu360reporting omod        : $([ -f "$ROOT_DIR/openmrs-image/phu360reporting-1.0.0-SNAPSHOT.omod" ] && echo present || echo MISSING)"
 echo "    reportingui omod         : $([ -f "$ROOT_DIR/openmrs-image/reportingui-1.15.0-SNAPSHOT.omod" ] && echo present || echo MISSING)"
+echo "    coreapps omod            : $([ -f "$ROOT_DIR/openmrs-image/coreapps-4.0.0-SNAPSHOT.omod" ] && echo present || echo MISSING)"
 echo "    config files             : $(find "$WEB_DIR/openmrs_config" -type f | wc -l)"
 echo "    spa                      : $(find "$WEB_DIR/openmrs_spa" -type f | wc -l)"
+echo "    dispensing theme link    : $(grep -c 'dispensing-labs-theme' "$WEB_DIR/openmrs_spa/index.html" 2>/dev/null || echo MISSING)"
 echo "    owas                     : $(find "$WEB_DIR/openmrs_owas" -type f | wc -l)"
 echo "    openmrs-distro.properties: $([ -f "$WEB_DIR/openmrs-distro.properties" ] && echo present || echo MISSING)"
