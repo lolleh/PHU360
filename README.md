@@ -13,7 +13,7 @@ scripts/build-distro.sh            # offline build -> distro/target/distro/web
 docker compose up -d --build       # first boot: 20-45 min (Initializer)
 ```
 
-Open [http://localhost:8090/openmrs](http://localhost:8080/openmrs) (O3 SPA at `/openmrs/spa`), log in `admin` / `Admin123`, pick a location (e.g. KGH).
+Open [http://localhost:8090/openmrs](http://localhost:8090/openmrs) (O3 SPA at `/openmrs/spa`), log in `admin` / `Admin123`, pick a location (e.g. KGH).
 
 > First build on a fresh machine: run `scripts/build-distro.sh --online` once (downloads the Maven plugin set), then offline builds thereafter.
 
@@ -21,10 +21,12 @@ Open [http://localhost:8090/openmrs](http://localhost:8080/openmrs) (O3 SPA at `
 
 ```
 pom.xml / content/ / distro/   Maven parent + content package + SDK distro (see below)
-scripts/                       install-prereqs.sh, seed-distro-maven-repo.sh, build-distro.sh, patch-reportingui-module.sh
+scripts/                       install-prereqs.sh, seed-distro-maven-repo.sh, build-distro.sh,
+                               patch-reportingui-module.sh, patch-coreapps-module.sh,
+                               build-phu360reporting-module.sh, prune-runtime-config.sh
 docker-compose.yml, .env.example   openmrs + MySQL 5.7 stack
-openmrs-image/                 provenance inputs: distro manifest baseline, branded SPA overlay, patched pihcore omod, patched reportingui omod
-openmrs-forms/                 legacy patched-WAR tooling (standalone register forms, custom gsp, patched omods) — provenance only
+openmrs-image/                 provenance inputs: distro manifest baseline, branded SPA overlay, patched pihcore/reportingui/coreapps omods
+openmrs-forms/                 register form sources + generators (mother-neonate-register/), legacy patched-WAR tooling — provenance only
 ```
 
 ## How it's assembled
@@ -50,8 +52,11 @@ new category is not a config-only change. `scripts/patch-reportingui-module.sh`
 therefore ships a patched reportingui omod:
 
 - **Links** — the two entries in
-  `content/configuration/backend_configuration/appframework/home_extension.json`
-  bound to `org.openmrs.module.reportingui.reports.dashboards`.
+  `content/configuration/backend_configuration/appframework/program_dashboards_extension.json`
+  bound to `org.openmrs.module.reportingui.reports.dashboards` (ids
+  `reportsDashboard.*`; the same two dashboards are also bound to
+  `pih.app.programSummaryList.apps` under ids `programDashboard.*`, so the file
+  holds both bindings rather than duplicating the definitions across two files).
 - **Extension point** — declared in `openmrs-image/reportingui/apps/reports_app.json`
   alongside the stock overview/dataquality/dataexport points.
 - **Page** — `openmrs-image/reportingui/web/module/pages/reportsapp/home.gsp`
@@ -64,18 +69,120 @@ therefore ships a patched reportingui omod:
 Bumping reportingui means re-checking the two overlay files against the new
 upstream page; the patch script fails if the page is not the one it expects.
 
-## Under Five & Above Five registers
+## Where app definitions have to live
 
-The dashboard ships two age-gated register buttons (Overall + Visit Actions):
+The appframework reads app definitions **only from the classpath**
+(`AppConfigurationLoaderFactory` scans `classpath*:/apps/*app.json`,
+`classpath*:/apps/*extension.json` and `classpath*:/apps/*AppTemplates.json`).
+`content/configuration/backend_configuration/appframework/*.json` is installed
+as a plain directory under `/openmrs/data/configuration` — *not* on the
+classpath — and there is no `appframework` Initializer domain, so a file sitting
+there is inert. Editing those files alone changes nothing at runtime; a link
+added to `program_dashboards_extension.json` simply never appears.
 
-| Button | Age gate | htmlform |
-|--------|----------|----------|
-| Above Five General Treatment Register | `age >= 5` | `htmlFormId` 185 |
-| Under Five (General) Register | `age < 5` | `htmlFormId` 184 |
+`scripts/build-phu360reporting-module.sh` therefore copies
+`content/configuration/backend_configuration/appframework/*.json` into the
+phu360reporting omod's `apps/` directory as part of assembling the module, which
+is what makes the tracked config authoritative. File names are load-bearing and
+already match the loader's two patterns (`*_app.json`, `*_extension.json`).
 
-- **Links** — `content/configuration/backend_configuration/appframework/patientdashboard_registers_extension.json`
-- **Forms** — created by Initializer on first boot from `pih/htmlforms/aboveFiveTreatmentRegister.xml` and `pih/htmlforms/underFiveRegister.xml` (both v1.1)
-- **Legacy tooling** — standalone sources & patched-WAR build scripts in `openmrs-forms/` target an older referenceapplication-based OpenMRS and are not consumed by this 2.8.9 build.
+Carrying them in a module is also what makes the register buttons work: they are
+`patientDashboard.overallActions` / `patientDashboard.visitActions` free-standing
+extensions, and coreapps' patient dashboard only renders what the appframework
+knows about.
+
+One caveat: the 11 entries in `home_extension.json` are bound to
+`org.openmrs.referenceapplication.homepageLink`, a point owned by the
+`referenceapplication` module, which is not part of this distribution. They load
+without error and stay invisible; nothing in PIH SL reads that point.
+
+## Under Five, Above Five & Mother/Neonate registers
+
+The patient dashboard ships three register buttons (Overall + Visit Actions), all
+addressed by `formUuid`:
+
+| Button | htmlform | `formUuid` |
+|--------|----------|------------|
+| Mother and Neonate Health Register | `motherAndNeonateRegister.xml` | `3f2b7c14-9d6a-4e58-b0c3-71a4d9e25f86` |
+| Delivery Register | `deliveryRegister.xml` | `dc288387-522e-5506-9607-ef2d20fdd7ef` |
+| Family Planning Register | `familyPlanningRegister.xml` | `6ed8a9e5-1341-5193-9882-c1e0600f1d48` |
+
+- **Links** — `content/configuration/backend_configuration/appframework/patientdashboard_registers_extension.json`.
+  Every button uses `formUuid` rather than `htmlFormId`: a numeric id depends on
+  how many forms the database has already seen, so an `htmlFormId` link breaks
+  as soon as the load order changes or a form row is purged.
+- **Above Five / Under Five were removed.** The four buttons pointing at
+  `aboveFiveTreatmentRegister.xml` and `underFiveRegister.xml` are gone, along
+  with both XMLs. They were already unusable: the Under Five form references 80
+  numeric concept ids of which 8 existed in the database, and Above Five
+  references 120 concept UUIDs of which none existed — neither form's concepts
+  were ever shipped. Both are recoverable from git history if the concepts are
+  ever exported.
+- **Forms** — pihcore's `HtmlFormSetup` loads every XML in
+  `pih/htmlforms/` on boot via `saveHtmlFormFromXml`, which keys on the
+  `formUuid` attribute, so re-running it is idempotent.
+ - **Register forms** — three forms share one generator in
+   `openmrs-forms/mother-neonate-register/`, and all three are addressed by
+   `formUuid` on the patient dashboard (the numeric-id reasoning above applies
+   to each of them):
+
+   | Form | `formUuid` | Encounter type | Fields |
+   | --- | --- | --- | --- |
+   | Mother and Neonate Health Register | `3f2b7c14-9d6a-4e58-b0c3-71a4d9e25f86` | Maternity and Delivery Register | 266 |
+   | Delivery Register | `dc288387-522e-5506-9607-ef2d20fdd7ef` | Delivery Register | 47 |
+   | Family Planning Register | `6ed8a9e5-1341-5193-9882-c1e0600f1d48` | Family Planning Register | 24 |
+
+   The Mother and Neonate form is an **extension** of the one already in
+   production: every previously rendered code/concept pair is still present, so
+   existing encounters keep displaying. The Delivery and Family Planning forms
+   are new.
+
+   Regenerate, in order, after editing any spec or source file:
+
+   ```
+   cd openmrs-forms/mother-neonate-register
+   python3 register_spec.py        # sections, form/encounter UUIDs
+   python3 register_concepts.py    # concepts-to-create.json + concept-uuids.json
+   python3 generate_form.py        # the three form XMLs (asserts 0 missing concepts)
+   python3 export_initializer_concepts.py
+   ```
+
+   `verify_source_coverage.py` and `parse_source.py` check the forms against the
+   source spreadsheet and should be run first if the mapping changed.
+
+ - **Register concepts** — the three forms' 348 concepts ship as Initializer
+   metadata in `concepts/registerConcepts.csv` (named for all three registers
+   because it replaced the earlier MNR-only `mnrRegisterConcepts.csv`). The
+   Yes/No/Not applicable answer concepts are reused from the base dictionary
+   rather than redeclared. Two header conventions in that file are load-bearing
+   and fail silently if you get them wrong:
+   - Concept-name columns are `<name type>:<locale>` — `fully specified name:en`,
+     **not** `name:en:fully specified name`. `ConceptLineProcessor` only treats a
+     header as a name when the first `:`-segment starts with `fully specified
+     name`/`short name`/`synonym`/`index term`, so a mis-ordered header is
+     ignored and every row fails with `At least one non-empty name is required`.
+     The `preferred` and `uuid` columns hang off that same base as a third
+     segment.
+   - The description column must be locale-decorated (`description:en`). A bare
+   `description` header parses to a `LocalizedHeader` with an empty locale set,
+     so descriptions are dropped without any error.
+ - **Concept UUIDs are derived, not minted** — `register_concepts.py` keeps
+   `concept-uuids.json` as the source of truth. The 133 concepts created before
+   the registry existed keep their original UUIDs (observations point at them);
+   everything added since is `uuid5`-derived from the concept name, so the same
+   name yields the same UUID on any machine. `load_concepts.py` pushes them to a
+   running instance and honours a supplied `uuid` on POST, so it is safe to re-run
+   and will report a name that exists under a different UUID rather than silently
+   accepting it. Do not introduce a loader that lets the server mint UUIDs: it
+   would overwrite the registry and the forms would stop matching it.
+ - **Concept names avoid `&`, `<`, `>`** — the REST API HTML-escapes what it
+   stores, so a name containing `&` is persisted as the literal text `&amp;`.
+   `generate_concepts_spec.sanitize()` substitutes words instead, and the form
+   still displays the original label.
+
+- **Legacy tooling** — `openmrs-forms/above-five-treatment-register/` standalone
+  sources & patched-WAR build scripts target an older referenceapplication-based
+  OpenMRS and are not consumed by this 2.8.9 build.
 
 ## Configuration
 
@@ -146,8 +253,74 @@ the materialized `content/build/` config, rebuilds the phu360reporting omod and
 the patched reportingui omod, and clears `distro/target/distro` before the SDK
 run — so config, module and page edits all reach the image.
 
+`docker compose up -d --build` alone does **not** re-materialize config: the
+image is built from `distro/target/distro/web/openmrs_config`, which only
+`build-distro.sh` refreshes. After editing anything under
+`content/configuration/`, re-run the build script or the image keeps shipping
+the previously materialized config.
+
+The overlay is a `cp -a`, which overlays but never deletes. **Renaming or
+removing a file under `content/configuration/` leaves the old copy behind in
+`content/build/`**, and the build keeps shipping it. That is how a stale
+`concepts/mnrRegisterConcepts.csv` ended up beside `registerConcepts.csv` — two
+CSVs declaring the same concept names. When you remove a config file, delete it
+from `content/build/configuration/backend_configuration/` too, or re-run
+`scripts/seed-distro-maven-repo.sh` to re-materialize from scratch.
+
+## Keeping a running install in sync
+
+`content/build/` is only the build tree. The *live* config lives in the
+`phu360-data` Docker volume, and the image entrypoint extracts
+`openmrs_config` into it with a plain `cp -R` on every boot — it never deletes.
+So a file removed from the config stays in the volume and keeps being served,
+and pihcore's `HtmlFormSetup` re-loads every XML it finds in
+`pih/htmlforms/` on each boot, which puts "deleted" forms back into the form
+list. The `form` / `form_resource` / `htmlformentry_html_form` rows pihcore
+saved for them stay behind too, keyed on the XML's `formUuid`.
+
+`scripts/prune-runtime-config.sh` reconciles a stopped install with the built
+config and drops those orphan rows:
+
+```bash
+docker compose stop openmrs
+scripts/prune-runtime-config.sh --dry-run   # lists what would go
+scripts/prune-runtime-config.sh
+docker compose up -d openmrs
+```
+
+It deletes every file present in the volume but absent from
+`distro/target/distro/web/openmrs_config` (as of this writing 179: 172 HTML
+form XMLs, 5 under `pih/htmlforms/retired/`, plus `concepts/mnrRegisterConcepts.csv`
+and `globalproperties/gp_labonfhir.xml`), and purges form rows that no kept
+`formUuid` claims. The `KEEP` array at the top of the script is the authoritative
+list of the 15 forms PHU360 keeps and is verified against the built XMLs on
+every run — a form listed there but missing from the build is a hard error.
+Forms that any encounter still points at are never purged and are listed first.
+
+Re-running the seed script does not substitute for this: the stale files are in
+the volume, not in the build tree.
+
 ## Troubleshooting
 
+- **Config edit has no effect** — run `scripts/build-distro.sh` before
+  `docker compose up -d --build`; see the note above. To confirm which config is
+  actually live: `head -1 distro/target/distro/web/openmrs_config/concepts/*.csv`.
+- **`<file>.csv ('<domain>' domain) was processed and N out of N entities were not saved`**
+  — an Initializer error summary in `docker compose logs openmrs`. It names the
+  file and prints the offending CSV rows; the actual cause is logged just above
+  it as `An OpenMRS object could not be constructed or saved from the following
+  CSV line`. Initializer still records a checksum for the file, so the domain
+  will not be retried until either the file changes or the checksum under
+  `/openmrs/data/configuration_checksums/` is removed and the server restarted.
+
+- **A deleted config file is still in use** — the running install keeps its own
+  copy in the `phu360-data` volume; `build-distro.sh` cannot reach it. See
+  "Keeping a running install in sync". To see the drift:
+  `scripts/prune-runtime-config.sh --dry-run`.
+- **A link or button in `appframework/*.json` never appears** — those files are
+  inert unless the module carries them on the classpath; see "Where app
+  definitions have to live". A `did you rebuild the omod` check:
+  `unzip -l distro/target/distro/web/openmrs_modules/phu360reporting-*.omod | grep apps/`.
 - **`Illegal mix of collations`** — pihcore's Liquibase crashes on non-`utf8_general_ci` DBs. The compose DB passes `--character-set-server=utf8 --collation-server=utf8_general_ci`; replicate for ad-hoc MySQL.
 - **`HTTP Status 500` / `Error loading PIH config`** — the `OPENMRS_PIH_CONFIG` chain references a profile the image doesn't ship. Fix `.env`, wipe the half-initialized DB, and let first boot run cleanly (`docker compose stop`, `docker volume rm <prefix>_phu360-data <prefix>_phu360-db-data`, `docker compose up -d openmrs && docker compose logs -f openmrs`).
 - **Ports** — `8090` (OpenMRS) and `3307` (MySQL) are the compose defaults.
