@@ -1,5 +1,6 @@
 package org.openmrs.module.phu360reporting.report;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -69,6 +70,27 @@ public final class ReportCatalog {
         /** value_coded the obs concepts must carry, or 0 when unconstrained. */
         public int getObsValueId() {
             return obsValueId;
+        }
+
+        /**
+         * This report's encounter type ids, resolved against the running
+         * database. Names are the catalog's unit so one catalog works across
+         * installations whose encounter type ids differ.
+         *
+         * <p>Empty for a report that does not restrict encounter types, which is
+         * a different thing from resolving to an empty list because none of the
+         * names were found - the first is "no restriction", the second would
+         * filter on nothing and quietly return no encounters.
+         */
+        public List<Integer> getEncounterTypeIds(ReportFilter.NameResolver resolver) {
+            List<Integer> ids = new ArrayList<Integer>();
+            for (String name : getEncounterTypeNames()) {
+                Integer id = resolver.encounterTypeId(name);
+                if (id != null) {
+                    ids.add(id);
+                }
+            }
+            return ids;
         }
     }
 

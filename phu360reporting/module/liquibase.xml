@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+	<!--
+		One indicator table per REPORT TYPE on the reporting dashboard.
+
+		Each table holds only the indicators belonging to its own report: a report's
+		rows are the product of that report's definition (its encounter types and obs
+		concepts), so an Under Five row and a Mother and Neonate row for the same day
+		can legitimately differ. The dashboard reads the tables instead of scanning
+		encounter/obs per request; see IndicatorTableStore and Phu360ReportingActivator.
+
+		Layout (one row per indicator fact):
+		  period_start     the calendar day the fact covers, so any date range the user
+		                   picks is a SUM over days rather than an approximation
+		  location_id      the health center the fact belongs to, or -1 for the
+		                   all-centers figure. -1 is stored rather than summed from the
+		                   per-center rows because newRegistrations and conditions are
+		                   counted per patient, and a patient seen at two centers in one
+		                   day must still be counted once in the unfiltered total
+		  dimension        kpi | type | sex | age  (byLocation is the location_id column
+		                   itself, so it is not a dimension)
+		  dimension_value  the type / sex / age-band label; NULL for kpi
+		  indicator_key    encounters | patientsSeen | newRegistrations | conditions,
+		                   or the dimension value for the breakdowns
+		  indicator_label  the label the dashboard renders
+		  indicator_value  the count
+	-->
+
+	<changeSet id="phu360-report-all-encounter" author="phu360">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="phu360_report_all_encounter"/></not>
+		</preConditions>
+		<createTable tableName="phu360_report_all_encounter">
+			<column name="id" type="INT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+			<column name="period_start" type="DATE"><constraints nullable="false"/></column>
+			<column name="location_id" type="INT"><constraints nullable="false"/></column>
+			<column name="dimension" type="VARCHAR(16)"><constraints nullable="false"/></column>
+			<column name="dimension_value" type="VARCHAR(160)"/>
+			<column name="indicator_key" type="VARCHAR(64)"><constraints nullable="false"/></column>
+			<column name="indicator_label" type="VARCHAR(160)"><constraints nullable="false"/></column>
+			<column name="indicator_value" type="BIGINT" defaultValueNumeric="0"><constraints nullable="false"/></column>
+			<column name="computed_at" type="DATETIME"><constraints nullable="false"/></column>
+		</createTable>
+		<createIndex tableName="phu360_report_all_encounter" indexName="phu360_rea_day_idx">
+			<column name="period_start"/>
+		</createIndex>
+		<createIndex tableName="phu360_report_all_encounter" indexName="phu360_rea_dim_idx">
+			<column name="dimension"/><column name="indicator_key"/>
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="phu360-report-above-five-morbidity" author="phu360">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="phu360_report_above_five_morbidity"/></not>
+		</preConditions>
+		<createTable tableName="phu360_report_above_five_morbidity">
+			<column name="id" type="INT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+			<column name="period_start" type="DATE"><constraints nullable="false"/></column>
+			<column name="location_id" type="INT"><constraints nullable="false"/></column>
+			<column name="dimension" type="VARCHAR(16)"><constraints nullable="false"/></column>
+			<column name="dimension_value" type="VARCHAR(160)"/>
+			<column name="indicator_key" type="VARCHAR(64)"><constraints nullable="false"/></column>
+			<column name="indicator_label" type="VARCHAR(160)"><constraints nullable="false"/></column>
+			<column name="indicator_value" type="BIGINT" defaultValueNumeric="0"><constraints nullable="false"/></column>
+			<column name="computed_at" type="DATETIME"><constraints nullable="false"/></column>
+		</createTable>
+		<createIndex tableName="phu360_report_above_five_morbidity" indexName="phu360_reafo_day_idx">
+			<column name="period_start"/>
+		</createIndex>
+		<createIndex tableName="phu360_report_above_five_morbidity" indexName="phu360_reafo_dim_idx">
+			<column name="dimension"/><column name="indicator_key"/>
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="phu360-report-above-five-patient-list" author="phu360">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="phu360_report_above_five_patient_list"/></not>
+		</preConditions>
+		<createTable tableName="phu360_report_above_five_patient_list">
+			<column name="id" type="INT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+			<column name="period_start" type="DATE"><constraints nullable="false"/></column>
+			<column name="location_id" type="INT"><constraints nullable="false"/></column>
+			<column name="dimension" type="VARCHAR(16)"><constraints nullable="false"/></column>
+			<column name="dimension_value" type="VARCHAR(160)"/>
+			<column name="indicator_key" type="VARCHAR(64)"><constraints nullable="false"/></column>
+			<column name="indicator_label" type="VARCHAR(160)"><constraints nullable="false"/></column>
+			<column name="indicator_value" type="BIGINT" defaultValueNumeric="0"><constraints nullable="false"/></column>
+			<column name="computed_at" type="DATETIME"><constraints nullable="false"/></column>
+		</createTable>
+		<createIndex tableName="phu360_report_above_five_patient_list" indexName="phu360_reafp_day_idx">
+			<column name="period_start"/>
+		</createIndex>
+		<createIndex tableName="phu360_report_above_five_patient_list" indexName="phu360_reafp_dim_idx">
+			<column name="dimension"/><column name="indicator_key"/>
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="phu360-report-under-five-register" author="phu360">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="phu360_report_under_five_register"/></not>
+		</preConditions>
+		<createTable tableName="phu360_report_under_five_register">
+			<column name="id" type="INT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+			<column name="period_start" type="DATE"><constraints nullable="false"/></column>
+			<column name="location_id" type="INT"><constraints nullable="false"/></column>
+			<column name="dimension" type="VARCHAR(16)"><constraints nullable="false"/></column>
+			<column name="dimension_value" type="VARCHAR(160)"/>
+			<column name="indicator_key" type="VARCHAR(64)"><constraints nullable="false"/></column>
+			<column name="indicator_label" type="VARCHAR(160)"><constraints nullable="false"/></column>
+			<column name="indicator_value" type="BIGINT" defaultValueNumeric="0"><constraints nullable="false"/></column>
+			<column name="computed_at" type="DATETIME"><constraints nullable="false"/></column>
+		</createTable>
+		<createIndex tableName="phu360_report_under_five_register" indexName="phu360_refu_day_idx">
+			<column name="period_start"/>
+		</createIndex>
+		<createIndex tableName="phu360_report_under_five_register" indexName="phu360_refu_dim_idx">
+			<column name="dimension"/><column name="indicator_key"/>
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="phu360-report-hf1-summary" author="phu360">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="phu360_report_hf1_summary"/></not>
+		</preConditions>
+		<createTable tableName="phu360_report_hf1_summary">
+			<column name="id" type="INT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+			<column name="period_start" type="DATE"><constraints nullable="false"/></column>
+			<column name="location_id" type="INT"><constraints nullable="false"/></column>
+			<column name="dimension" type="VARCHAR(16)"><constraints nullable="false"/></column>
+			<column name="dimension_value" type="VARCHAR(160)"/>
+			<column name="indicator_key" type="VARCHAR(64)"><constraints nullable="false"/></column>
+			<column name="indicator_label" type="VARCHAR(160)"><constraints nullable="false"/></column>
+			<column name="indicator_value" type="BIGINT" defaultValueNumeric="0"><constraints nullable="false"/></column>
+			<column name="computed_at" type="DATETIME"><constraints nullable="false"/></column>
+		</createTable>
+		<createIndex tableName="phu360_report_hf1_summary" indexName="phu360_reh1_day_idx">
+			<column name="period_start"/>
+		</createIndex>
+		<createIndex tableName="phu360_report_hf1_summary" indexName="phu360_reh1_dim_idx">
+			<column name="dimension"/><column name="indicator_key"/>
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="phu360-report-hf2-summary" author="phu360">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="phu360_report_hf2_summary"/></not>
+		</preConditions>
+		<createTable tableName="phu360_report_hf2_summary">
+			<column name="id" type="INT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+			<column name="period_start" type="DATE"><constraints nullable="false"/></column>
+			<column name="location_id" type="INT"><constraints nullable="false"/></column>
+			<column name="dimension" type="VARCHAR(16)"><constraints nullable="false"/></column>
+			<column name="dimension_value" type="VARCHAR(160)"/>
+			<column name="indicator_key" type="VARCHAR(64)"><constraints nullable="false"/></column>
+			<column name="indicator_label" type="VARCHAR(160)"><constraints nullable="false"/></column>
+			<column name="indicator_value" type="BIGINT" defaultValueNumeric="0"><constraints nullable="false"/></column>
+			<column name="computed_at" type="DATETIME"><constraints nullable="false"/></column>
+		</createTable>
+		<createIndex tableName="phu360_report_hf2_summary" indexName="phu360_reh2_day_idx">
+			<column name="period_start"/>
+		</createIndex>
+		<createIndex tableName="phu360_report_hf2_summary" indexName="phu360_reh2_dim_idx">
+			<column name="dimension"/><column name="indicator_key"/>
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="phu360-report-hf3-summary" author="phu360">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="phu360_report_hf3_summary"/></not>
+		</preConditions>
+		<createTable tableName="phu360_report_hf3_summary">
+			<column name="id" type="INT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+			<column name="period_start" type="DATE"><constraints nullable="false"/></column>
+			<column name="location_id" type="INT"><constraints nullable="false"/></column>
+			<column name="dimension" type="VARCHAR(16)"><constraints nullable="false"/></column>
+			<column name="dimension_value" type="VARCHAR(160)"/>
+			<column name="indicator_key" type="VARCHAR(64)"><constraints nullable="false"/></column>
+			<column name="indicator_label" type="VARCHAR(160)"><constraints nullable="false"/></column>
+			<column name="indicator_value" type="BIGINT" defaultValueNumeric="0"><constraints nullable="false"/></column>
+			<column name="computed_at" type="DATETIME"><constraints nullable="false"/></column>
+		</createTable>
+		<createIndex tableName="phu360_report_hf3_summary" indexName="phu360_reh3_day_idx">
+			<column name="period_start"/>
+		</createIndex>
+		<createIndex tableName="phu360_report_hf3_summary" indexName="phu360_reh3_dim_idx">
+			<column name="dimension"/><column name="indicator_key"/>
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="phu360-report-hf5-summary" author="phu360">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="phu360_report_hf5_summary"/></not>
+		</preConditions>
+		<createTable tableName="phu360_report_hf5_summary">
+			<column name="id" type="INT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+			<column name="period_start" type="DATE"><constraints nullable="false"/></column>
+			<column name="location_id" type="INT"><constraints nullable="false"/></column>
+			<column name="dimension" type="VARCHAR(16)"><constraints nullable="false"/></column>
+			<column name="dimension_value" type="VARCHAR(160)"/>
+			<column name="indicator_key" type="VARCHAR(64)"><constraints nullable="false"/></column>
+			<column name="indicator_label" type="VARCHAR(160)"><constraints nullable="false"/></column>
+			<column name="indicator_value" type="BIGINT" defaultValueNumeric="0"><constraints nullable="false"/></column>
+			<column name="computed_at" type="DATETIME"><constraints nullable="false"/></column>
+		</createTable>
+		<createIndex tableName="phu360_report_hf5_summary" indexName="phu360_reh5_day_idx">
+			<column name="period_start"/>
+		</createIndex>
+		<createIndex tableName="phu360_report_hf5_summary" indexName="phu360_reh5_dim_idx">
+			<column name="dimension"/><column name="indicator_key"/>
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="phu360-report-hf12-summary" author="phu360">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="phu360_report_hf12_summary"/></not>
+		</preConditions>
+		<createTable tableName="phu360_report_hf12_summary">
+			<column name="id" type="INT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+			<column name="period_start" type="DATE"><constraints nullable="false"/></column>
+			<column name="location_id" type="INT"><constraints nullable="false"/></column>
+			<column name="dimension" type="VARCHAR(16)"><constraints nullable="false"/></column>
+			<column name="dimension_value" type="VARCHAR(160)"/>
+			<column name="indicator_key" type="VARCHAR(64)"><constraints nullable="false"/></column>
+			<column name="indicator_label" type="VARCHAR(160)"><constraints nullable="false"/></column>
+			<column name="indicator_value" type="BIGINT" defaultValueNumeric="0"><constraints nullable="false"/></column>
+			<column name="computed_at" type="DATETIME"><constraints nullable="false"/></column>
+		</createTable>
+		<createIndex tableName="phu360_report_hf12_summary" indexName="phu360_reh12_day_idx">
+			<column name="period_start"/>
+		</createIndex>
+		<createIndex tableName="phu360_report_hf12_summary" indexName="phu360_reh12_dim_idx">
+			<column name="dimension"/><column name="indicator_key"/>
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="phu360-report-mother-and-neonate" author="phu360">
+		<preConditions onFail="MARK_RAN">
+			<not><tableExists tableName="phu360_report_mother_and_neonate"/></not>
+		</preConditions>
+		<createTable tableName="phu360_report_mother_and_neonate">
+			<column name="id" type="INT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+			<column name="period_start" type="DATE"><constraints nullable="false"/></column>
+			<column name="location_id" type="INT"><constraints nullable="false"/></column>
+			<column name="dimension" type="VARCHAR(16)"><constraints nullable="false"/></column>
+			<column name="dimension_value" type="VARCHAR(160)"/>
+			<column name="indicator_key" type="VARCHAR(64)"><constraints nullable="false"/></column>
+			<column name="indicator_label" type="VARCHAR(160)"><constraints nullable="false"/></column>
+			<column name="indicator_value" type="BIGINT" defaultValueNumeric="0"><constraints nullable="false"/></column>
+			<column name="computed_at" type="DATETIME"><constraints nullable="false"/></column>
+		</createTable>
+		<createIndex tableName="phu360_report_mother_and_neonate" indexName="phu360_reman_day_idx">
+			<column name="period_start"/>
+		</createIndex>
+		<createIndex tableName="phu360_report_mother_and_neonate" indexName="phu360_reman_dim_idx">
+			<column name="dimension"/><column name="indicator_key"/>
+		</createIndex>
+	</changeSet>
+
+</databaseChangeLog>

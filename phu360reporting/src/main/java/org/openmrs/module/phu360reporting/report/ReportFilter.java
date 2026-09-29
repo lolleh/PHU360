@@ -98,15 +98,23 @@ public final class ReportFilter {
         return sb.toString();
     }
 
-    public void bind(NativeQuery q) {
-        if (!encounterTypeIds.isEmpty()) {
+    /**
+     * Binds the parameters {@link #sqlFragment()} introduced.
+     *
+     * <p>Each is bound only when the query actually carries it. A filter can hold
+     * a restriction a particular query has no place for - the per-patient counts
+     * apply it as an EXISTS rather than by joining - and binding a parameter the
+     * query does not mention is an error, not a no-op.
+     */
+    public void bind(String sql, NativeQuery q) {
+        if (sql.contains(":repEtIds") && !encounterTypeIds.isEmpty()) {
             q.setParameterList("repEtIds", encounterTypeIds);
         }
-        if (!obsConceptIds.isEmpty()) {
+        if (sql.contains(":repConIds") && !obsConceptIds.isEmpty()) {
             q.setParameterList("repConIds", obsConceptIds);
-            if (obsValueId > 0) {
-                q.setParameter("repVal", obsValueId);
-            }
+        }
+        if (sql.contains(":repVal") && obsValueId > 0) {
+            q.setParameter("repVal", obsValueId);
         }
     }
 }

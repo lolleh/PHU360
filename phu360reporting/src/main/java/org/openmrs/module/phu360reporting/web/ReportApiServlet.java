@@ -16,7 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.phu360reporting.report.IndicatorReport;
+import org.openmrs.module.phu360reporting.report.LocationHierarchy;
+import org.openmrs.module.phu360reporting.report.ReportBody;
 import org.openmrs.module.phu360reporting.report.JsonWriter;
 import org.openmrs.module.phu360reporting.report.ReportCatalog;
 import org.openmrs.module.phu360reporting.report.ReportFilter;
@@ -203,7 +204,7 @@ public class ReportApiServlet extends HttpServlet {
         if (locUuid != null && locUuid.length() > 0) {
             locId = resolveId("location", locUuid);
             if (locId != null) {
-                locIds = subtree(locId);
+                locIds = LocationHierarchy.subtree(locId);
             }
         }
 
@@ -229,19 +230,14 @@ public class ReportApiServlet extends HttpServlet {
         }
 
         ReportFilter filter = ReportFilter.resolve(report, resolver);
-        IndicatorReport indicatorReport = new IndicatorReport(from, toExclusive, locIds, filter);
-        Map<String, Object> body = indicatorReport.build();
-        body.put("nominalTo", fmt(to));
-        body.put("report", report.getKey());
-        body.put("reportName", report.getLabel());
-        body.put("reportMapped", Boolean.TRUE);
-        body.put("locationName", locUuid != null && locId != null ? nameFor("location", locId) : "All health centers");
-        return body;
+        String locationName = locUuid != null && locId != null ? nameFor("location", locId) : "All health centers";
+        return ReportBody.build(report, from, toExclusive, to, locIds, locationName, filter,
+                report.getEncounterTypeIds(resolver));
     }
 
     private Map<String, Object> emptyKpis() {
         String[] keys = { "encounters", "patientsSeen", "newRegistrations", "conditions" };
-        String[] labels = { "Encounters", "Patients seen", "New registrations", "Conditions recorded" };
+        String[] labels = { "Encounters", "Patient visits", "New registrations", "Conditions recorded" };
         List<Map<String, Object>> items = new ArrayList<Map<String, Object>>();
         for (int i = 0; i < keys.length; i++) {
             Map<String, Object> m = new LinkedHashMap<String, Object>();
@@ -270,45 +266,6 @@ public class ReportApiServlet extends HttpServlet {
         } finally {
             sess.close();
         }
-    }
-
-    /** All non-retired locations in the subtree rooted at rootId (self included). */
-    private java.util.Set<Integer> subtree(int rootId) {
-        java.util.Set<Integer> ids = new java.util.HashSet<Integer>();
-        java.util.Map<Integer, java.util.List<Integer>> children = new java.util.HashMap<Integer, java.util.List<Integer>>();
-        Session sess = openSession();
-        try {
-            List rows = sess.createNativeQuery(
-                "SELECT location_id, parent_location FROM location WHERE retired=0").list();
-            for (Object row : rows) {
-                Object[] arr = (Object[]) row;
-                int id = ((Number) arr[0]).intValue();
-                if (arr[1] == null) {
-                    continue;
-                }
-                int parent = ((Number) arr[1]).intValue();
-                java.util.List<Integer> kids = children.get(parent);
-                if (kids == null) {
-                    kids = new java.util.ArrayList<Integer>();
-                    children.put(parent, kids);
-                }
-                kids.add(id);
-            }
-        } finally {
-            sess.close();
-        }
-        java.util.ArrayDeque<Integer> queue = new java.util.ArrayDeque<Integer>();
-        queue.add(rootId);
-        while (!queue.isEmpty()) {
-            int id = queue.poll();
-            if (!ids.add(id)) {
-                continue;
-            }
-            for (Integer kid : children.getOrDefault(id, java.util.Collections.<Integer>emptyList())) {
-                queue.add(kid);
-            }
-        }
-        return ids;
     }
 
     private String nameFor(String table, int id) {

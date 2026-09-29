@@ -225,7 +225,7 @@
         datasets: [
           { label: "Encounters", data: (monthly || []).map(function (m) { return m.encounters; }),
             borderColor: "#2563eb", backgroundColor: "rgba(37,99,235,0.12)", fill: true, tension: 0.35, borderWidth: 2, pointRadius: 3, pointHoverRadius: 6 },
-          { label: "Patients seen", data: (monthly || []).map(function (m) { return m.patients; }),
+          { label: "Patient visits", data: (monthly || []).map(function (m) { return m.patients; }),
             borderColor: "#0f8a3d", backgroundColor: "rgba(15,138,61,0.12)", fill: true, tension: 0.35, borderWidth: 2, pointRadius: 3, pointHoverRadius: 6 }
         ]
       },
@@ -325,7 +325,7 @@
       type: "bar",
       data: {
         labels: labels,
-        datasets: [{ label: "Patients", data: labels.map(function (g) { return by[g] || 0; }),
+        datasets: [{ label: "Patient visits", data: labels.map(function (g) { return by[g] || 0; }),
           backgroundColor: PALETTE, borderRadius: 5, maxBarThickness: 44 }]
       },
       options: Object.assign(chartBase(), {

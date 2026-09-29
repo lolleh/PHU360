@@ -70,6 +70,92 @@ Two decisions worth knowing before editing this file:
   `"… has no data mapping configured yet."`, which is what the `mapped` flag in
   `action=reports` and the notice under the filter bar are for.
 
+## Indicator tables: what the dashboard reads
+
+Every number on the reporting dashboard is served from a table, not computed per
+request. There is one table per REPORT TYPE, created by
+`phu360reporting/module/liquibase.xml` and mapped from the report key in
+`ReportTables` (looked up in a map, so a key arriving from a request is never
+interpolated into SQL). A report's numbers are the product of its definition, so
+an Under Five row and a Mother and Neonate row for the same day and center are
+different facts and live in different tables:
+
+| Report key | Table |
+|------------|-------|
+| `all-encounter` | `phu360_report_all_encounter` |
+| `above-five-morbidity` | `phu360_report_above_five_morbidity` |
+| `above-five-patient-list` | `phu360_report_above_five_patient_list` |
+| `under-five-register` | `phu360_report_under_five_register` |
+| `hf1-summary` … `hf12-summary` | `phu360_report_hf1_summary` … |
+| `mother-and-neonate` | `phu360_report_mother_and_neonate` |
+
+`Phu360ReportingActivator` refreshes all of them on a `ScheduledExecutorService`
+every **15 minutes** and once at startup. OpenMRS's scheduler module is not in
+this distribution, so the module schedules itself; the executor is a daemon
+thread and is shut down in `stopped()`.
+
+### The grain: one row per day, per bucket, per dimension
+
+Each row is `period_start`, `location_id`, `dimension`
+(`kpi`/`type`/`sex`/`age`/`location`), `dimension_value`, `indicator_key`,
+`indicator_label`, `indicator_value`, `computed_at` — all aggregates, no
+patient-level data. A request is then a sum of days, which is what lets the
+dashboard answer an arbitrary range rather than only whole months.
+
+`location_id` is the **bucket**, not the encounter's location. `IndicatorRefresher`
+writes one bucket per health center the filter offers (that center plus its
+wards, pharmacy and other descendants) plus a single all-centers bucket at
+`-1`. The per-center buckets are not additive, so the dashboard reads one bucket
+or the other and never sums them: a person seen at two centers counts once in
+each center's bucket and once in the all-centers bucket, so adding the centers up
+would double count them. The all-centers bucket is computed and stored
+separately for the same reason.
+
+A refresh replaces a bucket's whole range in one transaction, deleting first, so
+an interrupted refresh or a corrected day settles on the right numbers next time
+rather than accumulating. The delete runs even when there is nothing to write:
+an empty result means nothing happened in that period, and any rows a previous
+refresh left are now wrong.
+
+### "Patient visits", not distinct patients over a range
+
+`patientsSeen` counts **distinct patients per day, summed over the range** — a
+patient seen on three days counts three times. The old code counted distinct
+patients across the whole range; the daily tables cannot hold that, and rebuilding
+it would mean storing patient identifiers, which is the thing the tables exist to
+avoid. The label says "Patient visits" so the number is not read as a headcount.
+The same applies to the sex and age breakdowns, which are also distinct-per-day
+sums. `encounters`, `newRegistrations` and `conditions` are additive and did not
+change.
+
+Age bands are computed **as of each encounter day** rather than the range's end
+date, so a child who turns five mid-range appears as under 5 for the days they
+were under 5.
+
+### The fallback is a performance question, not a correctness one
+
+`ReportBody` reads the table when the range is inside the rolling **400-day**
+window the refresh keeps facts for, and computes live when it is not — a range
+reaching past the window has to come from the database, and answering "no rows
+yet" with zeroes would be indistinguishable from a real answer.
+
+The two paths are held to agreeing **exactly** for the same range, so which one
+answered is only a performance question. The live path therefore uses the same
+bucket the table would have used (`-1` or the center, never per-encounter-location
+grouping), the same previous-period selection, the same type whitelist, and
+sums its trend per day before adding up months. A selection that is not one of
+the buckets the refresh writes — a ward, say, rather than a health center — has
+no rows of its own and is computed live, rather than answered from some other
+bucket.
+
+A report with no mapping is never visualized, so its table is left empty: the
+refresh skips it and clears any rows an earlier build left behind, and the API
+answers with `reportMapped: false`.
+
+`IndicatorFacts` reaches the schema through the Hibernate session factory and raw
+SQL rather than the OpenMRS services, because the refresh runs on a background
+thread with no authenticated user and the services refuse to answer without one.
+
 ## Reports page: the DASHBOARDS category
 
 `/openmrs/reportingui/reportsapp/home.page` lists the dashboards under a

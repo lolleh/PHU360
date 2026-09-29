@@ -2,6 +2,12 @@ package org.openmrs.module.phu360reporting;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
+
+import org.openmrs.module.phu360reporting.report.IndicatorRefresher;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -12,8 +18,8 @@ import org.openmrs.module.appframework.domain.Extension;
 import org.openmrs.module.appframework.service.AppFrameworkService;
 
 /**
- * Starts the reporting module and trims the Program Dashboards page down to the
- * two PHU360 dashboards.
+ * Starts the reporting module: trims the Program Dashboards page down to the two
+ * PHU360 dashboards, and keeps the per-report-type indicator tables up to date.
  */
 public class Phu360ReportingActivator extends BaseModuleActivator {
 
@@ -35,15 +41,62 @@ public class Phu360ReportingActivator extends BaseModuleActivator {
      */
     private static final String PROGRAM_DASHBOARD_LINK_SUFFIX = ".programSummary.dashboard.appLink";
 
+    private ScheduledExecutorService refresher;
+
     @Override
     public void started() {
         log.info("PHU360 Reporting module started");
         removeProgramDashboardTiles();
+        startIndicatorRefresh();
     }
 
     @Override
     public void stopped() {
+        stopIndicatorRefresh();
         log.info("PHU360 Reporting module stopped");
+    }
+
+    /**
+     * Brings the indicator tables up to date now, then every
+     * {@link IndicatorRefresher#REFRESH_INTERVAL_MINUTES} minutes.
+     *
+     * <p>OpenMRS's {@code scheduler} module is not installed, so this runs on the
+     * module's own timer rather than through {@code SchedulerService}. The first
+     * refresh is done on a background thread: it walks a rolling window of daily
+     * facts for every report type, and doing that inline would hold up startup for
+     * every other module behind this one in the queue.
+     */
+    private void startIndicatorRefresh() {
+        stopIndicatorRefresh();
+        refresher = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
+            public Thread newThread(Runnable r) {
+                Thread t = new Thread(r, "phu360reporting-refresh");
+                // A daemon thread, so a missed shutdown cannot hold up the JVM.
+                t.setDaemon(true);
+                return t;
+            }
+        });
+        final long period = IndicatorRefresher.REFRESH_INTERVAL_MINUTES;
+        refresher.scheduleWithFixedDelay(new Runnable() {
+            public void run() {
+                try {
+                    IndicatorRefresher.refreshAll();
+                }
+                catch (RuntimeException e) {
+                    // Never let one run kill the schedule.
+                    log.error("PHU360: indicator refresh failed", e);
+                }
+            }
+        }, 0L, period, TimeUnit.MINUTES);
+        log.info("PHU360: indicator tables refreshing every " + period + " minutes");
+    }
+
+    private void stopIndicatorRefresh() {
+        if (refresher == null) {
+            return;
+        }
+        refresher.shutdownNow();
+        refresher = null;
     }
 
     /**

@@ -8,9 +8,10 @@
 	<package>org.openmrs.module.phu360reporting</package>
 	<author>PHU360</author>
 	<description>
-		Facility reporting dashboard. Computes KPIs and trend indicators live
-		from the OpenMRS database, filterable by date range, health center and
-		encounter type. Aggregate data only - no patient identifiers.
+		Facility reporting dashboard. KPIs and trend indicators live in one table
+		per report type, populated on startup and refreshed every 15 minutes, and
+		are filterable by date range, health center and encounter type. Aggregate
+		data only - no patient identifiers.
 	</description>
 
 	<require_version>2.8.9</require_version>

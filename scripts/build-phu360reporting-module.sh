@@ -55,10 +55,30 @@ echo "==> Compiling module classes (release 8)"
     $(find . -name '*.java' | sed 's|^\./||')
 )
 
+# Data-definition language, the schema a Hibernate mapping cannot express. The
+# reporting indicator tables are created here rather than in Java so an operator
+# reading liquibasechangelog can see the columns the dashboards read.
+echo "==> Compiling Liquibase changesets (release 8)"
+LIQUIBASE_CP="$BUILD/liquibase-cp"
+mkdir -p "$LIQUIBASE_CP"
+(
+  cd "$LIQUIBASE_CP"
+  unzip -o -q "$WAR" "WEB-INF/lib/liquibase-core-*.jar"
+)
+if [[ -d "$MOD_DIR/src/main/liquibase" ]] && compgen -G "$LIQUIBASE_CP"/*.jar >/dev/null; then
+  LQ_CP="$(echo "$LIQUIBASE_CP"/*.jar | tr ' ' ':')"
+  (
+    cd "$MOD_DIR"
+    /usr/bin/javac --release 8 -encoding UTF-8 -cp "$LQ_CP:$CP" -d "$CLASSES" \\
+      $(find src/main/liquibase -name '*.java')
+  )
+fi
+
 echo "==> Assembling $OUT"
 mkdir -p "$STAGE/web/module/resources"
 cp -a "$MOD_DIR/module/config.xml" "$STAGE/config.xml"
 cp -a "$MOD_DIR/module/moduleApplicationContext.xml" "$STAGE/moduleApplicationContext.xml"
+cp -a "$MOD_DIR/module/liquibase.xml" "$STAGE/liquibase.xml"
 cp -a "$CLASSES/." "$STAGE/"
 cp -a "$MOD_DIR/web/module/resources/." "$STAGE/web/module/resources/"
 
