@@ -60,13 +60,46 @@ public final class ReportFilter {
      * True when a report is defined by obs concepts and this database has none
      * of them. Such a report cannot filter on its defining data, so it is
      * reported as unmapped instead of as a confident zero.
+     *
+     * <p>Only when the report's own layout reads obs. The obs concepts are the
+     * report's encounter filter, and that filter matters to the figures; but a
+     * layout of encounter counts, patients and age bands never consults it, and
+     * hiding the page from such a report reported a missing data package as a
+     * missing mapping - which sent the reader looking for a mapping file that was
+     * there. The two conditions are now told apart in the message too, so an
+     * absent data package reads as one.
      */
     public static boolean obsConceptsMissing(ReportCatalog.Report report, NameResolver resolver) {
         if (report.getObsConceptIds().length == 0) {
             return false;
         }
+        if (!report.getLayout().readsObs()) {
+            return false;
+        }
         for (int id : report.getObsConceptIds()) {
             if (resolver.conceptExists(id)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * True when a report names encounter types and this database has none of them.
+     *
+     * <p>Distinct from {@link #obsConceptsMissing} and checked separately,
+     * because the two fail differently and saying so is the whole point. With
+     * nothing to filter on, {@link #resolve} returns null - meaning "no
+     * restriction" - and the report counts every encounter in the database. That
+     * is the failure this guards: a report whose figures would come back as the
+     * hospital's entire activity under a title saying Above Five patients.
+     */
+    public static boolean encounterTypesMissing(ReportCatalog.Report report, NameResolver resolver) {
+        if (report.getEncounterTypeNames().isEmpty()) {
+            return false;
+        }
+        for (String name : report.getEncounterTypeNames()) {
+            if (resolver.encounterTypeId(name) != null) {
                 return false;
             }
         }

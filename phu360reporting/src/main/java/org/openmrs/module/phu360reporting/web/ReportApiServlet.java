@@ -127,7 +127,7 @@ public class ReportApiServlet extends HttpServlet {
             Map<String, Object> m = new LinkedHashMap<String, Object>();
             m.put("key", r.getKey());
             m.put("label", r.getLabel());
-            m.put("mapped", r.isMapped() && !ReportFilter.obsConceptsMissing(r, resolver));
+            m.put("mapped", unavailability(r, resolver) == null);
             list.add(m);
         }
         out.put("reports", list);
@@ -224,6 +224,34 @@ public class ReportApiServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Why this report cannot be drawn against this database, or null when it can.
+     *
+     * <p>Three distinct reasons, and naming the right one is the point. They used
+     * to be collapsed into "no data mapping configured", which is a statement
+     * about a file: on a report whose mapping is sitting in the directory and
+     * whose register simply has not been loaded here, it sent the reader looking
+     * for a file that was there all along. Each also has a different fix - write a
+     * mapping, load a data package, or fix a name that does not resolve - so a
+     * reader who is told the wrong one cannot act on it.
+     */
+    private String unavailability(ReportCatalog.Report report, ReportFilter.NameResolver resolver) {
+        String label = report.getLabel();
+        if (!report.isMapped()) {
+            return "\"" + label + "\" has no data mapping configured yet.";
+        }
+        if (ReportFilter.encounterTypesMissing(report, resolver)) {
+            return "\"" + label + "\" names encounter types this database does not have, so it cannot tell "
+                    + "which visits are the register's. This is a data package that has not been loaded here, "
+                    + "not a missing mapping.";
+        }
+        if (ReportFilter.obsConceptsMissing(report, resolver)) {
+            return "\"" + label + "\" needs a data package this database has not loaded, so its obs concepts "
+                    + "cannot be matched.";
+        }
+        return null;
+    }
+
     /** How many non-retired rows of {@code table} carry {@code id}. */
     private int countFor(String table, int id) {
         Session sess = openSession();
@@ -272,7 +300,8 @@ public class ReportApiServlet extends HttpServlet {
 
         ReportCatalog.Report report = ReportCatalog.byKey(req.getParameter("report"));
         ReportFilter.NameResolver resolver = nameResolver();
-        if (!report.isMapped() || ReportFilter.obsConceptsMissing(report, resolver)) {
+        String unavailable = unavailability(report, resolver);
+        if (unavailable != null) {
             // Say so rather than returning the unfiltered set, which would read
             // as a filter that silently does nothing.
             Map<String, Object> out = new LinkedHashMap<String, Object>();
@@ -281,7 +310,7 @@ public class ReportApiServlet extends HttpServlet {
             out.put("report", report.getKey());
             out.put("reportName", report.getLabel());
             out.put("reportMapped", Boolean.FALSE);
-            out.put("unavailable", "\"" + report.getLabel() + "\" has no data mapping configured yet.");
+            out.put("unavailable", unavailable);
             out.put("kpis", emptyKpis());
             out.put("monthly", new ArrayList<Map<String, Object>>());
             out.put("byType", new ArrayList<Map<String, Object>>());

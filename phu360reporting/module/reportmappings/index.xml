@@ -8,7 +8,6 @@
 -->
 <reportCatalog>
     <report>all-encounter</report>
-    <report>above-five-morbidity</report>
     <report>above-five-patient-list</report>
     <report>under-five-register</report>
     <report>hf1-summary</report>

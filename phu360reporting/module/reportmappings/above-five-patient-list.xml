@@ -17,12 +17,38 @@
     -->
     <mapped>true</mapped>
 
-    <!-- Encounter type NAMES, resolved to ids per installation by
+    <!--
+         The report's own layout is answered entirely from the encounter and patient
+         tables, so the obs concepts below do NOT gate it.
+
+         They used to. This mapping carried the 15 concept ids the data package that
+         exported the report assigned, and obsConceptsMissing() reported the whole
+         report unmapped when none of them were in the database - which is every
+         install that has not loaded that particular package. The report was then
+         refused with "has no data mapping configured yet", a message about the
+         mapping being absent, sent to a reader looking for a missing mapping file
+         that was sitting in front of them. The layout is encounters, patients and
+         age bands; none of them reads obs, so their absence cannot change a figure
+         on this page. The concepts are kept below because they ARE the register's
+         condition filter and belong on any query that needs a patient's conditions,
+         but they no longer decide whether this report renders.
+    -->
+
+    <!--
+         Encounter type NAMES, resolved to ids per installation by
          ReportCatalog.Report.getEncounterTypeIds(). Names rather than ids so one
-         mapping survives a data package that loads a different id set. -->
+         mapping survives a data package that loads a different id set.
+
+         "Visit Note" is the type the register's own form is attached to - see
+         openmrs-forms/above-five-treatment-register/CONCEPT_MAPPING.md, which
+         assigns the form to it at save time. The names this mapping used to
+         carry, "PHU360 Outpatient Initial" and "PHU360 Outpatient Followup", are
+         not the register's encounter types and do not exist in any install; they
+         resolved to nothing everywhere, so the report had no way to tell which
+         visits were the register's.
+    -->
     <encounterTypes>
-        <encounterType>PHU360 Outpatient Initial</encounterType>
-        <encounterType>PHU360 Outpatient Followup</encounterType>
+        <encounterType>Visit Note</encounterType>
     </encounterTypes>
 
     <!-- Obs concept ids. Ids rather than names: the concepts are referenced by the

@@ -274,4 +274,33 @@ public final class ReportLayout {
     public List<Condition> getConditionConcepts() {
         return conditionConcepts;
     }
+
+    /**
+     * True when something this layout draws is computed from obs, and so its
+     * figures change if the database is missing the register's concepts.
+     *
+     * <p>Used to decide whether a report whose obs concepts are absent should
+     * still render. A layout of encounter counts, distinct patients and age bands
+     * reads only the encounter and person tables, so a data package it never
+     * touches cannot change a number on it - and refusing to draw the page is
+     * what made an Above Five patient list report "no data mapping configured"
+     * while its mapping sat in the directory, on a report type whose whole point
+     * is a list of who came.
+     */
+    public boolean readsObs() {
+        for (Indicator i : indicators) {
+            if (i.getConcept() != null) {
+                return true;
+            }
+        }
+        for (Section s : sections) {
+            if (KIND_AGE_BREAKDOWN.equals(s.getKind())) {
+                continue;
+            }
+            if (s.getConcept() != null || KIND_CONDITION_BREAKDOWN.equals(s.getKind())) {
+                return true;
+            }
+        }
+        return !conditionConcepts.isEmpty();
+    }
 }

@@ -58,8 +58,7 @@ and sections.
 | Key | Label | Defined by |
 |-----|-------|------------|
 | `all-encounter` | All Encounter | no restriction |
-| `above-five-morbidity` | Above Five Register - Morbidity Summary | morbidity concept ids 8838–8852, coded "Yes" 8853 |
-| `above-five-patient-list` | Above Five Register - Patient List | PHU360 Outpatient Initial/Followup + the same concepts |
+| `above-five-patient-list` | Above Five Register - Patient List | the `Visit Note` encounter type the register's form is attached to |
 | `under-five-register` | Under Five Register | 15 pediatric / vaccination / newborn / infant encounter type **names** |
 | `hf1/hf2/hf3/hf5/hf12-summary` | HF1, HF2, HF3, HF5, HF12 Summary | not mapped |
 | `mother-and-neonate` | Mother and Neonate | 22 maternal and newborn encounter type names |
@@ -134,10 +133,37 @@ Three rules the loader enforces:
   not listed — either would be a mapping that never applies.
 
 `mapped` is the declared state; what the API reports is the declared state
-narrowed by what this database can actually resolve. `above-five-morbidity` is
-`mapped: true` in its file and comes back as `reportMapped: false`, because its
-morbidity concepts were never exported into this database. Adding them to
-`concepts.csv` lights the report up with no code change.
+narrowed by what this database can actually resolve. `above-five-patient-list` is
+`mapped: true` in its file and comes back as `reportMapped: false`, because the
+Above Five register's form and conditions have never been loaded into this
+database.
+
+### A report that cannot be drawn says which of three things is wrong
+
+"no data mapping configured" was the only message, and it was wrong for two of the
+three cases it covered. A reader sent to look for a mapping file that is sitting
+in the directory cannot act on that, so the three are now named separately, each
+because it has a different fix:
+
+| Message | Means | Fix |
+|---------|-------|-----|
+| `has no data mapping configured yet` | the file declares `mapped: false` | write the mapping |
+| `names encounter types this database does not have` | the mapping is fine; the register's encounter types are not installed | load the data package |
+| `needs a data package this database has not loaded` | the mapping is fine; its obs concepts are not installed | load the data package |
+
+The encounter-type case is checked on its own, and it is the dangerous one to get
+wrong. `ReportFilter.resolve()` returns **null** when nothing resolves, and null
+means *no restriction* — so a report whose encounter types and concepts both
+failed to resolve would count every encounter in the database and label the total
+as that register's patients. Failing loudly is the only safe answer, and the
+message has to say why.
+
+`ReportLayout.readsObs()` decides whether absent obs concepts should block a
+report at all. A layout of encounter counts, patients and age bands never
+consults them, so a data package it does not touch cannot change a figure on it;
+a layout with any obs indicator does, and is blocked. The check is on the layout
+rather than on the report, because the same obs concepts are a filter for one
+report and irrelevant to another.
 
 ## Report layouts: what each REPORT TYPE shows
 
@@ -235,10 +261,10 @@ with nothing on the page saying so.
 | `conditionBreakdown` | one bar per condition the layout's `<conditionConcepts>` names, where the answer was affirmative |
 | `ageBreakdown` | distinct patients per under-five age band |
 
-`<limit>` caps a breakdown's bars. `above-five-morbidity` caps at 15 because the
-register names 102 conditions and a hundred-bar chart is not one; the section also
-carries `declaredConditions` so the caption can say "15 of 102 recorded" rather
-than letting the cap read as the register's size.
+`<limit>` caps a breakdown's bars. The Above Five register names 102 conditions
+and a hundred-bar chart is not one, so that register's own summary capped at 15;
+the section also carries `declaredConditions` so the caption can say "15 of 102
+recorded" rather than letting the cap read as the register's size.
 
 A `conditionConcept` may be a bare name, or carry a `<label>`:
 
@@ -281,8 +307,8 @@ would read as a clinical claim the report cannot make.
 - **A name this database does not have is dropped, not counted as zero**, and the
   response carries `conceptsMissing`. The dashboard turns that into a banner
   rather than a wall of zeroes that looks like real epidemiological data. This is
-  why `above-five-morbidity`'s 102 condition names resolve to nothing on an
-  install whose data package was never loaded, and why naming a *stock* disease
+  why the Above Five register's 102 condition names resolve to almost nothing on
+  an install whose data package was never loaded, and why naming a *stock* disease
   instead of the register's own tick-box would be wrong: CIEL "Hypertension"
   exists here, so the indicator would resolve, and would then count every
   hypertension diagnosis any form on the encounter recorded — a different and much
@@ -305,8 +331,7 @@ would read as a clinical claim the report cannot make.
 |------------|--------|
 | `all-encounter` | volume only — it is the unfiltered fallback view, so the shared KPIs are the point |
 | `under-five-register` | encounters, children seen, mean age, age bands. Deliberately no obs indicators: the under-five form is not shipped, so there is no field spec to write them against, and guessing would put unverifiable figures on the page |
-| `above-five-morbidity` | 18 condition and treatment-quality rates, plus the leading 15 conditions |
-| `above-five-patient-list` | encounters, patients seen, age bands. No conditions: that is what the Morbidity Summary is for, and repeating the register's 102 tick-boxes would give one chart two names in two files that could drift |
+| `above-five-patient-list` | encounters, patients seen, age bands. No conditions, deliberately: the register's 102 tick-boxes are a morbidity summary, and repeating them here would give one chart two names in two files that could drift. The Morbidity Summary report type has been removed from the catalog |
 | `mother-and-neonate` | 16 delivery and neonatal indicators including mean birth weight and both 24-hour survival checks, plus 5 breakdowns |
 | `postnatal-care` | 7: postnatal cases, 4 completion shares, and risk flags as counts. The counts and the shares are kept apart — "2 women were referred" and "2 of 12 had high blood pressure" are different findings about different questions, and flattening them into one list of percentages is how a dashboard comes to report a case count as a rate |
 | `delivery-register` | 8: volume, live-birth rate, and the five care-quality checks the labour register exists to record, plus 3 breakdowns. Built on the DR series rather than reusing the MNR layout, because DR is a different set of questions from D |
@@ -331,7 +356,6 @@ and center are different facts and live in different tables:
 | Report key | Table |
 |------------|-------|
 | `all-encounter` | `phu360_report_all_encounter` |
-| `above-five-morbidity` | `phu360_report_above_five_morbidity` |
 | `above-five-patient-list` | `phu360_report_above_five_patient_list` |
 | `under-five-register` | `phu360_report_under_five_register` |
 | `hf1-summary` … `hf12-summary` | `phu360_report_hf1_summary` … |
