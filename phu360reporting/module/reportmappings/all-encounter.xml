@@ -18,4 +18,25 @@
     -->
     <mapped>true</mapped>
 
+    <!--
+         ============================================================================
+         LAYOUT
+
+         All Encounter is the fallback view - every encounter in the selection,
+         unfiltered - so it keeps the volume indicators: what is the service load,
+         who is being seen, and where. A report that narrows the encounters takes
+         over from here with its own indicators.
+
+         It also keeps the encounter-shape sections, because with no report
+         filter applied the shape of the service is the interesting part.
+    ============================================================================
+    -->
+    <indicators>
+        <indicator>
+            <key>encounters</key>
+            <label>Encounters</label>
+            <kind>encounterCount</kind>
+        </indicator>
+    </indicators>
+
 </reportMapping>

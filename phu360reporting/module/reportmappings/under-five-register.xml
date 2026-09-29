@@ -43,4 +43,60 @@
         <encounterType>HIV-exposed Infant Followup</encounterType>
     </encounterTypes>
 
+    <!--
+         ============================================================================
+         LAYOUT
+
+         This register is the one that gets NO indicators of its own beyond the
+         encounter set, and deliberately so: the under-five register form is not
+         shipped (80 concept ids, 8 of which ever existed), so there is no field
+         spec to write indicators against. Inventing them - guessing at vaccine
+         coverage from the fact that a Vaccination encounter happened - would put
+         figures on the page that the database cannot support and that no one
+         could check.
+
+         What the encounter set alone does support is who was seen, and that is
+         the question an under-five register is asked first. Every indicator here
+         is answered from the encounter and patient tables, so none of them can
+         go missing when a data package is loaded or not.
+    ============================================================================
+    -->
+    <indicators>
+        <indicator>
+            <key>encounters</key>
+            <label>Under-five visits recorded</label>
+            <kind>encounterCount</kind>
+        </indicator>
+        <indicator>
+            <key>children</key>
+            <label>Children seen</label>
+            <kind>distinctPatients</kind>
+        </indicator>
+        <!--
+             Age at the encounter, not today. A child seen in January and read in
+             December must not have moved a band in the meantime - the register
+             records the age the child was. Blank rather than zero when no
+             birthdate is on file, which is a gap in registration rather than a
+             population of newborns.
+        -->
+        <indicator>
+            <key>meanAgeMonths</key>
+            <label>Mean age of the children seen</label>
+            <kind>meanAgeMonths</kind>
+        </indicator>
+    </indicators>
+
+    <sections>
+        <!--
+             The bands an under-five register is tallied in, so the two are
+             comparable. The age chart the dashboard draws for every report uses
+             all-ages bands and is kept as it is - this one is the register's.
+        -->
+        <section>
+            <key>ageBands</key>
+            <label>Children by age band</label>
+            <kind>ageBreakdown</kind>
+        </section>
+    </sections>
+
 </reportMapping>

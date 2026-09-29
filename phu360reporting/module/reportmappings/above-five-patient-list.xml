@@ -49,4 +49,47 @@
     <!-- The value_coded those obs must carry, or 0 for unconstrained. -->
     <obsValue>8853</obsValue>
 
+    <!--
+         ============================================================================
+         LAYOUT
+
+         The Morbidity Summary counts conditions; this one is the patient list, so
+         it answers who came, and leaves what for to the summary that already does
+         it. Repeating the register's hundred tick-boxes here would give the two
+         reports the same chart under two names and put the register's condition
+         list in two files that could drift apart.
+
+         Both indicators are answered from the encounter and patient tables rather
+         than from obs, so this page works on a database that has never loaded the
+         register's data package - which is the state this installation is in, and
+         the reason the Morbidity Summary reports itself unmapped.
+    ============================================================================
+    -->
+    <indicators>
+        <indicator>
+            <key>encounters</key>
+            <label>Outpatient visits recorded</label>
+            <kind>encounterCount</kind>
+        </indicator>
+        <indicator>
+            <key>patients</key>
+            <label>Patients seen</label>
+            <kind>distinctPatients</kind>
+        </indicator>
+    </indicators>
+
+    <sections>
+        <!--
+             The same banding the Under Five register uses. The neonatal bands go
+             to eleven months on an above-five list because babies do attend, and
+             because a register that renumbered its own bands per report type
+             would not be comparable between them.
+        -->
+        <section>
+            <key>ageBands</key>
+            <label>Patients by age band</label>
+            <kind>ageBreakdown</kind>
+        </section>
+    </sections>
+
 </reportMapping>

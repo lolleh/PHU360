@@ -47,4 +47,164 @@
         <encounterType>SCBU Newborn Register</encounterType>
     </encounterTypes>
 
+    <!--
+         ============================================================================
+         LAYOUT
+
+         Which indicators and charts this register shows. Until a layout existed
+         every report drew the same four volume cards, which for a delivery
+         register says nothing about deliveries.
+
+         Concepts are NAMED, not numbered, exactly as the encounter types above
+         are: these names come from the register's own field spec
+         (openmrs-forms/mother-neonate-register/mnr_spec.py), and the ids a data
+         package assigns them differ between installations. A name this database
+         does not have is dropped and reported as conceptsMissing rather than
+         counted as zero.
+
+         The indicators below are the questions the register exists to answer:
+         how many women delivered, how many babies were born alive, and what
+         share of those outcomes were the dangerous ones. A share whose answer is
+         "no" is marked inverted so it is reported as the share WITHOUT the
+         complication, which is the way a clinician reads it.
+    ============================================================================
+    -->
+    <indicators>
+        <indicator>
+            <key>deliveries</key>
+            <label>Deliveries recorded</label>
+            <kind>encounterCount</kind>
+        </indicator>
+        <indicator>
+            <key>liveBirths</key>
+            <label>Live births</label>
+            <kind>codedCount</kind>
+            <concept>MNR D13 Live Birth</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>lowBirthWeight</key>
+            <label>Low birth weight (under 2.5kg)</label>
+            <kind>codedRate</kind>
+            <concept>MNR D21 Birth weight under 2.5kg</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <!--
+             A mean, not a rate and not a count. It is here because a delivery
+             register is read for "how heavy were the babies" as much as for the
+             low-birthweight share, and the two disagree whenever the few
+             outliers pull the average up. Left blank rather than zero when no
+             weight was written down, so a register nobody filled in does not
+             report a mean of 0.0kg.
+        -->
+        <indicator>
+            <key>meanBirthWeight</key>
+            <label>Mean birth weight</label>
+            <kind>numericMean</kind>
+            <concept>MNR D22 Actual weight (kg)</concept>
+        </indicator>
+        <indicator>
+            <key>stillBirths</key>
+            <label>Stillbirths</label>
+            <kind>codedCount</kind>
+            <concept>MNR D14 (If NO to D13) Macerated still birth</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>freshStillBirths</key>
+            <label>Fresh stillbirths</label>
+            <kind>codedCount</kind>
+            <concept>MNR D15 (If NO to D13) Fresh still birth</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>maternalDeaths</key>
+            <label>Women who did not survive delivery</label>
+            <kind>codedRate</kind>
+            <concept>MNR D12 Mother Survived Delivery</concept>
+            <answer>No</answer>
+            <inverted>true</inverted>
+        </indicator>
+        <indicator>
+            <key>postPartumHaemorrhage</key>
+            <label>Post-partum haemorrhage (500ml+)</label>
+            <kind>codedRate</kind>
+            <concept>MNR D8 Bleeding (500mls or more)</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>caesareanRate</key>
+            <label>Delivered by caesarean section</label>
+            <kind>codedRate</kind>
+            <concept>MNR D7 Delivery Type</concept>
+            <answer>MNR D7 Delivery Type :: Elective CS</answer>
+        </indicator>
+        <indicator>
+            <key>earlyBreastfeeding</key>
+            <label>Breastfed within 1 hour</label>
+            <kind>codedRate</kind>
+            <concept>MNR D26 Live born breastfed within 1 hrs.</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>inFacilityDelivery</key>
+            <label>Delivered in a facility</label>
+            <kind>codedRate</kind>
+            <concept>MNR D11 Delivered at</concept>
+            <answer>MNR D11 Delivered at :: PHU</answer>
+        </indicator>
+        <indicator>
+            <key>neonatalResuscitation</key>
+            <label>Newborns resuscitated</label>
+            <kind>codedRate</kind>
+            <concept>MNR D25 If YES at D23/D24 new born resuscitated?</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>partographUsed</key>
+            <label>Partograph used during labour</label>
+            <kind>codedRate</kind>
+            <concept>MNR D30 Partograph/Labour Care Guide was used</concept>
+            <answer>Yes</answer>
+        </indicator>
+    </indicators>
+
+    <!--
+         The charts, in the order a clinician reads a delivery register: what
+         kind of delivery, where it happened, who conducted it, and how the
+         babies weighed.
+    -->
+    <sections>
+        <section>
+            <key>deliveryType</key>
+            <label>Delivery type</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR D7 Delivery Type</concept>
+        </section>
+        <section>
+            <key>deliveredAt</key>
+            <label>Delivered at</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR D11 Delivered at</concept>
+        </section>
+        <section>
+            <key>conductedBy</key>
+            <label>Delivery conducted by</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR D10 Delivery Conducted By</concept>
+        </section>
+        <section>
+            <key>presentation</key>
+            <label>Presentation at birth</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR D2 Cephalic Presentation</concept>
+        </section>
+        <section>
+            <key>sexOfBaby</key>
+            <label>Sex of baby</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR D19 Sex of Baby</concept>
+        </section>
+    </sections>
+
 </reportMapping>

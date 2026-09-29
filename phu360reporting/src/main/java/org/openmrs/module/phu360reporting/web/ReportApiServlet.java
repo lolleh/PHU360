@@ -21,6 +21,7 @@ import org.openmrs.module.phu360reporting.report.ReportBody;
 import org.openmrs.module.phu360reporting.report.JsonWriter;
 import org.openmrs.module.phu360reporting.report.ReportCatalog;
 import org.openmrs.module.phu360reporting.report.ReportFilter;
+import org.openmrs.module.phu360reporting.report.ReportIndicators;
 
 /**
  * Module servlet, mounted by config.xml at
@@ -133,6 +134,67 @@ public class ReportApiServlet extends HttpServlet {
         return out;
     }
 
+    /**
+     * Resolves the obs concept names a report's indicators are written against.
+     *
+     * <p>By name, for the same reason encounter types are: the mappings were
+     * written against one data package's concept ids, and this installation may
+     * have loaded another. A name that resolves to nothing is reported rather
+     * than counted as a zero.
+     */
+    private ReportIndicators.Concepts indicatorConcepts() {
+        return new ReportIndicators.Concepts() {
+            /**
+             * Through {@code concept_name}, not {@code concept}: the concept table
+             * has no name column, and a concept's name is a row of its own with
+             * its own locale and voided flag. The preferred, non-voided name for
+             * the locale is taken so a mapping written against a concept that was
+             * renamed here still resolves.
+             *
+             * <p>{@code concept} is restricted on {@code retired} only. It has no
+             * {@code voided} column — a concept is retired, its name is voided —
+             * and asking for {@code c.voided} fails the whole query rather than
+             * being ignored, which takes down every indicator on the page.
+             */
+            public Integer conceptId(String name) {
+                Session sess = openSession();
+                try {
+                    List rows = sess.createNativeQuery("SELECT c.concept_id FROM concept c"
+                            + " JOIN concept_name cn ON cn.concept_id = c.concept_id"
+                            + " WHERE cn.name = :name AND cn.voided = 0 AND c.retired = 0"
+                            + " ORDER BY cn.locale_preferred DESC, cn.concept_name_id LIMIT 1")
+                            .setParameter("name", name).list();
+                    if (rows.isEmpty()) {
+                        return null;
+                    }
+                    Object o = rows.get(0);
+                    return ((Number) (o instanceof Object[] ? ((Object[]) o)[0] : o)).intValue();
+                } finally {
+                    sess.close();
+                }
+            }
+
+            public String conceptName(int id) {
+                Session sess = openSession();
+                try {
+                    List rows = sess.createNativeQuery("SELECT cn.name FROM concept_name cn"
+                            + " WHERE cn.concept_id = :id AND cn.voided = 0"
+                            + " ORDER BY cn.locale_preferred DESC, cn.concept_name_id LIMIT 1")
+                            .setParameter("id", id).list();
+                    if (rows.isEmpty()) {
+                        // An answer concept with no name is a data problem, but
+                        // showing the id is more useful than an empty bar.
+                        return "Concept " + id;
+                    }
+                    Object o = rows.get(0);
+                    return String.valueOf(o instanceof Object[] ? ((Object[]) o)[0] : o);
+                } finally {
+                    sess.close();
+                }
+            }
+        };
+    }
+
     /** Resolves encounter type names and obs concept ids for the report filter. */
     private ReportFilter.NameResolver nameResolver() {
         return new ReportFilter.NameResolver() {
@@ -226,13 +288,22 @@ public class ReportApiServlet extends HttpServlet {
             out.put("byLocation", new ArrayList<Map<String, Object>>());
             out.put("sex", new ArrayList<Map<String, Object>>());
             out.put("age", new ArrayList<Map<String, Object>>());
+            out.put("indicators", new ArrayList<Map<String, Object>>());
+            out.put("sections", new ArrayList<Map<String, Object>>());
             return out;
         }
 
         ReportFilter filter = ReportFilter.resolve(report, resolver);
         String locationName = locUuid != null && locId != null ? nameFor("location", locId) : "All health centers";
-        return ReportBody.build(report, from, toExclusive, to, locIds, locationName, filter,
+        Map<String, Object> body = ReportBody.build(report, from, toExclusive, to, locIds, locationName, filter,
                 report.getEncounterTypeIds(resolver));
+        // The report's own indicators and sections, on top of the volume figures
+        // every report shares. Computed live rather than read from the report's
+        // table: the tables hold the encounter-shape dimensions, while these come
+        // from obs and the concept dictionary, which is a different set of rows.
+        body.putAll(ReportIndicators.compute(report.getLayout(), from, toExclusive, locIds, filter,
+                indicatorConcepts()));
+        return body;
     }
 
     private Map<String, Object> emptyKpis() {

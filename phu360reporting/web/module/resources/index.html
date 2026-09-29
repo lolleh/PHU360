@@ -43,6 +43,24 @@
   <p class="report-notice" id="reportNotice" hidden></p>
 </section>
 
+<!--
+     The report's own indicators, drawn from the layout its mapping declares.
+     Empty in the markup on purpose: a report that has never been selected has no
+     layout yet, and hardcoding a second copy of the cards here is exactly the
+     static page this replaced. app.js builds them from the API response, so a
+     report's page is defined by its mapping file.
+-->
+<section class="kpis" id="layoutIndicators"></section>
+
+<section class="charts" id="layoutSections"></section>
+
+<!--
+     The service volume every report shares, with the change against the previous
+     period of the same length. Kept below the layout's own indicators and separate
+     from them because they answer a different question: "how much is coming
+     through here" rather than "what does this register say". Both are shown,
+     since a report with a layout still needs the volume context.
+-->
 <section class="kpis">
   <div class="kpi card" data-kpi="encounters">
     <div class="kpi-title">Encounters</div>
@@ -66,7 +84,12 @@
   </div>
 </section>
 
-<section class="charts">
+<!--
+     The encounter-shape charts. Kept separate from the layout sections because
+     they describe the encounter set rather than the register's content, and every
+     report needs them.
+-->
+<section class="charts" id="shapeCharts">
   <div class="chart-card card span2">
     <h2>Service volume trend</h2>
     <p class="card-sub">Encounters and patients seen per day across the selected period</p>

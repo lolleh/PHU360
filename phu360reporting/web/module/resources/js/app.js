@@ -164,7 +164,8 @@
   function render(data) {
     dataCache = data;
     setSummary();
-    renderNotice(data.unavailable);
+    renderNotice(data.unavailable || missingConceptsMessage(data));
+    renderLayout(data);
     renderKpis(data.kpis);
     renderTrend(data.monthly);
     renderDonut("chartType", data.byType || []);
@@ -172,6 +173,210 @@
     renderAge(data.age || []);
     renderSex(data.sex || []);
     renderTable(data.byType || []);
+  }
+
+  /* ---------- per-report layout ----------
+     Every report used to draw the same four cards, which for a delivery register
+     says nothing about deliveries. The report's mapping now declares its own
+     indicators and sections, and these build the page from whatever came back -
+     so a report gets its own design by editing its mapping file, and the
+     renderer never needs to know what a particular register is. */
+
+  function renderLayout(data) {
+    destroyLayoutCharts();
+    renderIndicators(data.indicators || []);
+    renderSections(data.sections || []);
+  }
+
+  /* An indicator whose concept this database does not have is dropped rather
+     than shown as zero, so say which ones - a register whose data package was
+     never loaded is missing data, not a population with no deliveries. */
+  function missingConceptsMessage(data) {
+    var missing = data.conceptsMissing || [];
+    if (!missing.length) return "";
+    var shown = missing.slice(0, 4).join(", ");
+    var more = missing.length > 4 ? " and " + (missing.length - 4) + " more" : "";
+    return "This database has no record of " + missing.length + " concept" +
+      (missing.length === 1 ? "" : "s") + " this report is written against (" + shown + more +
+      "), so those indicators are left out rather than shown as zero. This usually means the register's data package has not been loaded.";
+  }
+
+  function renderIndicators(indicators) {
+    var host = $("layoutIndicators");
+    if (!host) return;
+    clear(host);
+    if (!indicators.length) { host.hidden = true; return; }
+    host.hidden = false;
+    indicators.forEach(function (ind) {
+      var card = document.createElement("div");
+      card.className = "kpi card";
+      card.setAttribute("data-indicator", ind.key);
+
+      var title = document.createElement("div");
+      title.className = "kpi-title";
+      title.textContent = ind.label;
+      card.appendChild(title);
+
+      var value = document.createElement("div");
+      value.className = "kpi-value";
+      /* null is a mean over nothing recorded, not a zero: the API sends it for
+         a numericMean or meanAgeMonths with no values behind it, and showing 0
+         there would be a claim about the data rather than about the register. */
+      var n = ind.value === null || ind.value === "" ? NaN : Number(ind.value);
+      value.textContent = isFinite(n) ? formatIndicatorValue(n, ind.kind) : "\u2013";
+      card.appendChild(value);
+
+      // A rate is a percentage of the encounters that answered, a mean is in
+      // whatever the concept is measured in, and a count is just a count.
+      // Labelling a count "%" would be wrong, so the unit is per kind. An empty
+      // mean has no unit either: the dash already says there is no figure, and
+      // "–months" reads as a measurement of nothing.
+      var unit = indicatorUnit(ind.kind);
+      if (unit && isFinite(n)) {
+        var u = document.createElement("span");
+        u.className = "kpi-unit";
+        u.textContent = unit;
+        value.appendChild(u);
+      }
+
+      var sub = document.createElement("div");
+      sub.className = "kpi-delta";
+      sub.textContent = indicatorCaption(ind.kind);
+      card.appendChild(sub);
+
+      host.appendChild(card);
+    });
+  }
+
+  function formatIndicatorValue(n, kind) {
+    // A mean is carried to one decimal by the API; a count is a whole number.
+    return kind === "codedRate" ? String(n) : n.toLocaleString();
+  }
+
+  function indicatorUnit(kind) {
+    if (kind === "codedRate") return "%";
+    if (kind === "meanAgeMonths") return "months";
+    return "";
+  }
+
+  function indicatorCaption(kind) {
+    switch (kind) {
+      case "codedRate": return "of encounters recording this";
+      case "numericMean": return "mean of recorded values";
+      case "meanAgeMonths": return "at the encounter";
+      case "encounterCount": return "encounters in period";
+      case "distinctPatients": return "distinct patients";
+      default: return "encounters recorded";
+    }
+  }
+
+  function renderSections(sections) {
+    var host = $("layoutSections");
+    if (!host) return;
+    clear(host);
+    if (!sections.length) { host.hidden = true; return; }
+    host.hidden = false;
+    sections.forEach(function (sec) {
+      var rows = sec.rows || [];
+      var card = document.createElement("div");
+      card.className = "chart-card card";
+      card.setAttribute("data-section", sec.key);
+
+      var h = document.createElement("h2");
+      h.textContent = sec.label;
+      card.appendChild(h);
+
+      var sub = document.createElement("p");
+      sub.className = "card-sub";
+      /* The bars are answers or conditions, not records, so the caption names
+         what the chart is cut by. An age banding is a fixed set of bands that
+         always renders, including the empty ones, so it is not a total. */
+      sub.textContent = sectionCaption(sec);
+      card.appendChild(sub);
+
+      var box = document.createElement("div");
+      box.className = "chart-box" + (rows.length > 8 ? " chart-box-tall" : "");
+      var canvas = document.createElement("canvas");
+      canvas.id = "layout-" + sec.key;
+      box.appendChild(canvas);
+      if (!rows.length) {
+        var empty = document.createElement("div");
+        empty.className = "chart-empty";
+        empty.innerHTML = escapeHtml(sec.label) + "<br><span>no data for this selection</span>";
+        box.appendChild(empty);
+      }
+      card.appendChild(box);
+      host.appendChild(card);
+
+      if (rows.length) {
+        layoutCharts[sec.key] = renderBars(canvas, rows);
+      }
+    });
+  }
+
+  function sectionCaption(sec) {
+    var rows = sec.rows || [];
+    if (!rows.length) return "no data for this selection";
+    if (sec.kind === "ageBreakdown") {
+      return "Distinct patients by age band at the encounter";
+    }
+    if (sec.kind === "conditionBreakdown") {
+      return rows.length + " of " + (sec.declaredConditions || rows.length) +
+        " conditions recorded, most frequent first";
+    }
+    // A coded breakdown renders one bar per answer the field actually took, so
+    // it says which field rather than how many there are.
+    return "Encounters by recorded answer";
+  }
+
+  /* A horizontal bar chart: a register names long labels ("Malaria treated with
+     ACT more than 24 hours") and a vertical bar chart truncates all of them. */
+  function renderBars(canvas, rows) {
+    return new Chart(canvas, {
+      type: "bar",
+      data: {
+        labels: rows.map(function (r) { return r.label; }),
+        datasets: [{
+          label: "Encounters",
+          data: rows.map(function (r) { return Number(r.count); }),
+          backgroundColor: "rgba(198, 138, 74, 0.72)",
+          borderRadius: 3,
+          maxBarThickness: 22
+        }]
+      },
+      options: Object.assign({}, chartBase(), {
+        indexAxis: "y",
+        plugins: {
+          legend: { display: false },
+          tooltip: chartBase().plugins.tooltip
+        },
+        scales: {
+          x: { beginAtZero: true, ticks: { precision: 0, color: "#4a4235" }, grid: { color: "rgba(0,0,0,0.06)" } },
+          y: { ticks: { color: "#4a4235", autoSkip: false, font: { size: 11 } }, grid: { display: false } }
+        }
+      })
+    });
+  }
+
+  var layoutCharts = {};
+
+  function destroyLayoutCharts() {
+    for (var k in layoutCharts) {
+      if (Object.prototype.hasOwnProperty.call(layoutCharts, k)) {
+        try { layoutCharts[k].destroy(); } catch (e) { /* already gone */ }
+        delete layoutCharts[k];
+      }
+    }
+  }
+
+  function clear(el) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
   }
 
   function renderNotice(message) {

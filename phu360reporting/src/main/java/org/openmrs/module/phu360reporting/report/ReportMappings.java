@@ -105,7 +105,52 @@ public final class ReportMappings {
             }
         }
         int obsValue = intText(root, "obsValue", key);
-        return new ReportCatalog.Report(key, label, boolText(root, "mapped"), types, concepts, obsValue, table);
+        return new ReportCatalog.Report(key, label, boolText(root, "mapped"), types, concepts, obsValue, table,
+                readLayout(root, key));
+    }
+
+    /**
+     * The report's indicators and sections, or {@link ReportLayout#standard()}
+     * when it declares none.
+     *
+     * <p>A layout that names a concept is not checked here: whether a concept
+     * exists is a question about the running database, not about this file, and
+     * the same mapping is expected to load on an installation that has different
+     * concept ids. {@link ReportIndicators} drops what it cannot resolve and
+     * reports the names it dropped.
+     */
+    private static ReportLayout readLayout(Element root, String key) {
+        List<ReportLayout.Indicator> indicators = new ArrayList<ReportLayout.Indicator>();
+        for (Element e : children(root, "indicators", "indicator")) {
+            String indKey = requiredText(e, "key", key);
+            String label = requiredText(e, "label", key);
+            String kind = requiredText(e, "kind", key);
+            String concept = text(e, "concept");
+            String answer = text(e, "answer");
+            indicators.add(new ReportLayout.Indicator(indKey, label, kind, concept.length() == 0 ? null : concept,
+                    answer.length() == 0 ? null : answer, boolText(e, "inverted")));
+        }
+        List<ReportLayout.Section> sections = new ArrayList<ReportLayout.Section>();
+        for (Element e : children(root, "sections", "section")) {
+            String secKey = requiredText(e, "key", key);
+            String label = requiredText(e, "label", key);
+            String kind = requiredText(e, "kind", key);
+            String concept = text(e, "concept");
+            sections.add(new ReportLayout.Section(secKey, label, kind, concept.length() == 0 ? null : concept,
+                    intText(e, "limit", key)));
+        }
+        // The register's own list of conditions, for a conditionBreakdown
+        // section. Names, and separate from the mapping's obsConcepts, which are
+        // ids from the data package that exported the report - see
+        // ReportLayout.getConditionConcepts().
+        List<String> conditionConcepts = new ArrayList<String>();
+        for (Element e : children(root, "conditionConcepts", "conditionConcept")) {
+            conditionConcepts.add(requiredText(e, "name", key));
+        }
+        if (indicators.isEmpty() && sections.isEmpty() && conditionConcepts.isEmpty()) {
+            return ReportLayout.standard();
+        }
+        return new ReportLayout(indicators, sections, conditionConcepts);
     }
 
     private static Document parse(String file, String rootElement) {

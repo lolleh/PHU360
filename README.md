@@ -49,8 +49,11 @@ queries, so one selection filters every number on the page.
 The mappings are data, not code. Editing a report's encounter types or concepts is
 an edit to its XML file — no recompile of a Java array is involved, and a file that
 is malformed or missing fails loudly at startup rather than showing up as a report
-that quietly returns every encounter. See
-[Report type data mappings](#report-type-data-mappings) for the file format.
+that quietly returns every encounter. The same is true of what a report *shows*:
+its indicators and charts are declared in the same file. See
+[Report type data mappings](#report-type-data-mappings) for the file format and
+[Report layouts](#report-layouts-what-each-report-type-shows) for the indicators
+and sections.
 
 | Key | Label | Defined by |
 |-----|-------|------------|
@@ -110,6 +113,8 @@ a hand-rolled `JsonWriter`.
         <obsConcept>8842</obsConcept>
     </obsConcepts>
     <obsValue>8853</obsValue>              <!-- value_coded required, 0/absent = any -->
+    <indicators/>                          <!-- optional; see "Report layouts" -->
+    <sections/>                            <!-- optional; see "Report layouts" -->
 </reportMapping>
 ```
 
@@ -133,6 +138,127 @@ narrowed by what this database can actually resolve. `above-five-morbidity` is
 `mapped: true` in its file and comes back as `reportMapped: false`, because its
 morbidity concepts were never exported into this database. Adding them to
 `concepts.csv` lights the report up with no code change.
+
+## Report layouts: what each REPORT TYPE shows
+
+A mapping also declares a **layout** — the indicators and charts that report type
+draws. Without one, every report drew the same four KPI cards and the same five
+charts, and a report type only changed which encounters were counted. That made
+the page actively misleading for a register: an MNR page whose only headline
+number was "Encounters" says nothing about live births or low birth weight, which
+is what the register exists to record.
+
+A layout is therefore an `<indicators>` list and a `<sections>` list, both
+optional, and the dashboard builds the page from whatever came back. Giving a
+report its own design is an edit to its mapping file, not a new view in
+JavaScript — `renderLayout()` in `app.js` never needs to know what a particular
+register is.
+
+```xml
+<indicators>
+    <indicator>
+        <key>lowBirthWeight</key>
+        <label>Low birth weight (under 2.5kg)</label>
+        <kind>codedRate</kind>
+        <concept>MNR D21 Birth weight under 2.5kg</concept>
+        <answer>Yes</answer>
+    </indicator>
+    <indicator>
+        <key>motherDeaths</key>
+        <label>Women who did not survive delivery</label>
+        <kind>codedRate</kind>
+        <concept>MNR D12 Mother Survived Delivery</concept>
+        <answer>No</answer>
+        <!-- inverted: report the share WITHOUT the "No" -->
+        <inverted>true</inverted>
+    </indicator>
+</indicators>
+<sections>
+    <section>
+        <key>deliveryType</key>
+        <label>Delivery type</label>
+        <kind>codedBreakdown</kind>
+        <concept>MNR D7 Delivery Type</concept>
+    </section>
+</sections>
+```
+
+### Indicator kinds
+
+| Kind | Answers | Needs a concept |
+|------|---------|------------------|
+| `encounterCount` | encounters in the selection | no |
+| `distinctPatients` | distinct patients across the whole range | no |
+| `meanAgeMonths` | mean age at the encounter, one decimal | no |
+| `codedCount` | encounters carrying the concept with the given answer | yes |
+| `codedRate` | share of the encounters **that answered** carrying the answer | yes |
+| `numeric` | encounters carrying a numeric value for the concept | yes |
+| `numericMean` | mean of the recorded numeric values, one decimal | yes |
+
+`<inverted>true</inverted>` reports a rate whose good outcome is the *absence* of
+the counted answer, as the share without it. `codedRate` with answer `No` is a
+complication rate and reads as a failure; inverted, it is the share of deliveries
+that were uncomplicated, which is how a clinician reads it. `"Malaria treated
+with ACT within 24h"` and `"malaria treated without ACT"` are a matched pair, and
+showing only one of them hides half the finding.
+
+### Section kinds
+
+| Kind | Draws |
+|------|-------|
+| `codedBreakdown` | one bar per coded answer the field actually took |
+| `conditionBreakdown` | one bar per condition the layout's `<conditionConcepts>` names, where the answer was affirmative |
+| `ageBreakdown` | distinct patients per under-five age band |
+
+`<limit>` caps a breakdown's bars. `above-five-morbidity` caps at 15 because the
+register names 102 conditions and a hundred-bar chart is not one; the section also
+carries `declaredConditions` so the caption can say "15 of 102 recorded" rather
+than letting the cap read as the register's size.
+
+### The rules a layout has to follow
+
+- **Concepts are named, not numbered**, exactly as encounter types are, because
+  the concept ids a data package assigns differ between installations while the
+  names the forms were built with do not. Names come from the register's own field
+  spec — `openmrs-forms/mother-neonate-register/concepts-to-create.json` for MNR,
+  `openmrs-forms/above-five-treatment-register/concepts-to-create.json` for Above
+  Five.
+- **A name this database does not have is dropped, not counted as zero**, and the
+  response carries `conceptsMissing`. The dashboard turns that into a banner
+  rather than a wall of zeroes that looks like real epidemiological data. This is
+  why `above-five-morbidity`'s 102 condition names resolve to nothing on an
+  install whose data package was never loaded, and why naming a *stock* disease
+  instead of the register's own tick-box would be wrong: CIEL "Hypertension"
+  exists here, so the indicator would resolve, and would then count every
+  hypertension diagnosis any form on the encounter recorded — a different and much
+  larger number than the register's column.
+- **A rate divides by the encounters that answered**, not by all encounters the
+  report selects. A register row left blank is missing data, and scoring it as a
+  "no" would understate the rate in proportion to how well the register is being
+  filled in.
+- **A mean over nothing is `null`, not `0`.** `numericMean` and `meanAgeMonths`
+  send null when no value was recorded, and the card shows the same dash it uses
+  before any data has loaded. A mean birth weight of 0.0kg is a claim about the
+  babies; the absence of weights is a claim about the register.
+- **A missing `key`, `label` or `kind` throws at load**, as it does for the rest
+  of the mapping: a layout that silently loses one of its indicators is a report
+  quietly showing fewer figures than it declares.
+
+### Which reports have a layout
+
+| Report key | Layout |
+|------------|--------|
+| `all-encounter` | volume only — it is the unfiltered fallback view, so the shared KPIs are the point |
+| `under-five-register` | encounters, children seen, mean age, age bands. Deliberately no obs indicators: the under-five form is not shipped, so there is no field spec to write them against, and guessing would put unverifiable figures on the page |
+| `above-five-morbidity` | 18 condition and treatment-quality rates, plus the leading 15 conditions |
+| `above-five-patient-list` | encounters, patients seen, age bands. No conditions: that is what the Morbidity Summary is for, and repeating the register's 102 tick-boxes would give one chart two names in two files that could drift |
+| `mother-and-neonate` | 13 delivery and neonatal indicators including mean birth weight, plus 5 breakdowns |
+| `hf1/hf2/hf3/hf5/hf12-summary` | none, on purpose — `mapped: false` with no mapping, so the API short-circuits before any layout is read. There is no data to be a layout of |
+
+`ReportLayout.standard()` — one encounter count and no sections — is what a
+report gets when it declares no layout. The encounter-shape charts (type,
+location, age, sex) are drawn for every report regardless, so a report with no
+layout of its own is not left without charts.
 
 ## Indicator tables: what the dashboard reads
 

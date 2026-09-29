@@ -41,4 +41,489 @@
     <!-- The value_coded those obs must carry, or 0 for unconstrained. -->
     <obsValue>8853</obsValue>
 
+    <!--
+         ============================================================================
+         LAYOUT
+
+         A treatment register is a list of conditions seen, not a count of visits,
+         so the indicators are the ones a district clinician asks about at review:
+         how many people were seen, how much of it was malaria, how much was
+         treated late or without the right drug, and how many of the
+         notifiable diseases were among them.
+
+         Every figure is a SHARE OF THE ENCOUNTERS THAT ANSWERED, not a share of
+         all visits: a visit that left the field blank is missing data, and scoring
+         it as a "no" would understate every rate in proportion to how well the
+         register is being filled in. ReportIndicators therefore divides by the
+         encounters carrying the concept with any answer.
+
+         A share whose bad outcome is the "no" answer is marked inverted, so it is
+         reported as the share WITHOUT the complication. "Malaria treated with ACT
+         within 24h" and "malaria treated without ACT" are opposites, and showing
+         only the first of a matched pair would hide half the finding.
+    ============================================================================
+    -->
+    <indicators>
+        <indicator>
+            <key>visits</key>
+            <label>Treatment visits recorded</label>
+            <kind>encounterCount</kind>
+        </indicator>
+        <indicator>
+            <key>malaria</key>
+            <label>Malaria (suspected fever)</label>
+            <kind>codedCount</kind>
+            <concept>Above Five treatment visit condition: Fever cases (suspected malaria)</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>rdtPositivity</key>
+            <label>RDT positivity</label>
+            <kind>codedRate</kind>
+            <concept>RDT positive</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>actWithin24h</key>
+            <label>Malaria treated with ACT within 24h</label>
+            <kind>codedRate</kind>
+            <concept>Malaria treated with ACT less than 24 hours</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>actOver24h</key>
+            <label>Malaria treated with ACT after 24h</label>
+            <kind>codedRate</kind>
+            <concept>Malaria treated with ACT more than 24 hours</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>noAct</key>
+            <label>Malaria treated without ACT</label>
+            <kind>codedRate</kind>
+            <concept>Malaria treated at facility without ACT</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>severeMalariaArtesunate</key>
+            <label>Severe malaria treated with artesunate</label>
+            <kind>codedRate</kind>
+            <concept>Severe malaria treated with Artesunate (IV/IM &amp; supp)</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>severePneumonia</key>
+            <label>Severe pneumonia treated with oxygen</label>
+            <kind>codedRate</kind>
+            <concept>Severe pneumonia treated with oxygen therapy</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>diarrhoeaBlood</key>
+            <label>Diarrhoea with blood (ORS + Zinc)</label>
+            <kind>codedRate</kind>
+            <concept>Diarrhoea with blood treated with ORS and Zinc</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>severeDehydration</key>
+            <label>Diarrhoea with severe dehydration</label>
+            <kind>codedRate</kind>
+            <concept>Diarrhoea with severe dehydration</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>severeMalnutrition</key>
+            <label>Severe malnutrition</label>
+            <kind>codedRate</kind>
+            <concept>Severe malnutrition</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>afp</key>
+            <label>Acute flaccid paralysis (AFP)</label>
+            <kind>codedRate</kind>
+            <concept>Acute flaccid paralysis (AFP)</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>avhf</key>
+            <label>Acute viral haemorrhagic fever</label>
+            <kind>codedRate</kind>
+            <concept>Acute viral haemorrhagic fever (AVHF)</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <!--
+             The four below are the register's own groupings, not the stock
+             dictionary diseases of the same names. A register writes "Cardiovascular
+             disease (all types)" as one tick, and a patient is ticked once; naming
+             CIEL "Hypertension" instead would count every hypertension DIAGNOSIS any
+             form on the encounter recorded, which is a different and much larger
+             number than the register's column.
+        -->
+        <indicator>
+            <key>cardiovascular</key>
+            <label>Cardiovascular disease</label>
+            <kind>codedRate</kind>
+            <concept>Cardiovascular disease (all types)</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>chronicRespiratory</key>
+            <label>Chronic respiratory disease</label>
+            <kind>codedRate</kind>
+            <concept>Chronic respiratory disease</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>chronicDisease</key>
+            <label>Chronic diseases</label>
+            <kind>codedRate</kind>
+            <concept>Chronic diseases</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>otherNcd</key>
+            <label>Other NCD conditions</label>
+            <kind>codedRate</kind>
+            <concept>Other NCD conditions</concept>
+            <answer>Yes</answer>
+        </indicator>
+    </indicators>
+
+    <!--
+         The leading conditions, which is how a morbidity summary is read: not
+         "there were 412 cases" but "these are what is being seen". Limited to the
+         busiest fifteen because a register names over a hundred conditions and
+         a hundred-bar chart is not one.
+    -->
+    <!--
+         The register's own list of conditions, by name, for the breakdown below.
+
+         Kept as names and kept here rather than read from the mapping's
+         <obsConcepts> because those are ids from the data package that exported
+         the report, and an id set that no longer matches would produce an empty
+         chart rather than an error. The list is the 102 tick-box findings of the
+         form at openmrs-forms/above-five-treatment-register/form-above-five-treatment-register.html
+         (concepts-to-create.json, datatype Boolean); its one free-text field is
+         left out because it carries a note, not a Yes/No.
+    -->
+    <conditionConcepts>
+        <conditionConcept>
+            <name>Above Five treatment visit condition: Fever cases (suspected malaria)</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>RDT positive</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>RDT negative</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Malaria microscopy positive</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Malaria microscopy negative</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Malaria treated with ACT less than 24 hours</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Malaria treated with ACT more than 24 hours</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Malaria treated at facility without ACT</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Treated with Artesunate injection</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Severe malaria treated with Artesunate (IV/IM &amp; supp)</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Treated with parenteral anti-malarial</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Eye infection</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Eye condition other than infection</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Moderate malnutrition</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Severe malnutrition</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Acute flaccid paralysis (AFP)</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Acute viral haemorrhagic fever (AVHF)</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Dysentery (bloody diarrhoea)</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Rubella</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Buruli ulcer</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Yellow fever</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Typhoid fever / Paratyphoid</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Animal bites (dogs, snakes, cats)</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>AIDS</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Pneumonia with antibiotic</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Pneumonia without antibiotic</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Pneumonia treated in facility</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Chicken pox</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Watery diarrhoea treated with ORS and Zinc</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Watery diarrhoea treated with ORS only</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Hepatitis (all types)</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Leprosy</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Severe pneumonia treated with oxygen therapy</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Diarrhoea with severe dehydration treated with IV fluids (RL)</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Mumps</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Sepsis</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Skin infection</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Pelvic inflammatory disease (PID)</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Genital discharge</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Genital ulcer</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>UTI (urinary tract infection)</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Onchocerciasis</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Other infectious conditions</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Adverse drug reaction</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Sickle cell disease</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Cancer (all types)</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Liver disease</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Cardiovascular disease (all types)</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Chronic respiratory disease</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Upper GI disease / Pancreatitis</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Chronic liver disease / Cirrhosis</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Appendicitis</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Ileus</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Obstruction</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Stroke</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Heart failure</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Kidney disorders</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Mental disorder (all types)</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Other NCD conditions</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Suspected cancer: breast</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Suspected cancer: prostate</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Suspected cancer: cervical</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Suspected cancer: childhood</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Suspected cancer: lungs</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Suspected cancer: liver</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Suspected cancer: others</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Lassa fever</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Marburg</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Suspected MPOX</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Ebola</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Postpartum haemorrhage / Antepartum haemorrhage (PPH &amp; APH)</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Worm infestation</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Chronic diseases</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Suspected AVHL other</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Dental caries</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Dental abscess</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Dental fracture</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Suspected poison: food</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Suspected poison: caustic soda</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Suspected poison: other</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Diarrhoea with blood treated with ORS and Zinc</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Diarrhoea without blood treated with ORS and Zinc</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Diarrhoea with severe dehydration</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Disability: physical</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Disability: visual impairment</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Disability: hearing impairment</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Disability: speech and language</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Disability: multiple</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Disability: intellectual</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Acute abdomen</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>ENT (ear, nose, throat) disorder</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Hernia</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Hydrocele</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Lymphoedema</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Oral and dental conditions</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Peptic ulcer disease (PUD)</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Wounds/Trauma: road traffic accident (RTA)</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Wounds/Trauma: non-RTA</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Burns</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Typhoid perforation</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Haemorrhoids / Piles</name>
+        </conditionConcept>
+        <conditionConcept>
+            <name>Other surgical conditions</name>
+        </conditionConcept>
+    </conditionConcepts>
+
+    <sections>
+        <section>
+            <key>topConditions</key>
+            <label>Leading causes of illness</label>
+            <kind>conditionBreakdown</kind>
+            <limit>15</limit>
+        </section>
+    </sections>
+
 </reportMapping>

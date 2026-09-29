@@ -43,9 +43,10 @@ public final class ReportCatalog {
         private final int[] obsConceptIds;
         private final int obsValueId;
         private final boolean mapped;
+        private final ReportLayout layout;
 
         Report(String key, String label, boolean mapped, List<String> encounterTypeNames, List<Integer> obsConceptIds,
-                int obsValueId, String table) {
+                int obsValueId, String table, ReportLayout layout) {
             this.key = key;
             this.label = label;
             this.mapped = mapped;
@@ -54,6 +55,7 @@ public final class ReportCatalog {
             this.obsConceptIds = obsConceptIds == null ? new int[0] : toIntArray(obsConceptIds);
             this.obsValueId = obsValueId;
             this.table = table;
+            this.layout = layout == null ? ReportLayout.standard() : layout;
         }
 
         private static int[] toIntArray(List<Integer> ids) {
@@ -80,6 +82,15 @@ public final class ReportCatalog {
         /** True when this report has a data mapping and can therefore filter. */
         public boolean isMapped() {
             return mapped;
+        }
+
+        /**
+         * How this report presents itself. Never null: a report that declares no
+         * layout of its own gets {@link ReportLayout#standard()}, so the renderer
+         * has one code path rather than one plus a fallback.
+         */
+        public ReportLayout getLayout() {
+            return layout;
         }
 
         public List<String> getEncounterTypeNames() {

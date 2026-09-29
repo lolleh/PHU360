@@ -206,6 +206,12 @@ main, section { max-width: 1280px; }
   width: 100%;
 }
 .chart-box-lg { min-height: 300px; height: 300px; }
+/* A register can name twenty conditions, and a bar chart whose labels do not
+   fit is a bar chart nobody can read. */
+.chart-box-tall { min-height: 420px; height: 420px; }
+/* The unit sits inside the value so a rate reads "62%" as one figure rather
+   than a number with a stray glyph after it. */
+.kpi-unit { font-size: 20px; font-weight: 700; color: var(--muted); margin-left: 2px; }
 .chart-box canvas { display: block; width: 100% !important; height: 100% !important; }
 .chart-empty {
   display: none;
@@ -268,7 +274,7 @@ td.empty-row { color: var(--muted); text-align: center; padding: 22px 12px; font
   .charts { grid-template-columns: 1fr; }
   .span2 { grid-column: span 1; }
   .kpis { grid-template-columns: repeat(2, 1fr); }
-  .chart-box, .chart-box-lg { height: 260px; min-height: 260px; }
+  .chart-box, .chart-box-lg, .chart-box-tall { height: 260px; min-height: 260px; }
 }
 
 @media (max-width: 560px) {
@@ -277,6 +283,6 @@ td.empty-row { color: var(--muted); text-align: center; padding: 22px 12px; font
   .brand h1 { font-size: 15px; }
   .kpis { grid-template-columns: 1fr; }
   .kpi-value { font-size: 32px; }
-  .chart-box, .chart-box-lg { height: 230px; min-height: 230px; }
+  .chart-box, .chart-box-lg, .chart-box-tall { height: 230px; min-height: 230px; }
   .chart-card { padding: 14px; }
 }
