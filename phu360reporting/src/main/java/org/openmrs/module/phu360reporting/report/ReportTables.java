@@ -13,35 +13,35 @@ import java.util.Map;
  * for the same day and health center are different facts and live in different
  * tables.
  *
- * <p>The names are looked up here rather than derived from the report key, so
- * that a key arriving from a request can never be interpolated into SQL.
+ * <p>The table is declared by the report's own mapping file and reached through
+ * this lookup rather than derived from the report key, so that a key arriving
+ * from a request can never be interpolated into SQL. Nothing is hardcoded here
+ * either: this is the same mapping {@link ReportCatalog} reads, indexed by key.
  */
 public final class ReportTables {
 
-    private static final Map<String, String> TABLES = new LinkedHashMap<String, String>();
-
-    static {
-        TABLES.put("all-encounter", "phu360_report_all_encounter");
-        TABLES.put("above-five-morbidity", "phu360_report_above_five_morbidity");
-        TABLES.put("above-five-patient-list", "phu360_report_above_five_patient_list");
-        TABLES.put("under-five-register", "phu360_report_under_five_register");
-        TABLES.put("hf1-summary", "phu360_report_hf1_summary");
-        TABLES.put("hf2-summary", "phu360_report_hf2_summary");
-        TABLES.put("hf3-summary", "phu360_report_hf3_summary");
-        TABLES.put("hf5-summary", "phu360_report_hf5_summary");
-        TABLES.put("hf12-summary", "phu360_report_hf12_summary");
-        TABLES.put("mother-and-neonate", "phu360_report_mother_and_neonate");
-    }
+    private static Map<String, String> tables;
 
     private ReportTables() {
     }
 
+    private static synchronized Map<String, String> tables() {
+        if (tables == null) {
+            Map<String, String> m = new LinkedHashMap<String, String>();
+            for (ReportCatalog.Report report : ReportCatalog.all()) {
+                m.put(report.getKey(), report.getTable());
+            }
+            tables = Collections.unmodifiableMap(m);
+        }
+        return tables;
+    }
+
     /** The table for a report key, or null when the key has no table. */
     public static String forReport(String reportKey) {
-        return TABLES.get(reportKey);
+        return tables().get(reportKey);
     }
 
     public static Map<String, String> all() {
-        return Collections.unmodifiableMap(TABLES);
+        return tables();
     }
 }

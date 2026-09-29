@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     Data mapping for the under-five-register REPORT TYPE.
+     The register form itself is not shipped (80 concept ids, 8 of which ever existed), so
+     this report is scoped by the encounter types under-five children are actually seen
+     under rather than by the register's obs concepts.
+-->
+<reportMapping>
+
+    <!-- The key the reportApi request carries and the filename of this file. -->
+    <key>under-five-register</key>
+    <label>Under Five Register</label>
+    <table>phu360_report_under_five_register</table>
+
+    <!--
+         Whether a mapping is defined. A report without one is reported back to the
+         dashboard as reportMapped:false rather than visualized, and its table is left
+         empty - see ReportFilter.obsConceptsMissing() for the other way a mapping
+         can turn out to be absent, which is that its concepts are not in this database.
+    -->
+    <mapped>true</mapped>
+
+    <!-- Encounter type NAMES, resolved to ids per installation by
+         ReportCatalog.Report.getEncounterTypeIds(). Names rather than ids so one
+         mapping survives a data package that loads a different id set. -->
+    <encounterTypes>
+        <!-- pediatric and vaccination -->
+        <encounterType>Primary Care Pediatric Initial Consult</encounterType>
+        <encounterType>Primary Care Pediatric Followup Consult</encounterType>
+        <encounterType>Pediatric Home Assessment</encounterType>
+        <encounterType>Vaccination</encounterType>
+        <!-- newborn and infant -->
+        <encounterType>Newborn Initial</encounterType>
+        <encounterType>Newborn Assessment</encounterType>
+        <encounterType>Newborn Daily Progress</encounterType>
+        <encounterType>Newborn Discharge</encounterType>
+        <encounterType>Newborn Observations</encounterType>
+        <encounterType>Newborn Referral</encounterType>
+        <encounterType>NICU Triage</encounterType>
+        <encounterType>NICU Followup</encounterType>
+        <encounterType>SCBU Newborn Register</encounterType>
+        <encounterType>HIV Infant Documentation</encounterType>
+        <encounterType>HIV-exposed Infant Followup</encounterType>
+    </encounterTypes>
+
+</reportMapping>

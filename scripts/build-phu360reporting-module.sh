@@ -82,6 +82,40 @@ cp -a "$MOD_DIR/module/liquibase.xml" "$STAGE/liquibase.xml"
 cp -a "$CLASSES/." "$STAGE/"
 cp -a "$MOD_DIR/web/module/resources/." "$STAGE/web/module/resources/"
 
+# The REPORT TYPE data mappings. ReportMappings reads them off the module
+# classpath, so they go in at the root of the omod like the other module files.
+# They are carried in the module rather than left in content/configuration
+# because nothing outside the module reads them, and shipping them in the omod
+# keeps the mapping and the code that interprets it one reviewable unit.
+echo "==> Carrying report type data mappings"
+MAPPINGS_SRC="$MOD_DIR/module/reportmappings"
+if [[ ! -f "$MAPPINGS_SRC/index.xml" ]]; then
+  echo "ERROR: no reportmappings/index.xml in $MAPPINGS_SRC" >&2
+  exit 1
+fi
+# A mapping file that index.xml does not list would never load, and one it lists
+# but that is absent would fail at runtime instead of here. Both are a mapping
+# silently not applying, so refuse to build rather than ship either.
+missing=0
+for key in $(sed -n 's|^[[:space:]]*<report>\(.*\)</report>[[:space:]]*$|\1|p' "$MAPPINGS_SRC/index.xml"); do
+  if [[ ! -f "$MAPPINGS_SRC/$key.xml" ]]; then
+    echo "ERROR: reportmappings/index.xml lists $key but $key.xml does not exist" >&2
+    missing=1
+  fi
+done
+for f in "$MAPPINGS_SRC"/*.xml; do
+  key="$(basename "$f" .xml)"
+  [[ "$key" == "index" ]] && continue
+  if ! grep -qE "^[[:space:]]*<report>$key</report>[[:space:]]*$" "$MAPPINGS_SRC/index.xml"; then
+    echo "ERROR: $key.xml exists but reportmappings/index.xml does not list it" >&2
+    missing=1
+  fi
+done
+[[ "$missing" -eq 0 ]] || exit 1
+mkdir -p "$STAGE/reportmappings"
+cp -a "$MAPPINGS_SRC"/./*.xml "$STAGE/reportmappings/"
+ls -1 "$STAGE/reportmappings" | sed 's/^/      reportmappings\//'
+
 # The appframework only reads app definitions from the classpath
 # (classpath*:/apps/*app.json and classpath*:/apps/*extension.json), and the
 # config package is installed as a plain directory under

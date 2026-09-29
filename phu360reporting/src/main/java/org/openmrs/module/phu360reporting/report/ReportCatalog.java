@@ -10,11 +10,17 @@ import java.util.Map;
 /**
  * The reports offered by the REPORT TYPE filter.
  *
- * <p>Each entry declares how the report narrows the encounter set. Nothing here
- * is hardcoded to a row id where a name will do: encounter types and obs
- * concepts are resolved by name at request time, so the same catalog works
- * across the different concept/encounter id sets that the various PIH data
- * packages load.
+ * <p>Each report's data mapping lives in {@code module/reportmappings/} in the
+ * omod and is read by {@link ReportMappings}; this class is only the in-memory
+ * view of it. That is the whole reason the mapping is data: adding an encounter
+ * type to a report, or giving one of the HF summaries a definition, is an edit
+ * to a file in this repository rather than a change to a Java array that has to
+ * be recompiled before anyone can see it.
+ *
+ * <p>Nothing in a mapping is hardcoded to a row id where a name will do:
+ * encounter types and obs concepts are resolved by name at request time, so the
+ * same mapping works across the different concept/encounter id sets that the
+ * various PIH data packages load.
  *
  * <p>A report is only listed as {@link #isMapped()} when its data mapping is
  * actually defined. Selecting an unmapped report is reported back to the UI as
@@ -32,18 +38,30 @@ public final class ReportCatalog {
     public static final class Report {
         private final String key;
         private final String label;
+        private final String table;
         private final String[] encounterTypeNames;
         private final int[] obsConceptIds;
         private final int obsValueId;
         private final boolean mapped;
 
-        Report(String key, String label, boolean mapped, String[] encounterTypeNames, int[] obsConceptIds, int obsValueId) {
+        Report(String key, String label, boolean mapped, List<String> encounterTypeNames, List<Integer> obsConceptIds,
+                int obsValueId, String table) {
             this.key = key;
             this.label = label;
             this.mapped = mapped;
-            this.encounterTypeNames = encounterTypeNames == null ? new String[0] : encounterTypeNames;
-            this.obsConceptIds = obsConceptIds == null ? new int[0] : obsConceptIds;
+            this.encounterTypeNames = encounterTypeNames == null ? new String[0]
+                    : encounterTypeNames.toArray(new String[0]);
+            this.obsConceptIds = obsConceptIds == null ? new int[0] : toIntArray(obsConceptIds);
             this.obsValueId = obsValueId;
+            this.table = table;
+        }
+
+        private static int[] toIntArray(List<Integer> ids) {
+            int[] out = new int[ids.size()];
+            for (int i = 0; i < out.length; i++) {
+                out[i] = ids.get(i).intValue();
+            }
+            return out;
         }
 
         public String getKey() {
@@ -52,6 +70,11 @@ public final class ReportCatalog {
 
         public String getLabel() {
             return label;
+        }
+
+        /** The table this report's figures are read from and refreshed into. */
+        public String getTable() {
+            return table;
         }
 
         /** True when this report has a data mapping and can therefore filter. */
@@ -94,93 +117,24 @@ public final class ReportCatalog {
         }
     }
 
-    /** Above Five morbidity concepts and the coded "Yes" value, as used by the
-     *  aboveFiveMorbiditySummary / aboveFivePatientList report descriptors. */
-    private static final int[] ABOVE_FIVE_MORBIDITY = {
-        8842, 8840, 8838, 8839, 8844, 8774, 8851, 8848, 8849, 8852, 8850, 8841, 8846, 8843, 8845, 8847
-    };
-
-    private static final int CODED_YES = 8853;
-
-    private static final String[] MOTHER_AND_NEONATE_TYPES = {
-        // maternal
-        "MCH Delivery",
-        "Labor and Delivery Summary",
-        "Labour Progress",
-        "Maternity and Delivery Register",
-        "Maternal Death",
-        "Maternal Discharge",
-        "Maternal Check-In",
-        "PHU360 Maternal Check-in",
-        "PHU360 MCH Triage",
-        "ANC Intake",
-        "ANC Followup",
-        "ANC Progress",
-        "Postnatal Followup",
-        // newborn / neonatal
-        "Newborn Initial",
-        "Newborn Assessment",
-        "Newborn Daily Progress",
-        "Newborn Discharge",
-        "Newborn Observations",
-        "Newborn Referral",
-        "NICU Followup",
-        "NICU Triage",
-        "SCBU Newborn Register"
-    };
-
-    /**
-     * Pediatric, vaccination and newborn/infant encounter types. The Under Five
-     * register form itself is not shipped (its 80 concept ids were never
-     * exported), so this report is defined by the encounter types under-five
-     * children are actually seen under rather than by the register's obs
-     * concepts. Names absent from a given database are skipped at request time.
-     */
-    private static final String[] UNDER_FIVE_TYPES = {
-        // pediatric
-        "Primary Care Pediatric Initial Consult",
-        "Primary Care Pediatric Followup Consult",
-        "Pediatric Home Assessment",
-        "Vaccination",
-        // newborn / infant
-        "Newborn Initial",
-        "Newborn Assessment",
-        "Newborn Daily Progress",
-        "Newborn Discharge",
-        "Newborn Observations",
-        "Newborn Referral",
-        "NICU Triage",
-        "NICU Followup",
-        "SCBU Newborn Register",
-        "HIV Infant Documentation",
-        "HIV-exposed Infant Followup"
-    };
-
     private static Map<String, Report> index;
 
     private static synchronized Map<String, Report> index() {
         if (index == null) {
             Map<String, Report> m = new LinkedHashMap<String, Report>();
-            add(m, new Report("all-encounter", "All Encounter", true, null, null, 0));
-            add(m, new Report("above-five-morbidity", "Above Five Register - Morbidity Summary", true,
-                    null, ABOVE_FIVE_MORBIDITY, CODED_YES));
-            add(m, new Report("above-five-patient-list", "Above Five Register - Patient List", true,
-                    new String[] { "PHU360 Outpatient Initial", "PHU360 Outpatient Followup" },
-                    ABOVE_FIVE_MORBIDITY, CODED_YES));
-            add(m, new Report("under-five-register", "Under Five Register", true, UNDER_FIVE_TYPES, null, 0));
-            add(m, new Report("hf1-summary", "HF1 Summary", false, null, null, 0));
-            add(m, new Report("hf2-summary", "HF2 Summary", false, null, null, 0));
-            add(m, new Report("hf3-summary", "HF3 Summary", false, null, null, 0));
-            add(m, new Report("hf5-summary", "HF5 Summary", false, null, null, 0));
-            add(m, new Report("hf12-summary", "HF12 Summary", false, null, null, 0));
-            add(m, new Report("mother-and-neonate", "Mother and Neonate", true, MOTHER_AND_NEONATE_TYPES, null, 0));
+            for (Report r : ReportMappings.load()) {
+                if (m.put(r.getKey(), r) != null) {
+                    throw new IllegalStateException("Report mapping listed twice: " + r.getKey());
+                }
+            }
+            if (!m.containsKey("all-encounter")) {
+                // byKey() falls back to it for an unknown or absent report key,
+                // so a catalog without it has no defined behaviour.
+                throw new IllegalStateException("reportmappings/index.xml has no all-encounter report to fall back on");
+            }
             index = Collections.unmodifiableMap(m);
         }
         return index;
-    }
-
-    private static void add(Map<String, Report> m, Report r) {
-        m.put(r.getKey(), r);
     }
 
     public static List<Report> all() {

@@ -38,11 +38,19 @@ openmrs-forms/                 register form sources + generators (mother-neonat
 ## Reporting dashboard: REPORT TYPE
 
 `/openmrs/moduleResources/phu360reporting/index.html` reads its options from
-`ReportCatalog` (`phu360reporting/src/main/java/.../report/ReportCatalog.java`).
-A report is a set of encounter type names and/or obs concept ids; `ReportFilter`
-resolves them against the running database and emits one SQL fragment
-(`encounter_type IN (...)` and/or an `EXISTS` on `obs`) that is ANDed onto the KPI,
-trend and breakdown queries, so one selection filters every number on the page.
+`ReportCatalog` (`phu360reporting/src/main/java/.../report/ReportCatalog.java`),
+which loads them from `phu360reporting/module/reportmappings/` — one XML file per
+REPORT TYPE, plus an `index.xml` that lists them in filter order. A report is a
+set of encounter type names and/or obs concept ids; `ReportFilter` resolves them
+against the running database and emits one SQL fragment (`encounter_type IN (...)`
+and/or an `EXISTS` on `obs`) that is ANDed onto the KPI, trend and breakdown
+queries, so one selection filters every number on the page.
+
+The mappings are data, not code. Editing a report's encounter types or concepts is
+an edit to its XML file — no recompile of a Java array is involved, and a file that
+is malformed or missing fails loudly at startup rather than showing up as a report
+that quietly returns every encounter. See
+[Report type data mappings](#report-type-data-mappings) for the file format.
 
 | Key | Label | Defined by |
 |-----|-------|------------|
@@ -53,7 +61,7 @@ trend and breakdown queries, so one selection filters every number on the page.
 | `hf1/hf2/hf3/hf5/hf12-summary` | HF1, HF2, HF3, HF5, HF12 Summary | not mapped |
 | `mother-and-neonate` | Mother and Neonate | 22 maternal and newborn encounter type names |
 
-Two decisions worth knowing before editing this file:
+Two decisions worth knowing before editing these files:
 
 - **Names, not ids, for encounter types.** Every encounter type name is resolved
   to an id at request time and unknown names are skipped, so a catalog entry
@@ -70,15 +78,71 @@ Two decisions worth knowing before editing this file:
   `"… has no data mapping configured yet."`, which is what the `mapped` flag in
   `action=reports` and the notice under the filter bar are for.
 
+## Report type data mappings
+
+`phu360reporting/module/reportmappings/` holds the data mapping of every REPORT
+TYPE. One file per report, named after its key, plus an `index.xml` that lists
+the keys in the order the filter shows them. `ReportMappings` reads them off the
+module classpath at first use; `ReportCatalog` and `ReportTables` are in-memory
+views of the result and hold no mappings of their own.
+
+They ship inside the omod rather than under `content/configuration/` because
+nothing outside this module reads them — the mapping and the code that
+interprets it stay one reviewable unit, and there is no question of the
+initializer picking up (or failing to pick up) a new subdirectory. Editing one is
+an ordinary source edit followed by a rebuild.
+
+XML rather than JSON because the module is already built around it
+(`config.xml`, `liquibase.xml`) and the JDK parses it with nothing added to the
+class path; the module otherwise has no JSON parser, writing its responses with
+a hand-rolled `JsonWriter`.
+
+```xml
+<reportMapping>
+    <key>under-five-register</key>          <!-- request key, and this file's name -->
+    <label>Under Five Register</label>      <!-- shown in the filter -->
+    <table>phu360_report_under_five_register</table>
+    <mapped>true</mapped>                   <!-- false ⇒ reportMapped:false, table left empty -->
+    <encounterTypes>                       <!-- names, resolved per installation -->
+        <encounterType>Primary Care Pediatric Initial Consult</encounterType>
+    </encounterTypes>
+    <obsConcepts>                          <!-- ids, checked against the database -->
+        <obsConcept>8842</obsConcept>
+    </obsConcepts>
+    <obsValue>8853</obsValue>              <!-- value_coded required, 0/absent = any -->
+</reportMapping>
+```
+
+Three rules the loader enforces:
+
+- **A bad mapping fails at startup, loudly.** A missing file, a wrong root
+  element, a non-numeric concept id or a non-`phu360_report_` table name throws
+  from `ReportMappings.load()`. A report whose mapping failed to load has to be
+  visible at startup, not discovered on a dashboard — a silently dropped report
+  looks the same as one that was never asked for.
+- **The table name is checked, not trusted.** It is interpolated into SQL, which
+  is only safe because the report key arriving in a request is looked up in a map
+  rather than used as an identifier. A mapping file must not be a way around
+  that, so a table outside `phu360_report_*` is rejected at load.
+- **The build checks index and directory agree.** `scripts/build-phu360reporting-module.sh`
+  fails if `index.xml` lists a file that does not exist, or if a mapping file is
+  not listed — either would be a mapping that never applies.
+
+`mapped` is the declared state; what the API reports is the declared state
+narrowed by what this database can actually resolve. `above-five-morbidity` is
+`mapped: true` in its file and comes back as `reportMapped: false`, because its
+morbidity concepts were never exported into this database. Adding them to
+`concepts.csv` lights the report up with no code change.
+
 ## Indicator tables: what the dashboard reads
 
 Every number on the reporting dashboard is served from a table, not computed per
 request. There is one table per REPORT TYPE, created by
-`phu360reporting/module/liquibase.xml` and mapped from the report key in
-`ReportTables` (looked up in a map, so a key arriving from a request is never
-interpolated into SQL). A report's numbers are the product of its definition, so
-an Under Five row and a Mother and Neonate row for the same day and center are
-different facts and live in different tables:
+`phu360reporting/module/liquibase.xml` and named by each report's mapping file,
+reached through the `ReportTables` lookup (a map, so a key arriving from a request
+is never interpolated into SQL). A report's numbers are the product of its
+definition, so an Under Five row and a Mother and Neonate row for the same day
+and center are different facts and live in different tables:
 
 | Report key | Table |
 |------------|-------|

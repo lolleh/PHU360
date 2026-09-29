@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     Data mapping for the above-five-patient-list REPORT TYPE.
+-->
+<reportMapping>
+
+    <!-- The key the reportApi request carries and the filename of this file. -->
+    <key>above-five-patient-list</key>
+    <label>Above Five Register - Patient List</label>
+    <table>phu360_report_above_five_patient_list</table>
+
+    <!--
+         Whether a mapping is defined. A report without one is reported back to the
+         dashboard as reportMapped:false rather than visualized, and its table is left
+         empty - see ReportFilter.obsConceptsMissing() for the other way a mapping
+         can turn out to be absent, which is that its concepts are not in this database.
+    -->
+    <mapped>true</mapped>
+
+    <!-- Encounter type NAMES, resolved to ids per installation by
+         ReportCatalog.Report.getEncounterTypeIds(). Names rather than ids so one
+         mapping survives a data package that loads a different id set. -->
+    <encounterTypes>
+        <encounterType>PHU360 Outpatient Initial</encounterType>
+        <encounterType>PHU360 Outpatient Followup</encounterType>
+    </encounterTypes>
+
+    <!-- Obs concept ids. Ids rather than names: the concepts are referenced by the
+         data package that exports them, and this database resolves them by id. -->
+    <obsConcepts>
+        <obsConcept>8842</obsConcept>
+        <obsConcept>8840</obsConcept>
+        <obsConcept>8838</obsConcept>
+        <obsConcept>8839</obsConcept>
+        <obsConcept>8844</obsConcept>
+        <obsConcept>8774</obsConcept>
+        <obsConcept>8851</obsConcept>
+        <obsConcept>8848</obsConcept>
+        <obsConcept>8849</obsConcept>
+        <obsConcept>8852</obsConcept>
+        <obsConcept>8850</obsConcept>
+        <obsConcept>8841</obsConcept>
+        <obsConcept>8846</obsConcept>
+        <obsConcept>8843</obsConcept>
+        <obsConcept>8845</obsConcept>
+        <obsConcept>8847</obsConcept>
+    </obsConcepts>
+
+    <!-- The value_coded those obs must carry, or 0 for unconstrained. -->
+    <obsValue>8853</obsValue>
+
+</reportMapping>

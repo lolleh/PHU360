@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     Data mapping for the mother-and-neonate REPORT TYPE.
+-->
+<reportMapping>
+
+    <!-- The key the reportApi request carries and the filename of this file. -->
+    <key>mother-and-neonate</key>
+    <label>Mother and Neonate</label>
+    <table>phu360_report_mother_and_neonate</table>
+
+    <!--
+         Whether a mapping is defined. A report without one is reported back to the
+         dashboard as reportMapped:false rather than visualized, and its table is left
+         empty - see ReportFilter.obsConceptsMissing() for the other way a mapping
+         can turn out to be absent, which is that its concepts are not in this database.
+    -->
+    <mapped>true</mapped>
+
+    <!-- Encounter type NAMES, resolved to ids per installation by
+         ReportCatalog.Report.getEncounterTypeIds(). Names rather than ids so one
+         mapping survives a data package that loads a different id set. -->
+    <encounterTypes>
+        <!-- maternal -->
+        <encounterType>MCH Delivery</encounterType>
+        <encounterType>Labor and Delivery Summary</encounterType>
+        <encounterType>Labour Progress</encounterType>
+        <encounterType>Maternity and Delivery Register</encounterType>
+        <encounterType>Maternal Death</encounterType>
+        <encounterType>Maternal Discharge</encounterType>
+        <encounterType>Maternal Check-In</encounterType>
+        <encounterType>PHU360 Maternal Check-in</encounterType>
+        <encounterType>PHU360 MCH Triage</encounterType>
+        <encounterType>ANC Intake</encounterType>
+        <encounterType>ANC Followup</encounterType>
+        <encounterType>ANC Progress</encounterType>
+        <encounterType>Postnatal Followup</encounterType>
+        <!-- newborn and neonatal -->
+        <encounterType>Newborn Initial</encounterType>
+        <encounterType>Newborn Assessment</encounterType>
+        <encounterType>Newborn Daily Progress</encounterType>
+        <encounterType>Newborn Discharge</encounterType>
+        <encounterType>Newborn Observations</encounterType>
+        <encounterType>Newborn Referral</encounterType>
+        <encounterType>NICU Followup</encounterType>
+        <encounterType>NICU Triage</encounterType>
+        <encounterType>SCBU Newborn Register</encounterType>
+    </encounterTypes>
+
+</reportMapping>

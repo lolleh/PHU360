@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     Data mapping for the hf12-summary REPORT TYPE.
+     Feeds phu360_report_hf12_summary.
+     See the reportmappings section of README.md.
+     No mapping defined.
+-->
+<reportMapping>
+
+    <!-- The key the reportApi request carries and the filename of this file. -->
+    <key>hf12-summary</key>
+    <label>HF12 Summary</label>
+    <table>phu360_report_hf12_summary</table>
+
+    <!--
+         Whether a mapping is defined. A report without one is reported back to the
+         dashboard as reportMapped:false rather than visualized, and its table is left
+         empty - see ReportFilter.obsConceptsMissing() for the other way a mapping
+         can turn out to be absent, which is that its concepts are not in this database.
+    -->
+    <mapped>false</mapped>
+
+</reportMapping>
