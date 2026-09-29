@@ -26,9 +26,43 @@
     return { from: fmtDate(from), to: fmtDate(to) };
   }
 
+  /* pihcore requires a session to have a login location, and until one is
+     chosen it redirects every moduleServlet request to loginLocation.page. A
+     fetch follows that redirect, gets HTML back, and the failure surfaces as
+     "Unexpected token <" or a bare HTTP 302 - which reads like the dashboard is
+     broken or has no data. Check for it here and say what actually happened. */
+  function isLoginRedirect(r) {
+    return r.redirected && /login\.page|loginLocation\.page/.test(r.url);
+  }
+
+  /* pihcore answers a request from a session it cannot use with a redirect to
+     either the login form (no/expired session) or loginLocation.page (signed in
+     but no facility chosen yet), so name which one it was instead of letting
+     r.json() fail on the HTML that comes back. */
+  function loginRedirectMessage(url) {
+    return /loginLocation/.test(url)
+      ? "Choose a login location to load the dashboard. pihcore asks for one " +
+        "after signing in, and until it is chosen it redirects the dashboard's " +
+        "data requests to the login page."
+      : "Your OpenMRS session has ended, so there is no data to show. " +
+        "Sign in again to load the dashboard.";
+  }
+
   function fetchJson(url, onOk, onErr) {
     fetch(url, { credentials: "same-origin" })
-      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function (r) {
+        if (isLoginRedirect(r)) {
+          var e = new Error(loginRedirectMessage(r.url));
+          e.loginRedirect = true;
+          throw e;
+        }
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        var type = r.headers.get("content-type") || "";
+        if (type.indexOf("json") === -1) {
+          throw new Error("Expected JSON but the server sent " + (type.split(";")[0] || "an unknown type"));
+        }
+        return r.json();
+      })
       .then(function (j) {
         if (j && j.error) { throw new Error(j.error); }
         onOk(j);
@@ -47,7 +81,7 @@
         o.textContent = l.name;
         loc.appendChild(o);
       });
-    }, function (e) { console.error("filters failed", e); setSummary("Failed to load filters"); });
+    }, function (e) { reportFailure(e, "Filters"); });
   }
 
   function loadReports() {
@@ -63,7 +97,7 @@
         sel.appendChild(o);
       });
       sel.addEventListener("change", warnIfUnmapped);
-    }, function (e) { console.error("reports failed", e); setSummary("Failed to load reports"); });
+    }, function (e) { reportFailure(e, "Reports"); });
   }
 
   /* Reports the catalog lists but has no data mapping for. Selecting one
@@ -79,6 +113,21 @@
     }
   }
 
+  /* An unusable session is not a data problem, so it goes in the notice banner
+     rather than being folded into "Data failed to load: ..." - the difference
+     between "pick a location" and "something is wrong with the numbers" is the
+     whole point of saying it. */
+  function reportFailure(e, what) {
+    console.error(what + " failed", e);
+    if (e && e.loginRedirect) {
+      renderNotice(e.message);
+      setSummary("Not loaded");
+    } else {
+      renderNotice("");
+      setSummary(what + " failed: " + (e && e.message ? e.message : "unknown error"));
+    }
+  }
+
   function collectState() {
     state.from = $("fFrom").value;
     state.to = $("fTo").value;
@@ -86,13 +135,27 @@
     state.report = $("fReport").value;
   }
 
+  /* The label of a <select>'s chosen option, or a fallback when it has no
+     options yet. The three requests in init() are fired together and whichever
+     answers first calls setSummary(), so on a fast connection the counts can
+     arrive before the report and location lists have been populated - reading
+     selectedOptions[0] then is undefined, and the TypeError that follows used
+     to abort render() on its first line, leaving every KPI showing its
+     placeholder while the API was in fact returning data. */
+  function selectedText(id, fallback) {
+    var sel = $(id);
+    if (!sel || !sel.options.length) return fallback;
+    var opt = sel.selectedOptions && sel.selectedOptions[0];
+    return (opt && opt.textContent) || fallback;
+  }
+
   function setSummary() {
     var parts = [];
     if (state.from && state.to) {
       parts.push(state.from + " \u2192 " + state.to);
     }
-    parts.push(state.location ? $("fLocation").selectedOptions[0].textContent : "All health centers");
-    parts.push(state.report ? $("fReport").selectedOptions[0].textContent : "All Encounter");
+    parts.push(state.location ? selectedText("fLocation", "All health centers") : "All health centers");
+    parts.push(state.report ? selectedText("fReport", "All Encounter") : "All Encounter");
     $("filterSummary").textContent = parts.join(" \u00B7 ");
   }
 
@@ -392,7 +455,7 @@
     if (state.location) url += "&location=" + state.location;
     if (state.report) url += "&report=" + encodeURIComponent(state.report);
     fetchJson(url, function (j) { render(j); setLoading(false); },
-      function (e) { setLoading(false); setSummary(); console.error(e); setSummary("Data failed to load: " + e.message); });
+      function (e) { setLoading(false); reportFailure(e, "Data"); });
   }
 
   function setLoading(on) {
@@ -407,8 +470,8 @@
     var rows = (dataCache && dataCache.byType) || [];
     var lines = ["report,value"];
     lines.push("period," + state.from + " to " + state.to);
-    lines.push("health center," + ($("fLocation").selectedOptions[0] ? $("fLocation").selectedOptions[0].textContent : "All"));
-    lines.push("report type," + ($("fReport").selectedOptions[0] ? $("fReport").selectedOptions[0].textContent : "All Encounter"));
+    lines.push("health center," + selectedText("fLocation", "All"));
+    lines.push("report type," + selectedText("fReport", "All Encounter"));
     lines.push("");
     lines.push("report type breakdown,encounters,share %");
     var total = rows.reduce(function (s, r) { return s + r.count; }, 0);
