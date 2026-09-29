@@ -126,9 +126,23 @@ public final class ReportMappings {
             String label = requiredText(e, "label", key);
             String kind = requiredText(e, "kind", key);
             String concept = text(e, "concept");
-            String answer = text(e, "answer");
+            List<String> answers = new ArrayList<String>();
+            for (Element a : children(e, "answer")) {
+                answers.add(a.getTextContent().trim());
+            }
+            // Every kind but codedRateAnyOf takes one answer, so a second one is a
+            // mapping mistake rather than a request for the set kind - and it would
+            // otherwise be silently ignored, which is the worst way for it to fail.
+            if (answers.size() > 1 && !ReportLayout.KIND_CODED_RATE_ANY_OF.equals(kind)) {
+                throw new IllegalStateException("report " + key + ", indicator " + indKey + " of kind " + kind
+                        + " takes one <answer>; codedRateAnyOf is the kind that takes several");
+            }
+            if (ReportLayout.KIND_CODED_RATE_ANY_OF.equals(kind) && answers.isEmpty()) {
+                throw new IllegalStateException(
+                        "report " + key + ", indicator " + indKey + " of kind codedRateAnyOf needs at least one <answer>");
+            }
             indicators.add(new ReportLayout.Indicator(indKey, label, kind, concept.length() == 0 ? null : concept,
-                    answer.length() == 0 ? null : answer, boolText(e, "inverted")));
+                    answers, boolText(e, "inverted")));
         }
         List<ReportLayout.Section> sections = new ArrayList<ReportLayout.Section>();
         for (Element e : children(root, "sections", "section")) {
@@ -143,9 +157,16 @@ public final class ReportMappings {
         // section. Names, and separate from the mapping's obsConcepts, which are
         // ids from the data package that exported the report - see
         // ReportLayout.getConditionConcepts().
-        List<String> conditionConcepts = new ArrayList<String>();
+        List<ReportLayout.Condition> conditionConcepts = new ArrayList<ReportLayout.Condition>();
         for (Element e : children(root, "conditionConcepts", "conditionConcept")) {
-            conditionConcepts.add(requiredText(e, "name", key));
+            // The label is optional, so <conditionConcept> may still be a bare
+            // name; a name is its own label when no other is given.
+            String name = textOf(e);
+            String label = text(e, "label");
+            if (name.length() == 0) {
+                name = requiredText(e, "name", key);
+            }
+            conditionConcepts.add(new ReportLayout.Condition(name, label.length() == 0 ? null : label));
         }
         if (indicators.isEmpty() && sections.isEmpty() && conditionConcepts.isEmpty()) {
             return ReportLayout.standard();
@@ -191,6 +212,22 @@ public final class ReportMappings {
     private static String text(Element root, String tag) {
         List<Element> found = children(root, tag);
         return found.isEmpty() ? "" : found.get(0).getTextContent().trim();
+    }
+
+    /**
+     * The element's own text, used where one element carries a name as its text
+     * when alone and as a child element when it also carries a label.
+     */
+    private static String textOf(Element root) {
+        StringBuilder direct = new StringBuilder();
+        NodeList nodes = root.getChildNodes();
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+            if (node.getNodeType() == Node.TEXT_NODE || node.getNodeType() == Node.CDATA_SECTION_NODE) {
+                direct.append(node.getNodeValue());
+            }
+        }
+        return direct.toString().trim();
     }
 
     private static int intText(Element root, String tag, String key) {

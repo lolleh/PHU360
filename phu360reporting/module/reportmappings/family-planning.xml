@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     Data mapping for the family-planning REPORT TYPE.
+
+     The family planning register is read two ways: how many clients the service
+     is seeing and where they came from (volume and flow), and what they are
+     actually being given (method mix, which is the supply question). The
+     workbook's dashboard does both, so this layout does too.
+-->
+<reportMapping>
+
+    <!-- The key the reportApi request carries and the filename of this file. -->
+    <key>family-planning</key>
+    <label>Family Planning</label>
+    <table>phu360_report_family_planning</table>
+
+    <mapped>true</mapped>
+
+    <!-- Encounter type NAMES, resolved to ids per installation. -->
+    <encounterTypes>
+        <encounterType>Family Planning Register</encounterType>
+        <encounterType>Family Planning Initial</encounterType>
+        <encounterType>Family Planning Followup</encounterType>
+    </encounterTypes>
+
+    <!--
+         ============================================================================
+         LAYOUT
+
+         Note the two shapes of figure here, kept apart on purpose. The headline
+         row is shares (what share of clients are new), because that is how the
+         workbook presents them and how a programme is assessed. The profile
+         below repeats the same questions as counts, because a district needs
+         "7 new clients" to order against, and 58% is not a number anyone
+         stocks drugs by.
+    ============================================================================
+    -->
+    <indicators>
+        <indicator>
+            <key>clients</key>
+            <label>FP clients</label>
+            <kind>encounterCount</kind>
+        </indicator>
+        <indicator>
+            <key>distinctClients</key>
+            <label>Individual clients served</label>
+            <kind>distinctPatients</kind>
+        </indicator>
+        <indicator>
+            <key>newClientsRate</key>
+            <label>New clients</label>
+            <kind>codedRate</kind>
+            <concept>MNR FP6 Client Type</concept>
+            <answer>MNR FP6 Client Type :: New Client (First time user)</answer>
+        </indicator>
+        <indicator>
+            <key>referredInRate</key>
+            <label>Referred in</label>
+            <kind>codedRate</kind>
+            <concept>MNR FP23 Referred in from CHW/Facility</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>referredOutRate</key>
+            <label>Referred out</label>
+            <kind>codedRate</kind>
+            <concept>MNR FP24 Referred out to other facility</concept>
+            <answer>Yes</answer>
+        </indicator>
+
+        <!--
+             The same three questions as counts, for the ordering and workload
+             figures the shares are only useful for checking.
+        -->
+        <indicator>
+            <key>newClientsCount</key>
+            <label>New clients (count)</label>
+            <kind>codedCount</kind>
+            <concept>MNR FP6 Client Type</concept>
+            <answer>MNR FP6 Client Type :: New Client (First time user)</answer>
+        </indicator>
+        <indicator>
+            <key>continuingClientsCount</key>
+            <label>Continuing clients (count)</label>
+            <kind>codedCount</kind>
+            <concept>MNR FP6 Client Type</concept>
+            <answer>MNR FP6 Client Type :: Continuing Client</answer>
+        </indicator>
+        <indicator>
+            <key>referredInCount</key>
+            <label>Referred in (count)</label>
+            <kind>codedCount</kind>
+            <concept>MNR FP23 Referred in from CHW/Facility</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>referredOutCount</key>
+            <label>Referred out (count)</label>
+            <kind>codedCount</kind>
+            <concept>MNR FP24 Referred out to other facility</concept>
+            <answer>Yes</answer>
+        </indicator>
+    </indicators>
+
+    <!--
+         Method mix: which contraceptive the service actually gave out this
+         period. This is the chart that decides what gets reordered, so it is a
+         condition breakdown over the method concepts rather than a breakdown of
+         one parent question - the register's method field records a tick per
+         method a client was given, and counting each method separately is what
+         makes the bars comparable.
+
+         NOT INCLUDED: the workbook's "elevated BP records" signal. Like the
+         postnatal dashboard's blood pressure figure, it is free text here and
+         cannot be counted without parsing it; it is left out rather than shown
+         as zero.
+    -->
+    <sections>
+        <section>
+            <key>methodMix</key>
+            <label>Contraceptive method mix</label>
+            <kind>conditionBreakdown</kind>
+        </section>
+    </sections>
+
+    <conditionConcepts>
+        <!--
+             The method concepts, each with a label. The labels matter more here
+             than anywhere else on the dashboard: the dictionary names a method as
+             the answer to a question, so the raw name of the concept is
+             "MNR FP11 COMBINED ORAL CONTRACEPTIVE :: Microgynon" - a column
+             heading and an answer, and no use on an axis. What a reader needs is
+             "Microgynon".
+        -->
+        <conditionConcept>
+            <name>MNR FP11 COMBINED ORAL CONTRACEPTIVE :: Microgynon</name>
+            <label>Microgynon</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR FP12 PROGESTIN ONLY ORALS :: Microlut</name>
+            <label>Microlut</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR FP13 INJECTABLES :: Depo provera</name>
+            <label>Depo provera</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR FP13 INJECTABLES :: Sayana press</name>
+            <label>Sayana press</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR FP14 IUCD :: Copper - t</name>
+            <label>Copper T</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR FP15 IMPLANTS :: 3 yr implant (ie. levoplant)</name>
+            <label>3 yr implant</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR FP15 IMPLANTS :: 5 yr implant (ie. jadelle)</name>
+            <label>5 yr implant (Jadelle)</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR FP16 CONDOM :: Male</name>
+            <label>Male condom</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR FP16 CONDOM :: Female</name>
+            <label>Female condom</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR FP17 Emergency contraceptive</name>
+            <label>Emergency contraceptive</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR FP18 PERMANENT METHOD :: Tubal ligation</name>
+            <label>Tubal ligation</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR FP19 Lactation Amenorhea Method (LAM)</name>
+            <label>Lactational amenorrhea (LAM)</label>
+        </conditionConcept>
+    </conditionConcepts>
+
+</reportMapping>

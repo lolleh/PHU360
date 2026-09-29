@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     Data mapping for the postnatal-care REPORT TYPE.
+
+     The postnatal register is a different report from mother-and-neonate even
+     though the two share a concept: it is read for what happened in the first
+     days after the birth - survival at 24 hours, whether the baby was referred,
+     how the feeding went - and the completion shares are the postnatal
+     section's own, not the delivery register's.
+-->
+<reportMapping>
+
+    <!-- The key the reportApi request carries and the filename of this file. -->
+    <key>postnatal-care</key>
+    <label>Postnatal Care</label>
+    <table>phu360_report_postnatal_care</table>
+
+    <mapped>true</mapped>
+
+    <!-- Encounter type NAMES, resolved to ids per installation. -->
+    <encounterTypes>
+        <encounterType>Postnatal Followup</encounterType>
+        <encounterType>Newborn Initial</encounterType>
+        <encounterType>Newborn Assessment</encounterType>
+        <encounterType>Newborn Daily Progress</encounterType>
+        <encounterType>Newborn Discharge</encounterType>
+        <encounterType>Newborn Observations</encounterType>
+        <encounterType>Newborn Referral</encounterType>
+        <encounterType>NICU Followup</encounterType>
+        <encounterType>NICU Triage</encounterType>
+        <encounterType>SCBU Newborn Register</encounterType>
+    </encounterTypes>
+
+    <!--
+         ============================================================================
+         LAYOUT
+
+         The workbook's postnatal dashboard in three groups: how many postnatal
+         cases there were, what share of the care was completed, and which
+         postnatal risk flags came up. The counts and the shares are kept apart
+         deliberately - "2 women were referred" and "2 of 12 had high blood
+         pressure" are different findings about different questions, and
+         flattening them into one list of percentages is how a dashboard comes
+         to report a case count as a rate.
+    ============================================================================
+    -->
+    <indicators>
+        <indicator>
+            <key>postnatalCases</key>
+            <label>Postnatal cases</label>
+            <kind>encounterCount</kind>
+        </indicator>
+
+        <!--
+             Completion. Each of these is a share of the encounters that answered
+             the question at all, so a postnatal record with the field blank
+             does not count against the facility - it is missing, not a "no".
+        -->
+        <indicator>
+            <key>motherAlive24h</key>
+            <label>Mother alive at 24 hours</label>
+            <kind>codedRate</kind>
+            <concept>MNR PR1 Mother alive</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>babyAlive24h</key>
+            <label>Baby alive at 24 hours</label>
+            <kind>codedRate</kind>
+            <concept>MNR NN1 Baby alive?</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>breastfedWithin1h</key>
+            <label>Breastfed within 1 hour</label>
+            <kind>codedRate</kind>
+            <concept>MNR D26 Live born breastfed within 1 hrs.</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>ancFourContacts</key>
+            <label>ANC contacts of 4 or more</label>
+            <kind>codedRateAnyOf</kind>
+            <concept>MNR PP3 Stage of ANC Contact</concept>
+            <answer>MNR PP3 Stage of ANC Contact :: 4</answer>
+            <answer>MNR PP3 Stage of ANC Contact :: 5</answer>
+            <answer>MNR PP3 Stage of ANC Contact :: 6</answer>
+            <answer>MNR PP3 Stage of ANC Contact :: 7</answer>
+            <answer>MNR PP3 Stage of ANC Contact :: 8</answer>
+        </indicator>
+
+        <!--
+             Risk flags, as counts. A flag is something that happened to a
+             woman, so it is counted rather than expressed as a share: the
+             number of referrals is a workload figure, and "16% were referred"
+             hides it.
+        -->
+        <indicator>
+            <key>lowBirthWeightCases</key>
+            <label>Low birth weight babies</label>
+            <kind>codedCount</kind>
+            <concept>MNR D21 Birth weight under 2.5kg</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>referrals</key>
+            <label>Referred to a doctor</label>
+            <kind>codedCount</kind>
+            <concept>MNR PR15 Refer to Doctor?</concept>
+            <answer>Yes</answer>
+        </indicator>
+    </indicators>
+
+    <!--
+         The risk flags as a chart, which is how a register is scanned: which
+         problem is taking up the ward's attention this week.
+
+         NOT INCLUDED: the workbook's "BP >=130/90" flag. Blood pressure is
+         entered as free text in this register, so there is nothing to match
+         the two numbers in "130/90" against and no honest way to count the
+         women who had it. Deriving it by parsing text is a separate piece of
+         work, and guessing at the threshold here would produce a figure that
+         looks like the workbook's and is not computed the same way. Left out
+         rather than shown as zero - a zero would read as "no high blood
+         pressure here", which is a clinical claim this report cannot make.
+    -->
+    <sections>
+        <section>
+            <key>riskFlags</key>
+            <label>Postnatal risk flags</label>
+            <kind>conditionBreakdown</kind>
+        </section>
+    </sections>
+
+    <conditionConcepts>
+        <!-- Low birth weight: a tick on the register, so a coded yes. -->
+        <conditionConcept>
+            <name>MNR D21 Birth weight under 2.5kg</name>
+            <label>Low birth weight</label>
+        </conditionConcept>
+        <!-- Referral: the register's own yes/no question. -->
+        <conditionConcept>
+            <name>MNR PR15 Refer to Doctor?</name>
+            <label>Referred to doctor</label>
+        </conditionConcept>
+        <!--
+             The two survival questions are deliberately NOT in this list. A
+             condition breakdown counts the concept answered YES, and for
+             "Mother alive" the yes is the good outcome - so listing them would
+             put a bar for the women who survived under a heading called risk
+             flags, which inverts the one thing the chart is for. They are
+             reported as rates above instead, where yes reads as it is meant to.
+        -->
+    </conditionConcepts>
+
+</reportMapping>

@@ -250,18 +250,27 @@
 
   function formatIndicatorValue(n, kind) {
     // A mean is carried to one decimal by the API; a count is a whole number.
-    return kind === "codedRate" ? String(n) : n.toLocaleString();
+    return isRateKind(kind) ? String(n) : n.toLocaleString();
+  }
+
+  /* Both rate kinds are whole percentages from the same one-division-over-the-
+     answers computation, so they format and carry a unit identically. Only the
+     set of answers that counts differs, and that is the mapping's business. */
+  function isRateKind(kind) {
+    return kind === "codedRate" || kind === "codedRateAnyOf";
   }
 
   function indicatorUnit(kind) {
-    if (kind === "codedRate") return "%";
+    if (isRateKind(kind)) return "%";
     if (kind === "meanAgeMonths") return "months";
     return "";
   }
 
   function indicatorCaption(kind) {
     switch (kind) {
-      case "codedRate": return "of encounters recording this";
+      case "codedRate":
+      case "codedRateAnyOf":
+        return "of encounters recording this";
       case "numericMean": return "mean of recorded values";
       case "meanAgeMonths": return "at the encounter";
       case "encounterCount": return "encounters in period";

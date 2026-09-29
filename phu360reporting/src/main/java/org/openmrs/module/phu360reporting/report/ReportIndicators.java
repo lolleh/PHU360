@@ -92,12 +92,24 @@ public final class ReportIndicators {
             if (conceptId == null) {
                 continue;
             }
-            Integer answerId = spec.getAnswer() == null ? null : resolve(spec.getAnswer(), concepts, missing);
-            if (spec.getAnswer() != null && answerId == null) {
+            // Every answer the indicator names has to resolve, or the figure would
+            // silently be computed over a smaller set than the mapping asked for:
+            // "stages 4 to 8" quietly becoming "stages 4 to 7" is a rate that is
+            // wrong without anything on the page saying so.
+            List<Integer> answerIds = new ArrayList<Integer>();
+            for (String answer : spec.getAnswers()) {
+                Integer answerId = resolve(answer, concepts, missing);
+                if (answerId == null) {
+                    answerIds = null;
+                    break;
+                }
+                answerIds.add(answerId);
+            }
+            if (answerIds == null) {
                 continue;
             }
-            indicators.add(indicator(spec.getKey(), spec.getLabel(), spec.getKind(), value(spec, conceptId, answerId,
-                    from, toExclusive, locationIds, filter, concepts)));
+            indicators.add(indicator(spec.getKey(), spec.getLabel(), spec.getKind(),
+                    value(spec, conceptId, answerIds, from, toExclusive, locationIds, filter)));
         }
 
         for (ReportLayout.Section spec : layout.getSections()) {
@@ -175,14 +187,15 @@ public final class ReportIndicators {
      * however much of the register nobody filled in. That makes the denominator
      * the number of encounters carrying the concept with any answer.
      */
-    private static double value(ReportLayout.Indicator spec, Integer conceptId, Integer answerId, Date from,
-            Date toExclusive, Set<Integer> locationIds, ReportFilter filter, Concepts concepts) {
-        if (ReportLayout.KIND_CODED_RATE.equals(spec.getKind())) {
+    private static double value(ReportLayout.Indicator spec, Integer conceptId, List<Integer> answerIds, Date from,
+            Date toExclusive, Set<Integer> locationIds, ReportFilter filter) {
+        if (ReportLayout.KIND_CODED_RATE.equals(spec.getKind())
+                || ReportLayout.KIND_CODED_RATE_ANY_OF.equals(spec.getKind())) {
             long answered = coded(conceptId, null, from, toExclusive, locationIds, filter);
             if (answered == 0) {
                 return 0d;
             }
-            long hit = coded(conceptId, answerId, from, toExclusive, locationIds, filter);
+            long hit = codedAnyOf(conceptId, answerIds, from, toExclusive, locationIds, filter);
             long good = spec.isInverted() ? answered - hit : hit;
             // Rounded to a whole percent: the dashboard shows whole numbers, and
             // carrying a fraction that is then truncated would show a different
@@ -195,7 +208,7 @@ public final class ReportIndicators {
         if (ReportLayout.KIND_NUMERIC.equals(spec.getKind())) {
             return coded(conceptId, null, from, toExclusive, locationIds, filter);
         }
-        return coded(conceptId, answerId, from, toExclusive, locationIds, filter);
+        return codedAnyOf(conceptId, answerIds, from, toExclusive, locationIds, filter);
     }
 
     /**
@@ -217,8 +230,7 @@ public final class ReportIndicators {
     }
 
     /**
-     * Encounters carrying {@code conceptId}, restricted to {@code answerId} when
-     * one is given.
+     * Encounters carrying {@code conceptId}, with no restriction on the answer.
      *
      * <p>Counted per encounter rather than per obs: a register can record the
      * same concept more than once on one encounter (a re-entered row, a
@@ -232,6 +244,50 @@ public final class ReportIndicators {
                 + obsWhere(conceptId, answerId, from, toExclusive, locationIds, filter);
         List<Object[]> rows = query(sql, from, toExclusive, locationIds, filter, conceptId, answerId);
         return rows.isEmpty() || rows.get(0)[0] == null ? 0L : ((Number) rows.get(0)[0]).longValue();
+    }
+
+    /**
+     * Encounters carrying {@code conceptId} with any one of {@code answerIds}.
+     *
+     * <p>One encounter counts once however many of the answers it carries, so
+     * "ANC visit four and also visit five" is one woman who reached four contacts,
+     * not two.
+     */
+    private static long codedAnyOf(Integer conceptId, List<Integer> answerIds, Date from, Date toExclusive,
+            Set<Integer> locationIds, ReportFilter filter) {
+        if (answerIds == null || answerIds.isEmpty()) {
+            return 0L;
+        }
+        if (answerIds.size() == 1) {
+            return coded(conceptId, answerIds.get(0), from, toExclusive, locationIds, filter);
+        }
+        String sql = "SELECT COUNT(DISTINCT o.encounter_id) FROM obs o JOIN encounter e"
+                + " ON e.encounter_id = o.encounter_id"
+                + obsWhere(conceptId, null, from, toExclusive, locationIds, filter)
+                + " AND o.value_coded IN (:ansIds)";
+        Session sess = IndicatorFacts.session();
+        try {
+            NativeQuery q = sess.createNativeQuery(sql);
+            q.setParameter("cid", conceptId);
+            q.setParameterList("ansIds", answerIds);
+            q.setParameter("from", from);
+            q.setParameter("to", toExclusive);
+            if (hasLocations(locationIds)) {
+                q.setParameterList("locIds", locationIds);
+            }
+            if (filter != null) {
+                filter.bind(sql, q);
+            }
+            List<?> raw = q.list();
+            if (raw.isEmpty()) {
+                return 0L;
+            }
+            Object r = raw.get(0);
+            Object first = r instanceof Object[] ? ((Object[]) r)[0] : r;
+            return first == null ? 0L : ((Number) first).longValue();
+        } finally {
+            sess.close();
+        }
     }
 
     /** The obs half of a statement: the concept, its answer, the period and the scope. */
@@ -308,17 +364,21 @@ public final class ReportIndicators {
             Date from, Date toExclusive, Set<Integer> locationIds, ReportFilter filter, int limit) {
         List<Integer> conceptIds = new ArrayList<Integer>();
         Set<Integer> seen = new LinkedHashSet<Integer>();
-        for (String name : layout.getConditionConcepts()) {
-            Integer id = concepts.conceptId(name);
+        Map<Integer, String> labels = new LinkedHashMap<Integer, String>();
+        for (ReportLayout.Condition condition : layout.getConditionConcepts()) {
+            Integer id = concepts.conceptId(condition.getName());
             // A condition this database does not have contributes no bar, and the
             // caller is told about it: an empty chart and a chart of conditions
             // nobody has are different findings.
             if (id == null) {
-                if (!missing.contains(name)) {
-                    missing.add(name);
+                if (!missing.contains(condition.getName())) {
+                    missing.add(condition.getName());
                 }
             } else if (seen.add(id)) {
                 conceptIds.add(id);
+                if (condition.getLabel() != null) {
+                    labels.put(id, condition.getLabel());
+                }
             }
         }
         if (conceptIds.isEmpty()) {
@@ -328,9 +388,19 @@ public final class ReportIndicators {
         if (yesIds.isEmpty()) {
             return new ArrayList<Map<String, Object>>();
         }
-        String sql = "SELECT o.concept_id, COUNT(DISTINCT o.encounter_id) n FROM obs o"
+        // A condition counts however the register recorded the tick: as this concept
+        // answered yes, or as this concept as the answer to the question it belongs
+        // to. A treatment register that has a checkbox per condition records the
+        // first, and one that asks "which method?" and offers the methods as answers
+        // records the second - and a breakdown that only understood one of them
+        // would come back empty against real data, with nothing to say why. The
+        // condition is selected rather than the concept, so the second shape is
+        // labelled with the method that was recorded and not with the question.
+        String sql = "SELECT CASE WHEN o.concept_id IN (:cids) THEN o.concept_id ELSE o.value_coded END cid,"
+                + " COUNT(DISTINCT o.encounter_id) n FROM obs o"
                 + " JOIN encounter e ON e.encounter_id = o.encounter_id WHERE o.voided = 0"
-                + " AND o.concept_id IN (:cids) AND o.value_coded IN (:yesIds) AND e.voided = 0"
+                + " AND e.voided = 0"
+                + " AND ((o.concept_id IN (:cids) AND o.value_coded IN (:yesIds)) OR o.value_coded IN (:cids))"
                 + " AND e.encounter_datetime >= :from AND e.encounter_datetime < :to";
         if (hasLocations(locationIds)) {
             sql += " AND e.location_id IN (:locIds)";
@@ -338,7 +408,7 @@ public final class ReportIndicators {
         if (filter != null) {
             sql += filter.sqlFragment();
         }
-        sql += " GROUP BY o.concept_id ORDER BY n DESC";
+        sql += " GROUP BY cid ORDER BY n DESC";
 
         Session sess = IndicatorFacts.session();
         try {
@@ -356,8 +426,10 @@ public final class ReportIndicators {
             List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
             for (Object r : q.list()) {
                 Object[] row = r instanceof Object[] ? (Object[]) r : new Object[] { r };
+                int id = ((Number) row[0]).intValue();
                 Map<String, Object> m = new LinkedHashMap<String, Object>();
-                m.put("label", concepts.conceptName(((Number) row[0]).intValue()));
+                String label = labels.get(id);
+                m.put("label", label != null ? label : concepts.conceptName(id));
                 m.put("count", ((Number) row[1]).longValue());
                 rows.add(m);
             }

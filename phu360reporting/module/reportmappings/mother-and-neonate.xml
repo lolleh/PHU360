@@ -167,6 +167,46 @@
             <concept>MNR D30 Partograph/Labour Care Guide was used</concept>
             <answer>Yes</answer>
         </indicator>
+        <!--
+             The three figures the workbook's MNR dashboard puts above the register
+             and the existing layout above does not have: the two survival checks
+             at 24 hours, and the four-contact ANC target.
+
+             The ANC one is codedRateAnyOf rather than five rates added together.
+             PP3 is not "the ANC contact" and a yes/no - it is a single question
+             whose answers ARE the contact, 1 through 8. A woman at her fifth
+             contact answers 5, and would score zero against a mapping that
+             expected 4. So the mapping names every answer from the fourth
+             contact on, and the share is computed in one division over the
+             women who answered the question at all. Summing five separate rates
+             in the browser would also have been wrong arithmetic, not just
+             awkward: each is a share of a different subset.
+        -->
+        <indicator>
+            <key>motherAlive24h</key>
+            <label>Mother alive at 24 hours</label>
+            <kind>codedRate</kind>
+            <concept>MNR PR1 Mother alive</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>babyAlive24h</key>
+            <label>Baby alive at 24 hours</label>
+            <kind>codedRate</kind>
+            <concept>MNR D27 Baby alive after 24 hrs?</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>ancFourContacts</key>
+            <label>ANC contacts of 4 or more</label>
+            <kind>codedRateAnyOf</kind>
+            <concept>MNR PP3 Stage of ANC Contact</concept>
+            <answer>MNR PP3 Stage of ANC Contact :: 4</answer>
+            <answer>MNR PP3 Stage of ANC Contact :: 5</answer>
+            <answer>MNR PP3 Stage of ANC Contact :: 6</answer>
+            <answer>MNR PP3 Stage of ANC Contact :: 7</answer>
+            <answer>MNR PP3 Stage of ANC Contact :: 8</answer>
+        </indicator>
     </indicators>
 
     <!--

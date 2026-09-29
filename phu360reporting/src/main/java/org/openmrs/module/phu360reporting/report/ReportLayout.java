@@ -42,6 +42,18 @@ public final class ReportLayout {
      */
     public static final String KIND_CODED_RATE = "codedRate";
 
+    /**
+     * Share of the encounters that recorded the concept and gave one of several
+     * coded answers, as a percentage.
+     *
+     * <p>For a question whose good answers are a set rather than one. "ANC
+     * contacts of four or more" is a single question the register answers by
+     * recording which ANC visit it was, so stages four to eight all count; writing
+     * that as five separate rates and adding them in a browser would be arithmetic
+     * a reader cannot check, and rates of different questions do not add up.
+     */
+    public static final String KIND_CODED_RATE_ANY_OF = "codedRateAnyOf";
+
     /** Encounters carrying a numeric value for the concept. */
     public static final String KIND_NUMERIC = "numeric";
 
@@ -94,15 +106,15 @@ public final class ReportLayout {
         private final String label;
         private final String kind;
         private final String concept;
-        private final String answer;
+        private final List<String> answers;
         private final boolean inverted;
 
-        Indicator(String key, String label, String kind, String concept, String answer, boolean inverted) {
+        Indicator(String key, String label, String kind, String concept, List<String> answers, boolean inverted) {
             this.key = key;
             this.label = label;
             this.kind = kind;
             this.concept = concept;
-            this.answer = answer;
+            this.answers = Collections.unmodifiableList(new ArrayList<String>(answers));
             this.inverted = inverted;
         }
 
@@ -123,9 +135,13 @@ public final class ReportLayout {
             return concept;
         }
 
-        /** The coded answer that counts, or null when the kind does not use one. */
-        public String getAnswer() {
-            return answer;
+        /**
+         * The coded answers that count. Empty for a kind that uses none, one for
+         * every kind but {@link #KIND_CODED_RATE_ANY_OF}, and several for that one
+         * - the set of answers that together count as a "yes".
+         */
+        public List<String> getAnswers() {
+            return answers;
         }
 
         /**
@@ -182,14 +198,44 @@ public final class ReportLayout {
         }
     }
 
+    /**
+     * One row of a register's condition list: the concept, and the shorter name to
+     * put on the bar.
+     *
+     * <p>The label is optional and only worth declaring when the concept's own
+     * name is not a label. A treatment register's concepts read as their condition
+     * text, but the family planning dictionary names a method as the answer to a
+     * question - "MNR FP16 CONDOM :: Male" - which is a column heading and an
+     * answer, not something to print on an axis.
+     */
+    public static final class Condition {
+        private final String name;
+        private final String label;
+
+        Condition(String name, String label) {
+            this.name = name;
+            this.label = label;
+        }
+
+        /** The concept name to resolve, and the bar's label when none is given. */
+        public String getName() {
+            return name;
+        }
+
+        /** The bar label, or null to use the concept's own name. */
+        public String getLabel() {
+            return label;
+        }
+    }
+
     private final List<Indicator> indicators;
     private final List<Section> sections;
-    private final List<String> conditionConcepts;
+    private final List<Condition> conditionConcepts;
 
-    ReportLayout(List<Indicator> indicators, List<Section> sections, List<String> conditionConcepts) {
+    ReportLayout(List<Indicator> indicators, List<Section> sections, List<Condition> conditionConcepts) {
         this.indicators = Collections.unmodifiableList(new ArrayList<Indicator>(indicators));
         this.sections = Collections.unmodifiableList(new ArrayList<Section>(sections));
-        this.conditionConcepts = Collections.unmodifiableList(new ArrayList<String>(conditionConcepts));
+        this.conditionConcepts = Collections.unmodifiableList(new ArrayList<Condition>(conditionConcepts));
     }
 
     /**
@@ -201,8 +247,9 @@ public final class ReportLayout {
      */
     public static ReportLayout standard() {
         List<Indicator> indicators = new ArrayList<Indicator>();
-        indicators.add(new Indicator("encounters", "Encounters", KIND_ENCOUNTER_COUNT, null, null, false));
-        return new ReportLayout(indicators, new ArrayList<Section>(), new ArrayList<String>());
+        indicators.add(
+                new Indicator("encounters", "Encounters", KIND_ENCOUNTER_COUNT, null, new ArrayList<String>(), false));
+        return new ReportLayout(indicators, new ArrayList<Section>(), new ArrayList<Condition>());
     }
 
     public List<Indicator> getIndicators() {
@@ -214,8 +261,8 @@ public final class ReportLayout {
     }
 
     /**
-     * The obs concept names the report's {@code conditionBreakdown} section
-     * counts, being the register's own list of conditions.
+     * The obs concepts the report's {@code conditionBreakdown} section counts,
+     * being the register's own list of conditions.
      *
      * <p>Names, and declared by the layout rather than read from the mapping's
      * {@code obsConcepts}, because those are ids from the data package that
@@ -224,7 +271,7 @@ public final class ReportLayout {
      * break it silently: the ids would match nothing and the chart would come
      * back empty.
      */
-    public List<String> getConditionConcepts() {
+    public List<Condition> getConditionConcepts() {
         return conditionConcepts;
     }
 }

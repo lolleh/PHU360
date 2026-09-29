@@ -155,32 +155,45 @@ JavaScript — `renderLayout()` in `app.js` never needs to know what a particula
 register is.
 
 ```xml
-<indicators>
-    <indicator>
-        <key>lowBirthWeight</key>
-        <label>Low birth weight (under 2.5kg)</label>
-        <kind>codedRate</kind>
-        <concept>MNR D21 Birth weight under 2.5kg</concept>
-        <answer>Yes</answer>
-    </indicator>
-    <indicator>
-        <key>motherDeaths</key>
-        <label>Women who did not survive delivery</label>
-        <kind>codedRate</kind>
-        <concept>MNR D12 Mother Survived Delivery</concept>
-        <answer>No</answer>
-        <!-- inverted: report the share WITHOUT the "No" -->
-        <inverted>true</inverted>
-    </indicator>
-</indicators>
-<sections>
-    <section>
-        <key>deliveryType</key>
-        <label>Delivery type</label>
-        <kind>codedBreakdown</kind>
-        <concept>MNR D7 Delivery Type</concept>
-    </section>
-</sections>
+<!-- excerpt: the other elements of the mapping are shown in the section above -->
+<reportMapping>
+    <indicators>
+        <indicator>
+            <key>ancFourContacts</key>
+            <label>ANC contacts of 4 or more</label>
+            <kind>codedRateAnyOf</kind>
+            <concept>MNR PP3 Stage of ANC Contact</concept>
+            <!-- The question's answers ARE the contacts, so all of these count. -->
+            <answer>MNR PP3 Stage of ANC Contact :: 4</answer>
+            <answer>MNR PP3 Stage of ANC Contact :: 5</answer>
+            <answer>MNR PP3 Stage of ANC Contact :: 6</answer>
+        </indicator>
+        <indicator>
+            <key>lowBirthWeight</key>
+            <label>Low birth weight (under 2.5kg)</label>
+            <kind>codedRate</kind>
+            <concept>MNR D21 Birth weight under 2.5kg</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>motherDeaths</key>
+            <label>Women who did not survive delivery</label>
+            <kind>codedRate</kind>
+            <concept>MNR D12 Mother Survived Delivery</concept>
+            <answer>No</answer>
+            <!-- inverted: report the share WITHOUT the "No" -->
+            <inverted>true</inverted>
+        </indicator>
+    </indicators>
+    <sections>
+        <section>
+            <key>deliveryType</key>
+            <label>Delivery type</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR D7 Delivery Type</concept>
+        </section>
+    </sections>
+</reportMapping>
 ```
 
 ### Indicator kinds
@@ -191,7 +204,8 @@ register is.
 | `distinctPatients` | distinct patients across the whole range | no |
 | `meanAgeMonths` | mean age at the encounter, one decimal | no |
 | `codedCount` | encounters carrying the concept with the given answer | yes |
-| `codedRate` | share of the encounters **that answered** carrying the answer | yes |
+| `codedRate` | share of the encounters **that answered** carrying any one `<answer>` | yes |
+| `codedRateAnyOf` | the same, counting any of several `<answer>`s | yes, and two or more answers |
 | `numeric` | encounters carrying a numeric value for the concept | yes |
 | `numericMean` | mean of the recorded numeric values, one decimal | yes |
 
@@ -201,6 +215,17 @@ complication rate and reads as a failure; inverted, it is the share of deliverie
 that were uncomplicated, which is how a clinician reads it. `"Malaria treated
 with ACT within 24h"` and `"malaria treated without ACT"` are a matched pair, and
 showing only one of them hides half the finding.
+
+`codedRateAnyOf` exists for a question whose good answers are a set rather than
+one. The ANC register does not ask "did she attend four contacts, yes or no" — it
+asks which contact this was, and the answers are the contacts themselves. A woman
+at her fifth contact answers `5` and scores zero against a mapping that expected
+`4`. So the mapping names every answer from the fourth contact on, and the share
+is one division over the women who answered. Summing five separate `codedRate`s in
+the browser would be wrong arithmetic as well as awkward: each is a share of a
+different subset. Every named answer must resolve or the figure is not computed at
+all — a rate quietly built from a smaller set than the mapping asked for is wrong
+with nothing on the page saying so.
 
 ### Section kinds
 
@@ -214,6 +239,36 @@ showing only one of them hides half the finding.
 register names 102 conditions and a hundred-bar chart is not one; the section also
 carries `declaredConditions` so the caption can say "15 of 102 recorded" rather
 than letting the cap read as the register's size.
+
+A `conditionConcept` may be a bare name, or carry a `<label>`:
+
+```xml
+<conditionConcept>
+    <name>MNR FP15 IMPLANTS :: 3 yr implant (ie. levoplant)</name>
+    <label>3 yr implant</label>
+</conditionConcept>
+```
+
+The label is worth declaring when the concept's own name is not a label. A
+treatment register's concepts read as their condition text, but the family
+planning dictionary names a method as the answer to a question — `MNR FP16 CONDOM
+:: Male` — which is a column heading and an answer, and no use on an axis.
+
+A condition counts **however the register recorded the tick**: as that concept
+answered yes, or as that concept as the answer to the question it belongs to. A
+register with a checkbox per condition records the first; one that asks "which
+method?" and offers the methods as answers records the second. Only the concept
+that was actually recorded is used for the label, so the second shape is
+attributed to the method and not to the question.
+
+Two things deliberately are **not** in a condition list, both because counting
+them as affirmative would invert the finding: a survival question (`MNR PR1 Mother
+alive`, where the yes is the *good* outcome) and a free-text measurement. The
+workbook's postnatal and family planning dashboards both show a "BP ≥130/90"
+figure; blood pressure is entered as text in these registers, so there is nothing
+to match two numbers against without parsing the string, and the threshold would
+be a guess. Those are left out of the layouts rather than shown as zero, which
+would read as a clinical claim the report cannot make.
 
 ### The rules a layout has to follow
 
@@ -252,7 +307,10 @@ than letting the cap read as the register's size.
 | `under-five-register` | encounters, children seen, mean age, age bands. Deliberately no obs indicators: the under-five form is not shipped, so there is no field spec to write them against, and guessing would put unverifiable figures on the page |
 | `above-five-morbidity` | 18 condition and treatment-quality rates, plus the leading 15 conditions |
 | `above-five-patient-list` | encounters, patients seen, age bands. No conditions: that is what the Morbidity Summary is for, and repeating the register's 102 tick-boxes would give one chart two names in two files that could drift |
-| `mother-and-neonate` | 13 delivery and neonatal indicators including mean birth weight, plus 5 breakdowns |
+| `mother-and-neonate` | 16 delivery and neonatal indicators including mean birth weight and both 24-hour survival checks, plus 5 breakdowns |
+| `postnatal-care` | 7: postnatal cases, 4 completion shares, and risk flags as counts. The counts and the shares are kept apart — "2 women were referred" and "2 of 12 had high blood pressure" are different findings about different questions, and flattening them into one list of percentages is how a dashboard comes to report a case count as a rate |
+| `delivery-register` | 8: volume, live-birth rate, and the five care-quality checks the labour register exists to record, plus 3 breakdowns. Built on the DR series rather than reusing the MNR layout, because DR is a different set of questions from D |
+| `family-planning` | 9: volume, three shares, and the same three as counts, plus the method mix. The shares are how a programme is assessed; the counts are what a district orders against, and 58% is not a number anyone stocks drugs by |
 | `hf1/hf2/hf3/hf5/hf12-summary` | none, on purpose — `mapped: false` with no mapping, so the API short-circuits before any layout is read. There is no data to be a layout of |
 
 `ReportLayout.standard()` — one encounter count and no sections — is what a
