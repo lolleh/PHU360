@@ -41,3 +41,6 @@ ae06d311-1866-455b-8a64-126a9bd74171,true,NCD Initial Consult,NCD initial forms 
 5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c,true,NCD Followup Consult,NCD followup forms excluded (see content/exclusions.txt)
 6a3afa6f-8f78-44a9-80c9-3f4f3b6ad8f2,true,NCD Followup Part 2 only,NCD followup part 2 forms excluded (see content/exclusions.txt)
 e02a8c32-4f14-4ff7-a4e9-2f087d9a1cf7,true,NCD Followup Part 1 only,NCD followup part 1 form excluded (see content/exclusions.txt)
+415b342e-9e4d-4496-bac4-7b6ffb8619f0,true,Maternal Death,Maternal Death case note form excluded (see content/exclusions.txt)
+fb4318dd-cca9-4d20-bb31-0d4eba947d74,true,NICU Triage,NICU triage form excluded (see content/exclusions.txt)
+37f04ddf-9653-4a02-98b4-1c23734c2f15,true,Postpartum progress,Postpartum daily progress form excluded (see content/exclusions.txt)

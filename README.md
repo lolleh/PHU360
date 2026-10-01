@@ -770,7 +770,7 @@ there is nothing in the repo to delete.
 | NCD | 13 | NCD Initial Consult + Part 1/2, NCD Followup Consult + Part 1/2 |
 | Oncology / OVC / COVID / other | 11 | Oncology Initial Consult, Oncology Consultation, Oncology Treatment Plan, Chemotheraphy treatment session, OVC Intake, OVC Follow-up, COVID-19 Admission/Progress/Discharge, Echocardiogram, Physical Rehab Evaluation |
 | `pih/htmlforms/retired/` | 5 | (none — the directory held no live encounter types) |
-| **Total** | **73** | **42 retired, 6 of them from the earlier outpatient removal** |
+| **Total** | **73** | **45 retired, 6 of them from the earlier outpatient removal** |
 
 Four consequences, each of which had to be handled in the same change:
 
@@ -784,12 +784,18 @@ Four consequences, each of which had to be handled in the same change:
   in place: dropping a table is a data migration, and the module tolerates a
   table no mapping names. The remaining 8 report types read encounter types that
   surviving forms produce.
-- **42 encounter types are retired** in
+- **45 encounter types are retired** in
   `encountertypes/sierraLeoneEncounterTypes_retired.csv`. Retiring an encounter
   type is what stops the visit UI listing a form that is no longer there — an
   encounter type is what it lists. Verified in both directions: no retired type
   still has a surviving form bound to it, and no deleted form leaves an
-  encounter type active.
+  encounter type active. Three of the 45 are not obvious from the form list and
+  were found by diffing the surviving set against the stock config: `Maternal
+  Death`, `NICU Triage` and `Postpartum progress` each had exactly one form,
+  and it was one of the 73. Six other program encounter types (`Newborn
+  Observations`, `Newborn Referral`, `NICU Followup`, `Maternal Follow-up Home
+  Assessment`, `Maternal Post-partum Home Assessment`) were already formless in
+  stock, and are left alone.
 - **The 41 matching entries in `pih/scripts/visit/encounterTypeConfig.js` are
   removed.** This file is tracked and its `getFormResource()` bindings name the
   deleted XMLs, so leaving them would 404 the visit UI on 11 encounter types.
