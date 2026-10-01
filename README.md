@@ -31,7 +31,7 @@ openmrs-forms/                 register form sources + generators (mother-neonat
 
 ## How it's assembled
 
-- **`content/`** — the content package. `seed-distro-maven-repo.sh` materializes the full config into the gitignored `content/build/`: the stock PIH SL image config overlaid with the tracked `configuration/backend_configuration/` delta (MOH branding, themes, htmlforms, registers, reports, `-mongo`/`-falaba`/`-sinkunia` site profiles) minus `content/exclusions.txt` (15 stock data-export descriptors). The SDK installs it as `openmrs_config`.
+- **`content/`** — the content package. `seed-distro-maven-repo.sh` materializes the full config into the gitignored `content/build/`: the stock PIH SL image config overlaid with the tracked `configuration/backend_configuration/` delta (MOH branding, themes, htmlforms, registers, reports, `-mongo`/`-falaba`/`-sinkunia` site profiles) minus `content/exclusions.txt` (15 stock data-export descriptors, 10 htmlforms, 9 documentation CSVs). The SDK installs it as `openmrs_config`.
 - **`distro/openmrs-distro.properties`** — the distribution manifest: `omod.*` pins identical to the stock PIH SL baseline plus the branded SPA coordinates and `content.phu360-content`. `build-distro.sh` cleans `distro/target/distro` before each SDK run so stale output never masks edits.
 - **`distro/Dockerfile`** — pins `openmrs/openmrs-core:2.8.9` and copies the six distribution outputs from `target/distro/web`.
 
@@ -59,7 +59,7 @@ and sections.
 |-----|-------|------------|
 | `all-encounter` | All Encounter | no restriction |
 | `above-five-patient-list` | Above Five Register - Patient List | the `Visit Note` encounter type the register's form is attached to |
-| `under-five-register` | Under Five Register | 15 pediatric / vaccination / newborn / infant encounter type **names** |
+| `under-five-register` | Under Five Register (2 Months - 5 Years) | the `Under Five IMNCI` encounter type the register's form is attached to |
 | `hf1/hf2/hf3/hf5/hf12-summary` | HF1, HF2, HF3, HF5, HF12 Summary | not mapped |
 | `mother-and-neonate` | Mother and Neonate | 22 maternal and newborn encounter type names |
 
@@ -67,16 +67,21 @@ Two decisions worth knowing before editing these files:
 
 - **Names, not ids, for encounter types.** Every encounter type name is resolved
   to an id at request time and unknown names are skipped, so a catalog entry
-  survives a data package that loads a different id set. The Under Five register
-  is deliberately defined this way: `underFiveRegister.xml` is not shipped (80
-  concept ids, 8 of which ever existed), so the report is scoped by the encounter
-  types under-five children are actually seen under.
+  survives a data package that loads a different id set. The registers are
+  defined this way: each is scoped to the one encounter type its own form is
+  attached to, rather than to a list of service encounter types the visit might
+  plausibly have been recorded under. The old 14-type guess for
+  `under-five-register` named two `Primary Care Pediatric *Consult` types that
+  this install retires, which is why it showed no under-five visits at all —
+  see [Outpatient, AYFS & Mental Health forms](#outpatient-ayfs--mental-health-forms-and-their-encounter-types).
 - **Concept ids are checked against the database.** `ReportFilter.obsConceptsMissing()`
   reports a report as unmapped when it is defined by obs concepts and this
   database has none of them, and `resolve()` drops the ids that are absent rather
-  than filtering on them. Without that, the two Above Five entries - whose
-  concepts were never exported - would have answered every date range with a
-  confident `0` encounters. They now come back with `reportMapped: false` and
+  than filtering on them. The gate applies only to a layout that actually reads
+  obs (`ReportLayout.readsObs()`). `above-five-patient-list` answers from the
+  encounter and patient tables, so its obs-concept ids being absent from this
+  database cannot change a figure on its page. A report whose layout *does* read
+  obs and has no resolvable concepts comes back with `reportMapped: false` and
   `"… has no data mapping configured yet."`, which is what the `mapped` flag in
   `action=reports` and the notice under the filter bar are for.
 
@@ -101,12 +106,12 @@ a hand-rolled `JsonWriter`.
 
 ```xml
 <reportMapping>
-    <key>under-five-register</key>          <!-- request key, and this file's name -->
-    <label>Under Five Register</label>      <!-- shown in the filter -->
-    <table>phu360_report_under_five_register</table>
+    <key>above-five-patient-list</key>   <!-- request key, and this file's name -->
+    <label>Above Five Register - Patient List</label>   <!-- shown in the filter -->
+    <table>phu360_report_above_five_patient_list</table>
     <mapped>true</mapped>                   <!-- false ⇒ reportMapped:false, table left empty -->
     <encounterTypes>                       <!-- names, resolved per installation -->
-        <encounterType>Primary Care Pediatric Initial Consult</encounterType>
+        <encounterType>Visit Note</encounterType>
     </encounterTypes>
     <obsConcepts>                          <!-- ids, checked against the database -->
         <obsConcept>8842</obsConcept>
@@ -116,6 +121,15 @@ a hand-rolled `JsonWriter`.
     <sections/>                            <!-- optional; see "Report layouts" -->
 </reportMapping>
 ```
+
+`above-five-patient-list` is the one mapping that still carries an
+`<obsConcepts>` block, and it is the only one that can: every other report names
+its concepts and answers as *strings* in `<indicators>`/`<sections>` instead, and
+those are resolved per concept name at request time
+(`ReportIndicators.resolve()`). The two are not interchangeable — an id list is
+what a data package exported, a name list is what a form defines — so the ids
+stay where they were exported and the rest of the dashboard does not need an
+export it never had.
 
 Three rules the loader enforces:
 
@@ -134,9 +148,11 @@ Three rules the loader enforces:
 
 `mapped` is the declared state; what the API reports is the declared state
 narrowed by what this database can actually resolve. `above-five-patient-list` is
-`mapped: true` in its file and comes back as `reportMapped: false`, because the
-Above Five register's form and conditions have never been loaded into this
-database.
+`mapped: true` and the Above Five register's form, `Visit Note` encounter type and
+concepts are now shipped (see
+[Under Five, Above Five & Mother/Neonate registers](#under-five-above-five--motherneonate-registers)),
+so its encounter type resolves and the report draws. It reads only encounters,
+patients and age bands, so it stays empty until Above Five visits are recorded.
 
 ### A report that cannot be drawn says which of three things is wrong
 
@@ -330,7 +346,7 @@ would read as a clinical claim the report cannot make.
 | Report key | Layout |
 |------------|--------|
 | `all-encounter` | volume only — it is the unfiltered fallback view, so the shared KPIs are the point |
-| `under-five-register` | encounters, children seen, mean age, age bands. Deliberately no obs indicators: the under-five form is not shipped, so there is no field spec to write them against, and guessing would put unverifiable figures on the page |
+| `under-five-register` | 12 indicators (volume, children seen, mean age, new/follow-up split, mean weight/MUAC/temperature, and the four IMNCI coverage checks) and 6 sections: visits by type, disease classification, outcome, disability type, age bands, and the 52 sign/condition/service tick boxes. Every concept and answer is named rather than numbered, and every name is checked against the database — see [Under Five, Above Five & Mother/Neonate registers](#under-five-above-five--motherneonate-registers) for why the names are generated from the same field spec that generates the form |
 | `above-five-patient-list` | encounters, patients seen, age bands. No conditions, deliberately: the register's 102 tick-boxes are a morbidity summary, and repeating them here would give one chart two names in two files that could drift. The Morbidity Summary report type has been removed from the catalog |
 | `mother-and-neonate` | 16 delivery and neonatal indicators including mean birth weight and both 24-hour survival checks, plus 5 breakdowns |
 | `postnatal-care` | 7: postnatal cases, 4 completion shares, and risk flags as counts. The counts and the shares are kept apart — "2 women were referred" and "2 of 12 had high blood pressure" are different findings about different questions, and flattening them into one list of percentages is how a dashboard comes to report a case count as a rate |
@@ -532,11 +548,13 @@ attached to the webapp's — verify the page HTML, not the log.
 
 ## Under Five, Above Five & Mother/Neonate registers
 
-The patient dashboard ships three register buttons (Overall + Visit Actions), all
+The patient dashboard ships five register buttons (Overall + Visit Actions), all
 addressed by `formUuid`:
 
 | Button | htmlform | `formUuid` |
 |--------|----------|------------|
+| Above Five General Treatment Register | `aboveFiveTreatmentRegister.xml` | `eaad2f41-de8f-48b7-9d40-50187fb95932` |
+| Under Five IMNCI Register | `underFiveIMNCIRegister.xml` | `b359d6b5-cdc2-5244-b6b2-bf78ae2891d0` |
 | Mother and Neonate Health Register | `motherAndNeonateRegister.xml` | `3f2b7c14-9d6a-4e58-b0c3-71a4d9e25f86` |
 | Delivery Register | `deliveryRegister.xml` | `dc288387-522e-5506-9607-ef2d20fdd7ef` |
 | Family Planning Register | `familyPlanningRegister.xml` | `6ed8a9e5-1341-5193-9882-c1e0600f1d48` |
@@ -545,13 +563,34 @@ addressed by `formUuid`:
   Every button uses `formUuid` rather than `htmlFormId`: a numeric id depends on
   how many forms the database has already seen, so an `htmlFormId` link breaks
   as soon as the load order changes or a form row is purged.
-- **Above Five / Under Five were removed.** The four buttons pointing at
-  `aboveFiveTreatmentRegister.xml` and `underFiveRegister.xml` are gone, along
-  with both XMLs. They were already unusable: the Under Five form references 80
-  numeric concept ids of which 8 existed in the database, and Above Five
-  references 120 concept UUIDs of which none existed — neither form's concepts
-  were ever shipped. Both are recoverable from git history if the concepts are
-  ever exported.
+- **Both registers that were missing are now shipped.** `aboveFiveTreatmentRegister.xml`
+  and `underFiveIMNCIRegister.xml` are in `pih/htmlforms/` with their dashboard
+  buttons, the encounter types they are attached to (`Visit Note` and
+  `Under Five IMNCI`) are added to `sierraLeoneEncounterTypes.csv`, and their
+  concepts ship as `concepts/aboveFiveConcepts.csv` and
+  `concepts/underFiveIMNCIConcepts.csv`. The Above Five form and its concepts
+  were exported from the database the register was built on
+  (`openmrs-forms/above-five-treatment-register/` is the standalone source); the
+  Under Five IMNCI form is digitised from the printed register
+  "Under5 Register-IMNCI Final Print Review.xlsx", sheet
+  "2 Month-5 Years Register", and covers ages 2 months to 5 years — a different
+  document from the newborn register, hence a different encounter type.
+- **The two were unusable before because their concepts had never been loaded.**
+  The old Under Five XML referenced 80 numeric concept ids of which 8 existed,
+  and Above Five referenced 120 concept UUIDs of which none existed. Both now
+  resolve: every `conceptId` in either form is a UUID declared in its own
+  concepts CSV, and across all three shipped CSVs there are 612 names and no
+  duplicate `en` name for OpenMRS to reject.
+- **26 Above Five condition concepts are suffixed.** They share a name with an
+  existing PHU360 diagnosis (`Tetanus`, `Leprosy`, `Hypertension`, …) and
+  OpenMRS refuses a duplicate `en` name, so those are imported under a
+  ` (Above Five register)` suffix: they keep the form's UUIDs, which is what the
+  form addresses them by. The Under Five concepts needed no such treatment.
+- **`under-five-register` reads only its own encounter type.** It used to name 14
+  paediatric and newborn service types because the form did not exist, so the
+  only way to see an under-five visit was to guess which other service had seen
+  the child. Now that the form exists, the report reads `Under Five IMNCI` and
+  its indicators are named against that form's own fields.
 - **Forms** — pihcore's `HtmlFormSetup` loads every XML in
   `pih/htmlforms/` on boot via `saveHtmlFormFromXml`, which keys on the
   `formUuid` attribute, so re-running it is idempotent.
@@ -614,30 +653,46 @@ addressed by `formUuid`:
    `generate_concepts_spec.sanitize()` substitutes words instead, and the form
    still displays the original label.
 
-- **Legacy tooling** — `openmrs-forms/above-five-treatment-register/` standalone
-  sources & patched-WAR build scripts target an older referenceapplication-based
-  OpenMRS and are not consumed by this 2.8.9 build.
+- **Legacy tooling** — `openmrs-forms/above-five-treatment-register/` also holds
+  its own standalone sources & patched-WAR build scripts, which target an older
+  referenceapplication-based OpenMRS and are not consumed by this 2.8.9 build.
+  The tracked form (`pih/htmlforms/aboveFiveTreatmentRegister.xml`) and the
+  concepts CSV were derived from what that package had loaded, not from the
+  scripts.
 
-## Outpatient & Mental Health forms and their encounter types
+## Outpatient, AYFS & Mental Health forms and their encounter types
 
-Four htmlforms are not part of PHU360: `outpatientConsultInitial.xml`,
-`outpatient-followup.xml`, `mentalHealth.xml` and `mentalHealthFollowup.xml`
-(plus the `_v1.0` revisions of the mental-health pair). Their encounter types
-were the only thing still offering them, because an encounter type is what the
-visit UI lists, not a form.
+None of these htmlforms are part of PHU360. Their encounter types were the only
+thing still offering them, because an encounter type is what the visit UI lists,
+not a form.
 
-| Encounter type | uuid | shipped by |
-|----------------|------|------------|
-| PHU360 Outpatient Initial | `7d5853d4-67b7-4742-8492-fcf860690ed5` | `sierraLeoneEncounterTypes.csv` |
-| PHU360 Outpatient Followup | `d8a038b5-90d2-43dc-b94b-8338b76674f3` | `sierraLeoneEncounterTypes.csv` |
-| Mental Health Follow-up | `9d701a81-bb83-40ea-9efc-af50f05575f2` | `sierraLeoneEncounterTypes.csv` |
-| Mental Health Consult | `a8584ab8-cc2a-11e5-9956-625662870761` | stock `encounterTypes.csv` |
+| Form XML (all excluded) | formName | Encounter type | uuid |
+|--------------------------|----------|----------------|------|
+| `outpatient-initial.xml` (+`_v1.0`) | Outpatient Initial | PHU360 Outpatient Initial | `7d5853d4-67b7-4742-8492-fcf860690ed5` |
+| `outpatient-followup.xml` (+`_v1.0`) | Outpatient Followup | PHU360 Outpatient Followup | `d8a038b5-90d2-43dc-b94b-8338b76674f3` |
+| `mentalHealth.xml` (+`_v1.0`) | Mental Health Intake | Mental Health Consult | `a8584ab8-cc2a-11e5-9956-625662870761` |
+| `mentalHealthFollowup.xml` (+`_v1.0`) | Mental Health Follow-up | Mental Health Follow-up | `9d701a81-bb83-40ea-9efc-af50f05575f2` |
+| `ayfsIntake.xml` | AYFS Initial | AYFS Initial | `1f3375af-fd9e-42a9-954e-99533ee15de9` |
+| `ayfsFollowup.xml` | AYFS Followup | AYFS Followup | `73399721-644e-494b-86c9-5dd345072db3` |
+| `primary-care-adult-initial.xml` (+`_v1.0`) | Outpatient Intake (Adult) | Primary Care Adult Initial Consult | `27d3a180-031b-11e6-a837-0800200c9a66` |
+| `primary-care-adult-followup.xml` (+`_v1.0`) | Outpatient Followup (Adult) | Primary Care Adult Followup Consult | `27d3a181-031b-11e6-a837-0800200c9a66` |
+| `primary-care-peds-initial.xml` (+`_v1.0`) | Outpatient Intake (Peds) | Primary Care Pediatric Initial Consult | `5b812660-0262-11e6-a837-0800200c9a66` |
+| `primary-care-peds-followup.xml` (+`_v1.0`) | Outpatient Followup (Peds) | Primary Care Pediatric Followup Consult | `229e5160-031b-11e6-a837-0800200c9a66` |
+
+**Two different families are called "outpatient" in the stock config.** The
+`outpatient-initial`/`outpatient-followup` pair and the `primary-care-*` pair are
+unrelated files that both surface under near-identical names in the form list, so
+excluding only one of them leaves forms called "Outpatient Intake" still on the
+pick list. Both are in `content/exclusions.txt`.
+
+Note `outpatientConsult.xml` / `Clinical Consult` is a *different* form on the
+`Consultation` encounter type and is deliberately still shipped.
 
 They are **retired, not deleted** — the same pattern the programs already use:
 
 - the three PHU360-ships rows are gone from
   `content/configuration/backend_configuration/encountertypes/sierraLeoneEncounterTypes.csv`;
-- `sierraLeoneEncounterTypes_retired.csv` re-declares all four with
+- `sierraLeoneEncounterTypes_retired.csv` re-declares all ten with
   `Void/Retire=true`, so a fresh install retires them on first boot and an
   existing install picks them up when that file's checksum changes;
 - the file has to sort **after** `encounterTypes.csv` or the stock
@@ -645,36 +700,59 @@ They are **retired, not deleted** — the same pattern the programs already use:
   install. `sierraLeoneEncounterTypes_retired.csv` does.
 
 Check with the REST API the visit UI reads — the default view hides retired
-types, so all four should be missing while `/encountertype?retired=true` lists
+types, so all ten should be missing while `/encountertype?retired=true` lists
 them:
 
 ```
 curl -su admin:Admin123 'http://127.0.0.1:8090/openmrs/ws/rest/v1/encountertype?v=default&limit=200'
 ```
 
-The eight `pih/htmlforms/documentation/*.csv` files that documented those forms
-are removed from the tracked config and added to `content/exclusions.txt` (they
-also ship with the stock config, so the delta deleting them is not enough on
-its own), and their rows are gone from
-`documentation/_section_to_form_mapping.csv`.
+### Removing a form also has to touch the data volume
+
+The image ships only the files under `distro/target/distro/web/openmrs_config`,
+but the entrypoint extracts them into the persistent `phu360-data` volume with a
+plain `cp -R` and never deletes anything that used to be there. pihcore's
+`HtmlFormSetup` re-loads every XML it finds on every boot, so a form whose XML is
+no longer shipped stays in the form list and its `form` / `form_resource` /
+`htmlformentry_html_form` rows stay behind, keyed on the XML's `formName` and
+`formVersion` (not its `formUuid` — see
+[Keeping a running install in sync](#keeping-a-running-install-in-sync)).
+Excluding a file is therefore necessary but not sufficient — the volume and those
+rows have to be cleaned too.
+
+`scripts/prune-runtime-config.sh` does this. The forms it keeps are the ones the
+image ships, read out of the built config on every run, so adding a form cannot
+put the script out of step.
 
 What deliberately **stays**:
 
 - the mental-health *subforms*. `triage.xml` embeds
   `configuration/pih/subforms/mental-health-phq2.xml`, so removing the mental
   health forms does not license removing that widget.
-- `pih/scripts/visit/encounterTypeConfig.js` still has the bindings for the four
+- `pih/scripts/visit/encounterTypeConfig.js` still has the bindings for these
   types. It is stock config, and retiring the encounter types makes the entries
   unreachable; it is only worth overriding if the visit UI is still seen
   offering the forms.
-- the mental-health *report descriptors* were already excluded (see
+- the mental-health and NCD *report descriptors* were already excluded (see
   `content/exclusions.txt`).
 
-Note that the two Above Five reporting definitions still name
-`PHU360 Outpatient Initial` / `PHU360 Outpatient Followup` as encounter types.
-That is harmless — those reports are already reported as unmapped, and
-`ReportFilter` only resolves encounter types that are not retired, so the names
-simply resolve to nothing.
+Both retired report definitions used to name these types, and that is what the
+retirement costs:
+
+- The Above Five Patient List definition named `PHU360 Outpatient Initial` /
+  `PHU360 Outpatient Followup`. Those were never the register's types anyway —
+  its form is attached to `Visit Note`, which is what the definition names now.
+  `ReportFilter` resolves only un-retired encounter types, so the old names
+  resolved to nothing.
+- The **Under Five Register** definition named 14 service encounter types,
+  including `Primary Care Pediatric Initial Consult` and `Primary Care Pediatric
+  Followup Consult`. That guessing is gone: the register has a form of its own,
+  so the report is scoped to the `Under Five IMNCI` encounter type and reads
+  that form's fields. Nothing is narrowed by the retirement any more — there was
+  nothing left to narrow. Had the old 14-type list survived, the report would
+  have stayed `mapped=true` on 12 resolving types while quietly showing no
+  paediatric outpatient visits, because `ReportFilter.encounterTypesMissing` only
+  fires when a report resolves *none* of its types.
 
 ## Configuration
 
@@ -741,9 +819,17 @@ scripts/build-distro.sh && docker compose up -d --build
 ```
 
 `build-distro.sh` re-applies `content/configuration/backend_configuration` over
-the materialized `content/build/` config, rebuilds the phu360reporting omod and
+the materialized `content/build/` config, re-applies `content/exclusions.txt` via
+`scripts/apply-config-exclusions.sh`, rebuilds the phu360reporting omod and
 the patched reportingui omod, and clears `distro/target/distro` before the SDK
 run — so config, module and page edits all reach the image.
+
+Exclusions are re-applied on every build, not just at seed time. That matters:
+`seed-distro-maven-repo.sh` is what deletes the excluded paths, and it is skipped
+once `content/build/` exists, so if only the seed script read `exclusions.txt`
+then an exclusion added afterwards would change the config on a machine that
+re-seeded and be silently ignored everywhere else. Both scripts now call the same
+`apply-config-exclusions.sh`.
 
 `docker compose up -d --build` alone does **not** re-materialize config: the
 image is built from `distro/target/distro/web/openmrs_config`, which only
@@ -781,13 +867,51 @@ docker compose up -d openmrs
 ```
 
 It deletes every file present in the volume but absent from
-`distro/target/distro/web/openmrs_config` (as of this writing 179: 172 HTML
-form XMLs, 5 under `pih/htmlforms/retired/`, plus `concepts/mnrRegisterConcepts.csv`
-and `globalproperties/gp_labonfhir.xml`), and purges form rows that no kept
-`formUuid` claims. The `KEEP` array at the top of the script is the authoritative
-list of the 15 forms PHU360 keeps and is verified against the built XMLs on
-every run — a form listed there but missing from the build is a hard error.
-Forms that any encounter still points at are never purged and are listed first.
+`distro/target/distro/web/openmrs_config`, and purges the form rows that no
+shipped form claims. Forms that any encounter still points at are never purged
+and are listed first so they can be checked. On the running install both halves
+currently report nothing to do: the volume holds 627 config files, the same 627
+the image ships, and all 170 `form` rows match a shipped form.
+
+### A form row is identified by (name, version), not by formUuid
+
+This is the part worth knowing before changing the script. pihcore's
+`HtmlFormSetup` loads each XML with `saveHtmlFormFromXml` and keys its own
+uuid→filename map on `HtmlForm.getUuid()`, but it does **not** persist the XML's
+`formUuid` anywhere the purge can see it:
+
+- `form_resource.uuid` is a freshly generated uuid. `HtmlFormSetup` builds the
+  `formEngine` resource with `new FormResource()` and never sets its uuid, so it
+  bears no relation to the form's. Comparing that column against the XML
+  formUuids — which is what this script used to do — matches nothing that is
+  kept and almost everything that is not.
+- `htmlformentry_html_form.uuid` is no better. htmlformentry only reuses the
+  XML's `formUuid` when a row with that uuid already exists; otherwise it mints
+  a new one. Measured on the running install, **1 of the 174** shipped
+  formUuids appears in that table at all.
+
+`(form.name, form.version)` is what OpenMRS keys a form on, what `HtmlFormSetup`
+writes, and what the form picker shows, so that is what the script matches on:
+`formName`/`formVersion` out of each shipped XML, compared against `form`. A row
+matching no shipped XML is a form this install no longer offers.
+
+That mistake had teeth. On an install that was fully in sync, the old predicate
+reported **167 of 170** `form_resource` rows as purgeable — the registers
+included. Its `form_field` and `form` deletes were worse: they were scoped by
+`form_id NOT IN (SELECT form_id FROM form_resource)`, and the NULL `form_id` on
+the encounters created without a form make that predicate never true, so they
+would have deleted the fields of every form in the database. Every delete is now
+scoped to one orphan `form_id` set, child tables before parent, with the
+`form` delete carrying the predicate inline because MySQL refuses to read the
+table it is deleting from (error 1093).
+
+The kept list is read out of `$BUILT_DIR/pih/htmlforms` on every run rather than
+kept in the script, because a form is added by overlaying a new XML onto
+`content/configuration/` and a hard-coded list of things that grow on their own
+is what made this script dangerous in the first place: its 15-entry `KEEP` array
+dated from when 15 forms was the whole shipped set, and against 174 it proposed
+purging 177 of 179 form rows. `PRUNE_KEEP_FORMS` pins an explicit subset instead,
+and a form named there but missing from the build is a hard error.
 
 Re-running the seed script does not substitute for this: the stale files are in
 the volume, not in the build tree.
