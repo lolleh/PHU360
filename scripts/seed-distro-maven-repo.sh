@@ -37,7 +37,6 @@ PATCHED_PIHCORE="$ROOT_DIR/openmrs-image/pihcore-2.2.0-SNAPSHOT.omod"
 PATCHED_PHU360REPORTING="$ROOT_DIR/openmrs-image/phu360reporting-1.0.0-SNAPSHOT.omod"
 PATCHED_REPORTINGUI="$ROOT_DIR/openmrs-image/reportingui-1.15.0-SNAPSHOT.omod"
 PATCHED_COREAPPS="$ROOT_DIR/openmrs-image/coreapps-4.0.0-SNAPSHOT.omod"
-EXCLUSIONS="$ROOT_DIR/content/exclusions.txt"
 
 # The OpenMRS SDK asks interactively for anonymous usage stats on first run,
 # which stalls automated builds. Disable it up front.
@@ -62,13 +61,8 @@ rm -rf "$CONFIG_BUILD"
 mkdir -p "$CONFIG_BUILD/configuration/backend_configuration"
 cp -a "$WORK_DIR/config/." "$CONFIG_BUILD/configuration/backend_configuration/"
 cp -a "$DELTA_DIR/." "$CONFIG_BUILD/configuration/backend_configuration/"
-REMOVED=0
-while IFS= read -r rel || [[ -n "$rel" ]]; do
-  [[ -z "$rel" || "$rel" == \#* ]] && continue
-  rm -f "$CONFIG_BUILD/configuration/backend_configuration/$rel"
-  REMOVED=$((REMOVED + 1))
-done < "$EXCLUSIONS"
-echo "    removed $REMOVED excluded files"
+bash "$ROOT_DIR/scripts/apply-config-exclusions.sh" \
+  "$CONFIG_BUILD/configuration/backend_configuration"
 
 echo "==> Branding SPA (stock openmrs_spa + openmrs-image/spa overlay)"
 SPA_DIR="$WORK_DIR/frontend/${FRONTEND_ARTIFACT}-${FRONTEND_VERSION}"

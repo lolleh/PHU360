@@ -30,6 +30,13 @@ else
   echo "    re-applying content/configuration/backend_configuration"
   cp -a content/configuration/backend_configuration/. \
     content/build/configuration/backend_configuration/
+  # Re-apply the exclusion list too. The seed script is what deletes the paths
+  # in content/exclusions.txt, and it does not run on this branch, so without
+  # this an exclusion added after the seed is ignored by every build that is not
+  # a re-seed - i.e. the excluded form keeps shipping.
+  echo "    re-applying content/exclusions.txt"
+  bash scripts/apply-config-exclusions.sh \
+    content/build/configuration/backend_configuration
 fi
 
 echo "==> Build + install content zip artifact"
