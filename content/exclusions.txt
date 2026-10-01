@@ -14,6 +14,11 @@ reports/reportdescriptors/dataexports/allergies.yml
 reports/reportdescriptors/dataexports/eveningMaternalHandoff.yml
 reports/reportdescriptors/dataexports/hospitalizations.yml
 reports/reportdescriptors/dataexports/mentalHealth.yml
+
+# The backing SQL for that same mentalHealth descriptor. The .yml above is
+# already excluded, which leaves this orphaned - it names the Mental Health
+# Consult and Mental Health Follow-up encounter types that no longer exist.
+reports/reportdescriptors/dataexports/sql/mentalHealth.sql
 reports/reportdescriptors/dataexports/mentalHealthCaseRegistration.yml
 reports/reportdescriptors/dataexports/mentalHealthProgram.yml
 reports/reportdescriptors/dataexports/morningMaternalHandoff.yml
@@ -26,14 +31,33 @@ reports/reportdescriptors/dataexports/surgery.yml
 reports/reportdescriptors/dataexports/triage.yml
 reports/reportdescriptors/dataexports/vitals.yml
 
-# The Outpatient and Mental Health HTML forms. PHU360 does not use them: only the
-# 15 form XMLs on the KEEP list in scripts/prune-runtime-config.sh are shipped, so
-# the stock forms (and the _v1.0 revisions of the mental-health pair) are stripped
-# from the materialized config. Their encounter types are retired declaratively
-# instead, see encountertypes/sierraLeoneEncounterTypes_retired.csv - retiring is
-# what stops the visit UI offering the forms, an encounter type is what it lists.
+# The Outpatient, AYFS and Mental Health HTML forms. PHU360 does not use them, so
+# the stock forms (and their _v1.0 revisions) are stripped from the materialized
+# config. Their encounter types are retired declaratively instead, see
+# encountertypes/sierraLeoneEncounterTypes_retired.csv - retiring an encounter type
+# is what stops the visit UI offering the forms, an encounter type is what it lists.
 # The mental-health *subforms* stay: triage.xml embeds
 # pih/subforms/mental-health-phq2.xml.
+#
+# Two different families are called "outpatient" in the stock config and both are
+# excluded, because both surface under near-identical names in the form list:
+#
+#   * outpatient-initial / outpatient-followup -> forms "Outpatient Initial" /
+#     "Outpatient Followup" on encounter types "PHU360 Outpatient Initial" /
+#     "PHU360 Outpatient Followup".
+#   * primary-care-{adult,peds}-{initial,followup} -> forms "Outpatient Intake
+#     (Adult)" / "Outpatient Intake (Peds)" / "Outpatient Followup (Adult)" /
+#     "Outpatient Followup (Peds)" on encounter types "Primary Care Adult Initial
+#     Consult", "Primary Care Adult Followup Consult", "Primary Care Pediatric
+#     Initial Consult", "Primary Care Pediatric Followup Consult".
+#
+# CONSEQUENCE: both register reports used to name these types. above-five-patient-list
+# named the two PHU360 Outpatient types and now names "Visit Note", the type its
+# register form is attached to. under-five-register named 14 service types because
+# the form did not exist; it now names the single "Under Five IMNCI" type that
+# underFiveIMNCIRegister.xml is attached to. So retiring these encounter types no
+# longer narrows either register report - it only stops the visit UI offering the
+# forms, which is what it was for.
 pih/htmlforms/mentalHealth.xml
 pih/htmlforms/mentalHealth_v1.0.xml
 pih/htmlforms/mentalHealthFollowup.xml
@@ -42,6 +66,16 @@ pih/htmlforms/outpatient-initial.xml
 pih/htmlforms/outpatient-initial_v1.0.xml
 pih/htmlforms/outpatient-followup.xml
 pih/htmlforms/outpatient-followup_v1.0.xml
+pih/htmlforms/ayfsIntake.xml
+pih/htmlforms/ayfsFollowup.xml
+pih/htmlforms/primary-care-adult-initial.xml
+pih/htmlforms/primary-care-adult-initial_v1.0.xml
+pih/htmlforms/primary-care-adult-followup.xml
+pih/htmlforms/primary-care-adult-followup_v1.0.xml
+pih/htmlforms/primary-care-peds-initial.xml
+pih/htmlforms/primary-care-peds-initial_v1.0.xml
+pih/htmlforms/primary-care-peds-followup.xml
+pih/htmlforms/primary-care-peds-followup_v1.0.xml
 
 # Documentation for those same forms, for the same reason: the CSVs describe
 # forms that are no longer shipped.
@@ -53,3 +87,65 @@ pih/htmlforms/documentation/outpatient-initial.csv
 pih/htmlforms/documentation/outpatient-initial_v1.0.csv
 pih/htmlforms/documentation/outpatient-followup.csv
 pih/htmlforms/documentation/outpatient-followup_v1.0.csv
+pih/htmlforms/documentation/ayfsIntake.csv
+
+# The KGH / MCOE location tag map. Every row in it is a KGH or MCOE location,
+# and both of those trees were removed from locations/locations.csv (see below),
+# so nothing is left for it to map. Removed rather than emptied: the file is
+# stripped from the materialized config, so it cannot reappear on a rebuild.
+locationtagmaps/locationtagmaps-site-kgh.csv
+
+# The inpatient discharge-list descriptors. Each one hardcodes a locationUUID
+# from the KGH/MCOE tree removed from locations/locations.csv, so none of them
+# resolves any more:
+#
+#   * antenatalWardDischargeList.yml     -> Antenatal Ward
+#   * labourAndDeliveryDischargeList.yml -> Labour and Delivery
+#   * mccuDischargeList.yml              -> MCCU
+#   * mcoePacuDischargeList.yml          -> MCOE PACU
+#   * mcoePreOpDischargeList.yml         -> MCOE Pre-Op
+#   * mcoeTriageDischargeList.yml        -> MCOE Triage
+#   * postOpDischargeList.yml            -> MCOE Post-Op
+#   * postnatalDischargeList.yml         -> Postnatal Ward
+#   * quietWardDischargeList.yml         -> Quiet Ward
+#
+# The nine links to these reports were removed from
+# appframework/home_extension.json in the same change, per the rule at the top of
+# this file: nothing links to an excluded descriptor, so the home screen does not
+# offer a report that does not exist. Each link was gated on
+# "sessionLocation.uuid === '<removed uuid>'", so it could only ever have rendered
+# for a KGH/MCOE login that can no longer exist.
+#
+# The two remaining home links - aboveFiveMorbiditySummary and
+# aboveFivePatientList - resolve to shipped descriptors and were kept.
+reports/reportdescriptors/dataexports/antenatalWardDischargeList.yml
+reports/reportdescriptors/dataexports/labourAndDeliveryDischargeList.yml
+reports/reportdescriptors/dataexports/mccuDischargeList.yml
+reports/reportdescriptors/dataexports/mcoePacuDischargeList.yml
+reports/reportdescriptors/dataexports/mcoePreOpDischargeList.yml
+reports/reportdescriptors/dataexports/mcoeTriageDischargeList.yml
+reports/reportdescriptors/dataexports/postOpDischargeList.yml
+reports/reportdescriptors/dataexports/postnatalDischargeList.yml
+reports/reportdescriptors/dataexports/quietWardDischargeList.yml
+
+# The chronic-disease programs PHU360 does not run, and their workflows. These
+# rows are removed outright rather than retired: each program is declared ONLY in
+# programs/programs_retired.csv, so deleting the row means the program is never
+# created at all instead of being created and immediately retired. ANC,
+# Malnutrition and MCH are left retired - only the eleven below were dropped.
+#
+# CONSEQUENCE: six workflows were bound to four of these programs by UUID and had
+# to go with them, in programworkflows/programworkflows_retired.csv:
+#
+#   * aba55bfe  HIV       PIH:HIV TREATMENT STATUS
+#   * 39270921  HIV       PIH:PMTCT status   <- PMTCT concept, but bound to HIV
+#   * ee228c4f  OVC       PIH:OVC program status
+#   * 7e35b35e  EID       PIH:EID treatment status
+#   * 157333e6  Oncology   PIH:Oncology program status
+#   * 45ffa97a  Oncology   PIH:Oncology treatment status
+#
+# Dropping those cascaded to 18 states in
+# programworkflowstates/programworkflowstates_retired.csv, which reference a
+# workflow either by UUID or by concept. Left behind: the NCD workflow (NCD is
+# still active) and the Infant-bound EID treatment status, whose concept mentions
+# EID but whose program is Infant - it survives because Infant was not removed.

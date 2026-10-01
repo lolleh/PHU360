@@ -3,7 +3,7 @@
     "uuid": "edObservation",
     "name": "disposition.mirebalais.edObservation",
     "conceptCode": "PIH:ED Observation",
-    "excludedEncounterTypes": ["a8584ab8-cc2a-11e5-9956-625662870761","9d701a81-bb83-40ea-9efc-af50f05575f2"],
+    "excludedEncounterTypes": [],
     "keepsVisitOpen": "false",
     "actions": [],
     "additionalObs": []
@@ -13,9 +13,11 @@
     "type": "DISCHARGE",
     "name": "disposition.emrapi.discharge",
     "conceptCode": "PIH:DISCHARGED",
-    "excludedEncounterTypes": ["a8584ab8-cc2a-11e5-9956-625662870761","9d701a81-bb83-40ea-9efc-af50f05575f2",
-      "ae06d311-1866-455b-8a64-126a9bd74171","5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c",
-      "43423212-6f70-4df8-a9f7-2aef88df1ee2","6a3afa6f-8f78-44a9-80c9-3f4f3b6ad8f2"
+    "excludedEncounterTypes": [
+      "ae06d311-1866-455b-8a64-126a9bd74171",
+      "5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c",
+      "43423212-6f70-4df8-a9f7-2aef88df1ee2",
+      "6a3afa6f-8f78-44a9-80c9-3f4f3b6ad8f2"
     ],
     "additionalObs": []
   },
@@ -23,9 +25,11 @@
     "uuid": "active",
     "name": "pihcore.active",
     "conceptCode": "CIEL:161636",
-    "excludedEncounterTypes": ["a8584ab8-cc2a-11e5-9956-625662870761","9d701a81-bb83-40ea-9efc-af50f05575f2",
-      "ae06d311-1866-455b-8a64-126a9bd74171","5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c",
-      "43423212-6f70-4df8-a9f7-2aef88df1ee2","6a3afa6f-8f78-44a9-80c9-3f4f3b6ad8f2"
+    "excludedEncounterTypes": [
+      "ae06d311-1866-455b-8a64-126a9bd74171",
+      "5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c",
+      "43423212-6f70-4df8-a9f7-2aef88df1ee2",
+      "6a3afa6f-8f78-44a9-80c9-3f4f3b6ad8f2"
     ],
     "additionalObs": []
   },
@@ -33,8 +37,11 @@
     "uuid": "outpatientFollowup",
     "name": "pihcore.disposition.outpatientFollowup",
     "conceptCode": "PIH:20680",
-    "encounterTypes": ["ae06d311-1866-455b-8a64-126a9bd74171","5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c",
-      "43423212-6f70-4df8-a9f7-2aef88df1ee2","6a3afa6f-8f78-44a9-80c9-3f4f3b6ad8f2"
+    "encounterTypes": [
+      "ae06d311-1866-455b-8a64-126a9bd74171",
+      "5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c",
+      "43423212-6f70-4df8-a9f7-2aef88df1ee2",
+      "6a3afa6f-8f78-44a9-80c9-3f4f3b6ad8f2"
     ],
     "additionalObs": []
   },
@@ -72,9 +79,11 @@
     "uuid": "medsPrescribed",
     "name": "disposition.emrapi.medsPrescribed",
     "conceptCode": "PIH:Medications prescribed at end of visit",
-    "excludedEncounterTypes": ["a8584ab8-cc2a-11e5-9956-625662870761","9d701a81-bb83-40ea-9efc-af50f05575f2",
-      "ae06d311-1866-455b-8a64-126a9bd74171","5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c",
-      "43423212-6f70-4df8-a9f7-2aef88df1ee2","6a3afa6f-8f78-44a9-80c9-3f4f3b6ad8f2"
+    "excludedEncounterTypes": [
+      "ae06d311-1866-455b-8a64-126a9bd74171",
+      "5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c",
+      "43423212-6f70-4df8-a9f7-2aef88df1ee2",
+      "6a3afa6f-8f78-44a9-80c9-3f4f3b6ad8f2"
     ],
     "additionalObs": []
   },
@@ -82,9 +91,11 @@
     "uuid": "waitingForLabs",
     "name": "disposition.emrapi.waitingForLabs",
     "conceptCode": "PIH:WAITING FOR TEST RESULTS",
-    "excludedEncounterTypes": ["a8584ab8-cc2a-11e5-9956-625662870761","9d701a81-bb83-40ea-9efc-af50f05575f2",
-      "ae06d311-1866-455b-8a64-126a9bd74171","5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c",
-      "43423212-6f70-4df8-a9f7-2aef88df1ee2","6a3afa6f-8f78-44a9-80c9-3f4f3b6ad8f2"
+    "excludedEncounterTypes": [
+      "ae06d311-1866-455b-8a64-126a9bd74171",
+      "5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c",
+      "43423212-6f70-4df8-a9f7-2aef88df1ee2",
+      "6a3afa6f-8f78-44a9-80c9-3f4f3b6ad8f2"
     ],
     "additionalObs": []
   },
@@ -92,9 +103,11 @@
     "uuid": "inactiveStatus",
     "name": "disposition.emrapi.inactive",
     "conceptCode": "CIEL:164928",
-    "excludedEncounterTypes": ["a8584ab8-cc2a-11e5-9956-625662870761","9d701a81-bb83-40ea-9efc-af50f05575f2",
-      "ae06d311-1866-455b-8a64-126a9bd74171","5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c",
-      "43423212-6f70-4df8-a9f7-2aef88df1ee2","6a3afa6f-8f78-44a9-80c9-3f4f3b6ad8f2"
+    "excludedEncounterTypes": [
+      "ae06d311-1866-455b-8a64-126a9bd74171",
+      "5cbfd6a2-92d9-4ad0-b526-9d29bfe1d10c",
+      "43423212-6f70-4df8-a9f7-2aef88df1ee2",
+      "6a3afa6f-8f78-44a9-80c9-3f4f3b6ad8f2"
     ],
     "additionalObs": []
   },

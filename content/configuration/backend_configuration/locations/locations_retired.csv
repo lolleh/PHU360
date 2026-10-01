@@ -1,0 +1,27 @@
+Uuid,Void/Retire,Name,Description,Parent
+074b2ab0-716a-11eb-8aa6-0242ac110002,true,KGH,KGH,,
+2bcb9215-8cd6-11eb-b7be-0242ac110002,true,KGH Triage,KGH Triage,KGH,
+5981f962-6eec-453d-89ce-2f9ac48d096f,true,MCH OPD,KGH Maternal Child Health (MCH) Outpatient Clinic,KGH,84b9b680-786c-4388-9e7c-805614c13b5a
+7b959d2f-11f3-4611-b2e4-700200625d61,true,KGH NCD,KGH Non-communicate disease clinic,KGH,8947193b-92f0-4577-a66d-43d4a64c49b7
+7b959d2f-11f3-4611-b2e4-700200629a66,true,KGH Mental Health,KGH Mental Health clinic,KGH,e458694f-27c3-4a44-a8d8-c53f2ac6a88f
+0d3704ab-17f7-4272-aa1b-9118ae51acce,true,KGH Laboratory,KGH Laboratory,KGH,
+8947193b-92f0-4577-a66d-43d4a64c49b7,true,NCD Pharmacy,KGH NCD Pharmacy,KGH,
+e458694f-27c3-4a44-a8d8-c53f2ac6a88f,true,OPD Pharmacy,KGH OPD Pharmacy,KGH,
+067c83ad-6850-11ee-ab8d-0242ac120002,true,MCOE,Maternal Center of Excellence,KGH,
+f85feffc-fe54-4648-aa14-01ed6d30b943,true,MCOE Triage,MCOE Triage,MCOE,550e8400-e29b-41d4-a716-446655440000
+11377a5b-6850-11ee-ab8d-0242ac120002,true,Labour and Delivery,Labour and Delivery,MCOE,550e8400-e29b-41d4-a716-446655440000
+4d7e927d-6850-11ee-ab8d-0242ac120002,true,MCCU,MCCU,MCOE,550e8400-e29b-41d4-a716-446655440000
+0ce2f6fb-6850-11ee-ab8d-0242ac120002,true,NICU,Newborn Intensive Care Unit,MCOE,550e8400-e29b-41d4-a716-446655440000
+11f5c9f9-40b8-46ad-9e7e-59473ce43246,true,Antenatal Ward,Antenatal Ward,MCOE,550e8400-e29b-41d4-a716-446655440000
+17596678-6850-11ee-ab8d-0242ac120002,true,MCOE PACU,MCOE PACU,MCOE,550e8400-e29b-41d4-a716-446655440000
+142de844-6850-11ee-ab8d-0242ac120002,true,MCOE Pre-Op,MCOE Pre-Op,MCOE,550e8400-e29b-41d4-a716-446655440000
+28660b7f-3450-4b86-b840-9670ec68235f,true,Quiet Ward,Quiet Ward,MCOE,550e8400-e29b-41d4-a716-446655440000
+ff0d5e73-3fe0-437f-90ba-7d605ac03dc0,true,Postnatal Ward,Postnatal Ward,MCOE,550e8400-e29b-41d4-a716-446655440000
+550e8400-e29b-41d4-a716-446655440000,true,MCOE Inpatient Pharmacy,MCOE Inpatient Pharmacy,MCOE,
+84b9b680-786c-4388-9e7c-805614c13b5a,true,Maternity Pharmacy,Maternity Pharmacy,MCOE,
+b4d5b9c5-e5c8-490a-a5b4-7055c0e8a1f6,true,Pediatric Pharmacy,Pediatric Pharmacy,MCOE,
+81080213-d1f9-11f0-9d46-169316be6a48,true,Kangaroo Care,Kangaroo Care,MCOE,550e8400-e29b-41d4-a716-446655440000
+989a9b23-d1f9-11f0-9d46-169316be6a48,true,Mothers Dorm,Mother's Dorm,MCOE,
+a39ec469-d1f9-11f0-9d46-169316be6a48,true,MCOE Post-Op,MCOE Post-Op,MCOE,550e8400-e29b-41d4-a716-446655440000
+adde966c-d1f9-11f0-9d46-169316be6a48,true,Staff Ward,Staff Ward,MCOE,550e8400-e29b-41d4-a716-446655440000
+07aa9943-d1fa-11f0-9d46-169316be6a48,true,MCOE Inpatient Registration,MCOE Inpatient Registration,MCOE,

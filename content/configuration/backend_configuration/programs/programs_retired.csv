@@ -1,15 +1,4 @@
 Uuid,Name,Description,Void/Retire,Program concept,Outcomes concept
 d830a5c1-30a2-4943-93a0-f918772496ec,ANC,Antenatal Care Program,true,CIEL:165475,PIH:MCH outcome
-2639449c-8764-4003-be5f-dba522b4b680,Asthma,Asthma Program,true,PIH:Asthma Program,PIH:Generic outcome
-dc227c44-d68e-431b-a20d-a60bb3496543,COVID-19,COVID-19 Program,true,CIEL:166009,PIH:Generic outcome
-3f038507-f4bc-4877-ade0-96ce170fc8eb,Diabetes,Diabetes Program,true,PIH:Diabetes Program,PIH:Generic outcome
-69e6a46d-674e-4281-99a0-4004f293ee57,Epilepsy,Epilepsy Program,true,PIH:Epilepsy program,PIH:Generic outcome
-6959057e-9a5c-40ba-a878-292ba4fc35bc,Hypertension,Hypertension Program,true,PIH:Hypertension program,PIH:Generic outcome
-b1cb1fc1-5190-4f7a-af08-48870975dafc,HIV,HIV Program,true,PIH:HIV PROGRAM,PIH:HIV outcome
 61e38de2-44f2-470e-99da-3e97e93d388f,Malnutrition,Malnutrition Program,true,PIH:MALNUTRITION PROGRAM,PIH:Generic outcome
 41a2715e-8a14-11e8-9a94-a6cf71072f73,MCH,Maternal and Child Health Program,true,CIEL:159937,PIH:MCH outcome
-e1b2f0b5-6d56-4500-8523-0ba71e75d897,OVC,USAID orphans and vulnerable children program,true,PIH:OVC PROGRAM,PIH:OVC OUTCOMES
-5bdbf9f6-690c-11e8-adc0-fa7ae01bbebc,Oncology,ONCOLOGY Program,true,PIH:Oncology program,PIH:Oncology outcome
-5682f919-a43b-4d4a-bcc3-ef0426162e23,TB,Tuberculosis Program,true,CIEL:160541,PIH:Generic outcome
-3bea593a-9afd-4642-96a6-210b60f5aff2,Zika,Zika Program,true,PIH:Zika program,PIH:Study outcome
-7e06bf82-9f1a-4218-b68f-823082ef519b,EID,HIV Exposed Infant Program,true,PIH:EID program,PIH:EID outcome

@@ -8,32 +8,6 @@ dac348b7-2ece-47ad-b80a-140fc6788706,,Mongo Bendugu CHC MCH,Mongo Bendugu CHC MC
 1fadef30-c980-49bc-91ab-041f5cfd3b7c,,Mongo Bendugu CHC Laboratory,Mongo Bendugu CHC Laboratory,Mongo Bendugu CHC,
 6a7fc2e7-282c-4d25-b19c-777731928457,,Mongo Bendugu CHC Pharmacy,Mongo Bendugu CHC Pharmacy,Mongo Bendugu CHC,
 9a308db1-f15f-48aa-b615-b1aa945aaa2e,,Mongo Bendugu CHC Triage,Mongo Bendugu CHC Triage,Mongo Bendugu CHC,
-074b2ab0-716a-11eb-8aa6-0242ac110002,,KGH,KGH,,
-2bcb9215-8cd6-11eb-b7be-0242ac110002,,KGH Triage,KGH Triage,KGH,
-5981f962-6eec-453d-89ce-2f9ac48d096f,,MCH OPD,KGH Maternal Child Health (MCH) Outpatient Clinic,KGH,84b9b680-786c-4388-9e7c-805614c13b5a
-7b959d2f-11f3-4611-b2e4-700200625d61,,KGH NCD,KGH Non-communicate disease clinic,KGH,8947193b-92f0-4577-a66d-43d4a64c49b7
-7b959d2f-11f3-4611-b2e4-700200629a66,,KGH Mental Health,KGH Mental Health clinic,KGH,e458694f-27c3-4a44-a8d8-c53f2ac6a88f
-0d3704ab-17f7-4272-aa1b-9118ae51acce,,KGH Laboratory,KGH Laboratory,KGH,
-8947193b-92f0-4577-a66d-43d4a64c49b7,,NCD Pharmacy,KGH NCD Pharmacy,KGH,
-e458694f-27c3-4a44-a8d8-c53f2ac6a88f,,OPD Pharmacy,KGH OPD Pharmacy,KGH,
-067c83ad-6850-11ee-ab8d-0242ac120002,,MCOE,Maternal Center of Excellence,KGH,
-f85feffc-fe54-4648-aa14-01ed6d30b943,,MCOE Triage,MCOE Triage,MCOE,550e8400-e29b-41d4-a716-446655440000
-11377a5b-6850-11ee-ab8d-0242ac120002,,Labour and Delivery,Labour and Delivery,MCOE,550e8400-e29b-41d4-a716-446655440000
-4d7e927d-6850-11ee-ab8d-0242ac120002,,MCCU,MCCU,MCOE,550e8400-e29b-41d4-a716-446655440000
-0ce2f6fb-6850-11ee-ab8d-0242ac120002,,NICU,Newborn Intensive Care Unit,MCOE,550e8400-e29b-41d4-a716-446655440000
-11f5c9f9-40b8-46ad-9e7e-59473ce43246,,Antenatal Ward,Antenatal Ward,MCOE,550e8400-e29b-41d4-a716-446655440000
-17596678-6850-11ee-ab8d-0242ac120002,,MCOE PACU,MCOE PACU,MCOE,550e8400-e29b-41d4-a716-446655440000
-142de844-6850-11ee-ab8d-0242ac120002,,MCOE Pre-Op,MCOE Pre-Op,MCOE,550e8400-e29b-41d4-a716-446655440000
-28660b7f-3450-4b86-b840-9670ec68235f,,Quiet Ward,Quiet Ward,MCOE,550e8400-e29b-41d4-a716-446655440000
-ff0d5e73-3fe0-437f-90ba-7d605ac03dc0,,Postnatal Ward,Postnatal Ward,MCOE,550e8400-e29b-41d4-a716-446655440000
-550e8400-e29b-41d4-a716-446655440000,,MCOE Inpatient Pharmacy,MCOE Inpatient Pharmacy,MCOE,
-84b9b680-786c-4388-9e7c-805614c13b5a,,Maternity Pharmacy,Maternity Pharmacy,MCOE,
-b4d5b9c5-e5c8-490a-a5b4-7055c0e8a1f6,,Pediatric Pharmacy,Pediatric Pharmacy,MCOE,
-81080213-d1f9-11f0-9d46-169316be6a48,,Kangaroo Care,Kangaroo Care,MCOE,550e8400-e29b-41d4-a716-446655440000
-989a9b23-d1f9-11f0-9d46-169316be6a48,,Mothers Dorm,Mother's Dorm,MCOE,
-a39ec469-d1f9-11f0-9d46-169316be6a48,,MCOE Post-Op,MCOE Post-Op,MCOE,550e8400-e29b-41d4-a716-446655440000
-adde966c-d1f9-11f0-9d46-169316be6a48,,Staff Ward,Staff Ward,MCOE,550e8400-e29b-41d4-a716-446655440000
-07aa9943-d1fa-11f0-9d46-169316be6a48,,MCOE Inpatient Registration,MCOE Inpatient Registration,MCOE,
 b91a1e36-b357-11f1-9657-963295145081,,Falaba CHC,Falaba CHC,,
 b91a4ab0-b357-11f1-9657-963295145081,,Falaba CHC Clinic,Falaba CHC Clinic,Falaba CHC,
 3a18c1fa-9c4d-45e3-87dd-969ec80dcbe4,,Falaba CHC Laboratory,Falaba CHC Laboratory,Falaba CHC,
