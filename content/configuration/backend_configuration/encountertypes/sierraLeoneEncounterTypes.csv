@@ -21,3 +21,5 @@ ce67f875-726f-4314-abd5-6bcaec10d273,,ANC Progress,Inpatient Antenatal (ANC) pro
 f69b393e-1b8b-4c10-90ac-7161d95ad29d,,Pre-op Assessment,Pre-operative and intra-operative assessment for surgery
 6819f108-b59f-552c-925d-053f2dcd343a,,Delivery Register,The delivery register for PHU360
 5fbe1109-7e1e-57f6-af95-d222eb9cc5aa,,Family Planning Register,The family planning register for PHU360
+d7151f82-c1f3-4152-a605-2f9ea7414a79,,Visit Note,The visit note encounter type used by the Above Five (General) Treatment Register
+efbac517-5a27-58b6-acf1-61a8f23b4586,,Under Five IMNCI,The encounter type for the Under Five IMNCI Register (ages 2 months to 5 years)

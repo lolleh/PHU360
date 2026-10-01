@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     Under Five IMNCI Register, digitised from the printed register
+     "Under5 Register-IMNCI Final Print Review.xlsx", sheet
+     "2 Month-5 Years Register". Age range 2 months to 5 years.
+-->
+<htmlform formUuid="b359d6b5-cdc2-5244-b6b2-bf78ae2891d0" formName="Under Five IMNCI Register" formEncounterType="efbac517-5a27-58b6-acf1-61a8f23b4586" formVersion="1.0">
+    <style type="text/css">
+        #who-when-where { margin-bottom: 12px; }
+        #who-when-where p { display: inline-block; margin: 0 24px 8px 0; }
+        #who-when-where label { font-weight: bold; }
+
+        .uf-section { background: #ffffff; border: 1px solid #d9d2c4; border-radius: 6px; margin-bottom: 14px; overflow: hidden; }
+        .uf-section h4.uf-title { margin: 0; padding: 8px 14px; background: #1d3d5c; color: #ffffff; font-size: 1em; letter-spacing: 0.3px; }
+        .uf-grid { display: flex; flex-wrap: wrap; padding: 12px 12px 4px; }
+
+        .uf-field { background: #faf7f2; border: 1px solid #ece6dc; border-radius: 4px;
+                    flex: 1 1 300px; box-sizing: border-box; padding: 8px 10px; margin: 0 6px 8px 0; }
+        .uf-field .flabel { display: block; font-weight: bold; color: #444; margin-bottom: 4px; font-size: 0.92em; }
+        .uf-field select { max-width: 100%; }
+        .uf-field input[type="text"] { box-sizing: border-box; }
+        .uf-field input[type="checkbox"] { width: 16px; height: 16px; }
+        .uf-field input[type="number"] { width: 8em; }
+
+        .uf-2col { flex: 1 1 300px; max-width: 48%; }
+        .uf-3col { flex: 1 1 220px; max-width: 32%; }
+        .uf-full { flex: 1 1 100%; max-width: 100%; }
+        .uf-full input[type="text"] { width: 100%; }
+
+        .field-error { color: #ff6666; font-size: 1.1em; display: block; }
+    </style>
+
+    <h3>Under Five IMNCI Register (age 2 months - 5 years)</h3>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Visit</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-2col"><span class="flabel">Date</span> <encounterDate/></div>
+            <div class="uf-field uf-2col"><span class="flabel">Provider</span> <encounterProvider default="currentUser" required="true"/></div>
+            <div class="uf-field uf-2col"><span class="flabel">Type of visit</span> <obs conceptId="3e796477-b1e3-5b9f-a98c-bcc312858b4b" style="dropdown" answerConceptIds="2d2dee3a-4522-5280-9949-c0ba9b316a26,74672f58-b0a4-523f-984e-162bb1d0d9fc"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Disability screening</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Screened for disability</span> <obs conceptId="40e4e1aa-25ed-58cb-95e8-d54684a11ab9" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Has disability</span> <obs conceptId="8fa7ae4b-ec44-56d9-8648-cb8f7e74bd90" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Disability type</span> <obs conceptId="c446846d-cf31-5a7a-8aca-2b6a1b939bc9" style="dropdown" answerConceptIds="9bac2e78-200f-574b-b007-9fd7d453682c,24b1ff62-c39f-5476-b50d-16d9753d30e5,3b5e24c5-c5fc-5742-8e17-eedfeaadca90,e06be1e3-b63a-5166-bcea-ad70cba95281,5a2b5e34-d59d-5552-8315-8a5513f56fed,a9add65a-e92a-5301-8aa7-0bb89a148200"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Anthropometry</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-2col"><span class="flabel">Temperature (C)</span> <obs conceptId="43d9b799-471e-56ad-82cc-f7050ae524ec" style="number"/></div>
+            <div class="uf-field uf-2col"><span class="flabel">Weight (kg)</span> <obs conceptId="a6af75de-a010-5dd5-97f7-f029f80f3033" style="number"/></div>
+            <div class="uf-field uf-2col"><span class="flabel">Height / length (cm)</span> <obs conceptId="09928eae-c330-5eb5-b633-88b346843488" style="number"/></div>
+            <div class="uf-field uf-2col"><span class="flabel">MUAC (cm)</span> <obs conceptId="f9ad48f3-4972-5650-8765-1983b80ee602" style="number"/></div>
+            <div class="uf-field uf-2col"><span class="flabel">WHZ</span> <obs conceptId="c3189a02-8469-5219-a42f-51fbad104955" style="number"/></div>
+            <div class="uf-field uf-2col"><span class="flabel">WAZ</span> <obs conceptId="afd0558f-acca-5e7f-9eff-0dca3c20b8e9" style="number"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Feeding and presenting problem</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Exclusive breastfeeding (child &lt; 6 months)</span> <obs conceptId="f08c6531-a027-5b00-ab18-a98edaa0e214" style="dropdown" answerConceptIds="dbb4beed-7b24-512b-bb9b-f42ae6735e0a,131d3222-ff5a-5df9-97f7-87d3ea28ef9b,0325bf32-d68e-5a01-8df9-4c1a2c863420"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Continued breastfeeding (child 6-23 months)</span> <obs conceptId="f8c96388-d221-5d13-a0f7-59084cf58ad1" style="dropdown" answerConceptIds="dbb4beed-7b24-512b-bb9b-f42ae6735e0a,131d3222-ff5a-5df9-97f7-87d3ea28ef9b,0325bf32-d68e-5a01-8df9-4c1a2c863420"/></div>
+            <div class="uf-field uf-full"><span class="flabel">Presenting complaint (the child's problems)</span> <obs conceptId="8f0be8a3-2474-56e7-8eda-3174b267a721" style="textarea"/></div>
+            <div class="uf-field uf-full"><span class="flabel">Other problems</span> <obs conceptId="2a5925f1-c5e9-5e0b-97d5-4e4635b7aa54" style="textarea"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">General danger signs (check all)</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Unable to drink or breastfeed</span> <obs conceptId="6acaa24d-5ef9-5509-b149-95d0cf0002b7" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Vomiting everything</span> <obs conceptId="1cb7f690-1811-54c5-9fa9-bd7829e446b4" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">History of convulsion</span> <obs conceptId="ea195b7d-6bb4-580a-917a-9c1e3694d374" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Convulsing now</span> <obs conceptId="5b701f8e-5549-540b-b614-7070b2495e7f" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Lethargic or unconscious</span> <obs conceptId="415456c1-f4af-5924-b3d5-6cbdc9af2199" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Cough or difficult breathing</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Cough or difficult breathing</span> <obs conceptId="0967c2d9-add9-56ad-814c-038b0dfd4d0d" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Duration of cough / breathing problem (days)</span> <obs conceptId="486e4ad4-5a34-50cd-9610-ae5b78809ea5" style="number"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Breathing rate (/minute)</span> <obs conceptId="399f765b-1ab2-590d-8e39-0ec9696a21a7" style="number"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Fast breathing</span> <obs conceptId="597350e3-169b-56b6-841d-6c5ff85525d5" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Chest indrawing</span> <obs conceptId="219ae317-7e62-59bc-8dea-c9f1383433ad" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Stridor</span> <obs conceptId="564ded8f-6c7e-5405-abce-5732a232a0d5" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Oxygen saturation (%)</span> <obs conceptId="f323cde4-e331-5f22-9b32-3c7cd433456a" style="number"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Diarrhoea</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Diarrhoea</span> <obs conceptId="6ca44519-9c52-5f58-ab68-484cb7a7b189" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Duration of diarrhoea (days)</span> <obs conceptId="04f87c11-24f6-5d63-a3b7-a19fefb3b43e" style="number"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Blood in stool</span> <obs conceptId="f1c8d548-a2b0-5d0e-a07f-7b422eb82950" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Restless / irritable</span> <obs conceptId="5fed55de-9c2f-5881-bd38-a247c88d7a8d" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Sunken eyes</span> <obs conceptId="ef0b5eb4-cf66-550f-afa5-dc5287c33d34" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Weak to drink</span> <obs conceptId="03039484-eb50-54e9-b55c-a03ce57cd3c9" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Eager / thirsty</span> <obs conceptId="e747c60b-fcc5-523f-b594-4fe7ca25f5ed" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Skin pinch going back</span> <obs conceptId="31bb5096-6a5f-58c1-b688-4afc982150a4" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Fever</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Fever</span> <obs conceptId="7c764e58-4024-5d84-acff-5eacf6eb1b6d" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Duration of fever (days)</span> <obs conceptId="af475cf6-48c2-5b3a-9343-b269f8d5599d" style="number"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Measles in the last three months</span> <obs conceptId="6c556002-a8fa-500f-94ae-9fc2ce623086" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Stiff neck / bulging fontanelle</span> <obs conceptId="cbc60206-a85a-5ed3-9b9e-8416ed5c05d5" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Generalised rash of measles</span> <obs conceptId="c175904e-6126-531d-9918-0fb29a573536" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Cough / runny nose / red eyes</span> <obs conceptId="47eea1bf-302b-5ed1-9677-6ecc39403e88" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Mouth ulcer / discharging eyes / corneal clouding</span> <obs conceptId="a994d9b2-c539-50d8-818e-dddf9133730e" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Malaria tests</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">RDT: not done</span> <obs conceptId="5019e47a-1723-55e0-abc5-8b5b204b809f" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">RDT: negative</span> <obs conceptId="0d3f4c75-53ad-582a-9f04-245979a59574" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">RDT: positive</span> <obs conceptId="bdf79fd5-2f7f-5d36-be9a-9461b8cc859e" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Microscopy: not done</span> <obs conceptId="3f1f321a-0ee8-576e-ab8f-0f728bcf9b57" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Microscopy: negative</span> <obs conceptId="e3db92bb-fb63-5de4-a1ff-fa8f912935ce" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Microscopy: positive</span> <obs conceptId="e946baad-025d-59e2-823e-0b97093b77f3" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Malaria treated within 24 hrs of onset</span> <obs conceptId="126cdb1d-3993-50cc-a570-8150c2e5a0c6" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Malaria treated after 24 hrs of onset</span> <obs conceptId="b38588ee-b366-57b2-a501-ad8431970d56" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Ear problem</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Ear problem</span> <obs conceptId="81c311c1-4394-565e-982e-ccde5a1bb5e9" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Ear pain</span> <obs conceptId="0d055491-eb01-50bc-b431-790e9768cdad" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Duration of ear problem (days)</span> <obs conceptId="e41783d7-7be5-5750-8896-a552b78825c0" style="number"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Ear discharge</span> <obs conceptId="1bac7316-3d35-5c80-a79d-d05a5f31660b" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Malnutrition or anaemia (check all)</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Oedema both feet (&lt; 6 months)</span> <obs conceptId="cb825d79-20ec-5e1a-bcd4-43b6562b0131" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Oedema both feet (&gt;= 6 months)</span> <obs conceptId="f69f6035-67fa-566e-a786-80a00a5b5fef" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Visible severe wasting</span> <obs conceptId="6ecf3cd3-639d-5066-b98c-3675e38e29be" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">MUAC &lt; 11.5 cm</span> <obs conceptId="2b2f7b0e-01a5-5721-bd78-0ee3bb43e863" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">MUAC 11.5 - 12.5 cm</span> <obs conceptId="d1ea72a7-9617-5bc5-9388-fcded9e1afb1" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">MUAC &gt;= 12.5 cm</span> <obs conceptId="f74da10e-1597-5499-a687-185be92c42b0" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">WHZ &lt; -3</span> <obs conceptId="64763a8b-0571-529a-9e97-091f00d66dd6" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">WHZ -3 to -2</span> <obs conceptId="b6578527-367e-582e-8c67-75cddce05017" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">WHZ &gt;= -2</span> <obs conceptId="e50babbf-9e80-557e-93fe-61d9c3f04a97" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Pneumonia / fever</span> <obs conceptId="791695dc-4ab7-50ea-8352-da7986bb0231" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Watery diarrhoea / dysentery</span> <obs conceptId="c623e5d0-4556-5125-8954-bb33b0027596" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Appetite test: pass</span> <obs conceptId="5341e334-6962-5040-af17-53b5c08f5622" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Palmar pallor</span> <obs conceptId="a79ab850-af2e-56b6-8632-955da37fbf30" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Severe palmar pallor</span> <obs conceptId="57721780-2947-5a04-8b1f-26dd25f7110f" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">HIV / AIDS (RDT)</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Mother: positive</span> <obs conceptId="1f1cab7f-fa54-5958-a181-fc0d882a7e1a" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Mother: negative</span> <obs conceptId="305a9a75-8567-57d4-9e82-d387d27acfc4" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Mother: unknown</span> <obs conceptId="d44ee674-abde-5d6e-9581-031ce0bc25eb" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Child: positive</span> <obs conceptId="d4fcdbff-1fd7-5011-863e-0fe337c0bafa" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Child: negative</span> <obs conceptId="81b46e1e-2bb5-5ce7-9b7b-99017593c480" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Child: unknown</span> <obs conceptId="c25eb0ae-eb55-5d9d-9738-014b0b94d77c" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Immunisation status (2 years and under)</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-2col"><span class="flabel">Completed</span> <obs conceptId="4fbfbe13-ac84-51d2-99e7-282defbadb98" style="checkbox"/></div>
+            <div class="uf-field uf-2col"><span class="flabel">Up to date</span> <obs conceptId="04fffb25-f9cb-52fe-a320-cd61ddc5a874" style="checkbox"/></div>
+            <div class="uf-field uf-2col"><span class="flabel">Not up to date</span> <obs conceptId="55e7cdff-fa1a-529d-8a7d-e4f6f25a21bb" style="checkbox"/></div>
+            <div class="uf-field uf-2col"><span class="flabel">Not started</span> <obs conceptId="f5628b66-09c7-54d0-be8b-dfa6dbef0417" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Vitamin A (6 months and over) and Albendazole (2 years and over)</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-2col"><span class="flabel">Vitamin A in last 6 months (6-11m)</span> <obs conceptId="ea12e24b-0df7-54dd-a573-14a5c8004844" style="dropdown" answerConceptIds="dbb4beed-7b24-512b-bb9b-f42ae6735e0a,131d3222-ff5a-5df9-97f7-87d3ea28ef9b"/></div>
+            <div class="uf-field uf-2col"><span class="flabel">Vitamin A in last 6 months (12-59m)</span> <obs conceptId="58db6658-e361-5152-928d-ad89ae8f5e3a" style="dropdown" answerConceptIds="dbb4beed-7b24-512b-bb9b-f42ae6735e0a,131d3222-ff5a-5df9-97f7-87d3ea28ef9b"/></div>
+            <div class="uf-field uf-2col"><span class="flabel">Albendazole in last 6 months (12-23m)</span> <obs conceptId="e229fac7-def2-5eef-bc92-71b13eecde98" style="dropdown" answerConceptIds="dbb4beed-7b24-512b-bb9b-f42ae6735e0a,131d3222-ff5a-5df9-97f7-87d3ea28ef9b"/></div>
+            <div class="uf-field uf-2col"><span class="flabel">Albendazole in last 6 months (24-59m)</span> <obs conceptId="39a12c02-1b37-5e31-94f6-21d6ea5578d0" style="dropdown" answerConceptIds="dbb4beed-7b24-512b-bb9b-f42ae6735e0a,131d3222-ff5a-5df9-97f7-87d3ea28ef9b"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Classification, treatment and outcome</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Disease classification</span> <obs conceptId="1f76f1bb-f6d8-528e-a9be-270f1b18874e" style="dropdown" answerConceptIds="3c544cd0-1691-575a-bfd6-d5f8f98687a3,8d24d647-a515-5482-8beb-c57aad397d05,9b7baabe-9406-57dc-b5aa-0cfdc2e6417f,9cc83d37-408c-5749-8567-441da9125a50,47c31b49-663c-5588-a11c-1df2ee5ec735,2b92d547-944b-59df-a437-417064a5e77a,f863b815-1697-5c6a-b2c6-842638c4c5a8,eb9b0f2b-a978-588a-8a43-91cef57e7930"/></div>
+            <div class="uf-field uf-full"><span class="flabel">Treatment given (medicine)</span> <obs conceptId="b9de52b3-a1c6-5017-8490-a0b88e5f7e1e" style="textarea"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Counsel mother: on feeding</span> <obs conceptId="7a2abb91-6e99-53da-a52c-6300a96f8e09" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Counsel mother: on fluids</span> <obs conceptId="e85ffb45-a353-50e6-a1af-0841dd7f9635" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Counsel mother: on when to return</span> <obs conceptId="81ed8348-8487-530c-91a9-2b2919f6e765" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Referred</span> <obs conceptId="a0aa66ef-02c3-5065-9c84-e9ddcf3397cb" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">If referred, name of health facility</span> <obs conceptId="7b27fbe0-3cb0-5b42-ab33-4ffb99937938" style="textarea"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">If referred, pre-referral treatment</span> <obs conceptId="eb36b3d6-f004-5032-8393-253d0e24d75a" style="textarea"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Follow up date</span> <obs conceptId="9b2ad628-6150-533b-a8a4-5cfad5f93a71" style="datetime"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Outcome</span> <obs conceptId="d9bd1f6c-18b0-59eb-b567-26db8b437468" style="dropdown" answerConceptIds="3c4be42c-768b-5b46-a8ae-1df79177a0e4,0c4e6dd5-2bfc-5b7d-b536-9ed3903b12b2,0a08267b-3fc9-56bb-8842-0e6efdf9a387,5a3404e7-5249-5ae2-98b2-5378f87553ed"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Drugs provided (No.)</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Albendazole 400mg</span> <obs conceptId="447b29f8-30d7-56f3-b0d0-e22bb58c94ff" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Amoxicillin 250mg</span> <obs conceptId="530d4101-49e6-5403-b503-dfa6d452f2f3" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">ACT (AL-6 / ASAQ-3, 2-11 mos)</span> <obs conceptId="997fdc29-233c-5b68-9291-e3863cf0ce6c" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">ACT (AL-12 / ASAQ-3, 1-5 yrs)</span> <obs conceptId="2b3f7553-a340-50d4-aa7d-1e7fd05925b0" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">ORS sachet</span> <obs conceptId="85b467c3-4962-508c-b446-3f347d7f8d28" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Paracetamol 100mg</span> <obs conceptId="874a5af1-35c9-51d7-a693-e7ad64ba7937" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Zinc sulphate 20mg</span> <obs conceptId="a05702be-0e45-5b93-bbce-653d3c2ac320" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Rectal artesunate suppository</span> <obs conceptId="7ea85bc9-4f08-5f2f-891b-09c3aa381b19" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Artesunate 60mg/ml inj, 1ml vial</span> <obs conceptId="a4723bda-0c8f-5190-b0d5-63401e7e0ae5" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Oxygen therapy</span> <obs conceptId="58abaa8e-87b2-55e0-9e6c-f4984476e0ce" style="checkbox"/></div>
+            <div class="uf-field uf-full"><span class="flabel">Other drug (specify)</span> <obs conceptId="e3284b97-5660-542e-b6dd-c43f2e67d71a" style="textarea"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Remarks</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-full"><span class="flabel">Remarks</span> <obs conceptId="e0836698-d86e-5b1f-9ebb-4f2bdfc61d7a" style="textarea"/></div>
+        </div>
+    </div>
+
+    <div id="buttons">
+        <submit submitClass="confirm right" submitCode="general.save"/>
+        <button type="button" class="cancel"><uimessage code="general.cancel"/></button>
+    </div>
+</htmlform>

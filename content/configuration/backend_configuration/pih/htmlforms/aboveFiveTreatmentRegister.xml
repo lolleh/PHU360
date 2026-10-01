@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<htmlform formUuid="eaad2f41-de8f-48b7-9d40-50187fb95932" formName="Above Five (General) Treatment Register" formEncounterType="d7151f82-c1f3-4152-a605-2f9ea7414a79" formVersion="1.1">
+    <style type="text/css">
+        #who-when-where { margin-bottom: 12px; }
+        #who-when-where p { display: inline-block; margin: 0 24px 8px 0; }
+        #who-when-where label { font-weight: bold; }
+
+        .uf-section { background: #ffffff; border: 1px solid #d9d2c4; border-radius: 6px; margin-bottom: 14px; overflow: hidden; }
+        .uf-section h4.uf-title { margin: 0; padding: 8px 14px; background: #1d3d5c; color: #ffffff; font-size: 1em; letter-spacing: 0.3px; }
+        .uf-grid { display: flex; flex-wrap: wrap; padding: 12px 12px 4px; }
+
+        .uf-field { background: #faf7f2; border: 1px solid #ece6dc; border-radius: 4px;
+                    flex: 1 1 300px; box-sizing: border-box; padding: 8px 10px; margin: 0 6px 8px 0; }
+        .uf-field .flabel { display: block; font-weight: bold; color: #444; margin-bottom: 4px; font-size: 0.92em; }
+        .uf-field select { max-width: 100%; }
+        .uf-field input[type="text"] { box-sizing: border-box; }
+        .uf-field input[type="checkbox"] { width: 16px; height: 16px; }
+
+        .uf-2col { flex: 1 1 300px; max-width: 48%; }
+        .uf-3col { flex: 1 1 220px; max-width: 32%; }
+        .uf-4col { flex: 1 1 150px; max-width: 24%; }
+        .uf-full { flex: 1 1 100%; max-width: 100%; }
+        .uf-full input[type="text"] { width: 100%; }
+        .uf-sub { color: #1d3d5c; font-size: 0.85em; letter-spacing: 0.4px; text-transform: uppercase; font-weight: 700; }
+
+        .field-error { color: #ff6666; font-size: 1.1em; display: block; }
+    </style>
+
+    <h3>Above Five (General) Treatment Register</h3>
+
+
+    <div class="uf-section">
+        <h4 class="uf-title">Facility / Visit</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-2col"><span class="flabel">Ownership</span> <obs conceptId="b891e640-5fe6-4833-9a20-f52c980c4505" style="dropdown" answerConceptIds="01fdc579-378d-40cc-afcc-dcfc0c5c7133,8c83a580-bf3c-4438-ab82-f07e5d2e6975,0fe727d2-30b3-4f2c-9ef5-637d01c01cd2"/></div>
+            <div class="uf-field uf-2col"><span class="flabel">Service point</span> <obs conceptId="fb953d82-5042-41c0-ba7b-cab46e34dc5e" style="dropdown" answerConceptIds="cdc75415-678d-42ee-8d04-fe2404b6eb08,a27dc8c2-28df-4d93-abce-ec7e37a81907"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Patient &amp; Visit Details</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-2col"><span class="flabel">Type of visit</span> <obs conceptId="1515414d-5e68-42ef-a239-34c86e494679" style="dropdown" answerConceptIds="1bfff36f-5ee3-4c22-ba99-5b981649ea30,ce10f985-03ae-44c7-a63e-ec5fa7aae3c5"/></div>
+            <div class="uf-field uf-2col"><span class="flabel">Category of patient</span> <obs conceptId="1ce41cb6-3aca-424d-8545-5d7b56d8a343" style="dropdown" answerConceptIds="401b121b-59a2-46ed-862a-d15df25d7bac,e5179039-ee3e-4634-aedb-803b0bb118f7,71653506-cb1d-4411-994c-8018e245883a,b72ad93c-69bd-4364-97cd-f3ebcd0f036a,07586f12-635e-4c31-b293-aef383be4d9f"/></div>
+            <div class="uf-field uf-2col"><span class="flabel">Provider</span> <encounterProvider default="currentUser" required="true"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Malaria</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Fever cases (suspected malaria)</span> <obs conceptId="6b1b7255-4bdf-4c9d-b411-314de1c11f9a" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">RDT positive</span> <obs conceptId="128b88e4-49cd-4a8f-85b3-de536741cd54" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">RDT negative</span> <obs conceptId="82752b4b-940a-462a-869a-d34e5f3c90b6" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Microscopy positive</span> <obs conceptId="31505342-ed59-4253-841f-43e8718467ca" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Microscopy negative</span> <obs conceptId="953a35a2-c6f7-4977-a3da-7efa7e31e74e" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Treated with ACT &lt;24h</span> <obs conceptId="ada12301-be11-4a63-9eb5-2a9d9b6e18de" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Treated with ACT &gt;24h</span> <obs conceptId="da4dc155-856a-456e-bd82-4430d876bd35" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Treated without ACT</span> <obs conceptId="da85de75-b82d-4548-aa58-a9cf187dcfac" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Artesunate injection</span> <obs conceptId="85ba420b-17be-4f94-90a6-c253913cae93" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Severe malaria (Artesunate IV/IM &amp; Supp)</span> <obs conceptId="da58522b-8e66-426f-9787-3d909918db56" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Parenteral anti-malarial</span> <obs conceptId="9965b265-a15f-4150-887c-ed73fbe879fe" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Eye</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Eye infection</span> <obs conceptId="3c960886-9501-4466-950a-5a6e30ac9034" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Eye condition (all types, except infection)</span> <obs conceptId="217b71b7-d457-47e9-9f29-9f34f75c1be8" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Infectious Diseases</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-full"><span class="flabel uf-sub">Malnutrition</span></div>
+            <div class="uf-field uf-3col"><span class="flabel">Moderate malnutrition</span> <obs conceptId="50befc52-ebdc-44a8-92be-bb62eb0019ed" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Severe malnutrition</span> <obs conceptId="6b4685fe-b5f9-4634-8124-80045d9e269f" style="checkbox"/></div>
+            <div class="uf-field uf-full"><span class="flabel uf-sub">Notifiable Medical Conditions (eIDSR / eCBDS)</span></div>
+            <div class="uf-field uf-3col"><span class="flabel">AFP</span> <obs conceptId="9244f9b0-63e5-4dd9-a995-726214965b40" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">AVHF</span> <obs conceptId="78158612-4c10-4f2a-b7d5-d13c849c9bbf" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Cholera</span> <obs conceptId="2826d9b5-a5d9-4b2e-aea3-19a7b3cc54fb" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Dysentery (bloody diarrhoea)</span> <obs conceptId="5abb022f-406a-4ee6-a223-abf11a944ca1" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Measles</span> <obs conceptId="b8c1824d-3782-4511-88b8-c9ec16ad7cac" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Rubella</span> <obs conceptId="933872e1-c068-44d9-a0be-96b465327402" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Meningitis / Encephalitis</span> <obs conceptId="e9536cb1-30d1-42fa-bc7f-2ccc0d77bc11" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Buruli ulcer</span> <obs conceptId="cba00176-dd4a-4024-b2a7-025680d7c621" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Yellow fever</span> <obs conceptId="9aafdba1-62ac-4e27-8637-28ee98548dcf" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Typhoid / Paratyphoid</span> <obs conceptId="a9796b0e-6e33-4bf9-a2bd-5c7b0524f0f3" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Tetanus</span> <obs conceptId="890e2b34-9d08-4e95-a688-3407742f31bb" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Animal bites</span> <obs conceptId="e5eeb46b-2e38-4de8-a8b8-511321173de8" style="checkbox"/></div>
+            <div class="uf-field uf-full"><span class="flabel uf-sub">Other infectious</span></div>
+            <div class="uf-field uf-3col"><span class="flabel">AIDS</span> <obs conceptId="b60b9d4d-718a-4180-8773-741876da2755" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Pneumonia with antibiotic</span> <obs conceptId="fe5cd35c-22c3-4af5-82bd-bbbc6763aa58" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Pneumonia without antibiotic</span> <obs conceptId="6a30671e-c024-4559-bef5-bf71a80efc14" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Pneumonia treated in facility</span> <obs conceptId="25a05262-2c2c-485a-9d0a-2c5e3cb9efdc" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Chicken pox</span> <obs conceptId="7d7c330f-12b1-4f1f-b379-3d4fb148f456" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Watery diarrhoea (ORS + Zinc)</span> <obs conceptId="6ace0b14-465e-44a9-97ce-350c40a52989" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Watery diarrhoea (ORS only)</span> <obs conceptId="29d49454-9cf6-43d1-8abe-7e37d065be54" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Hepatitis (all types)</span> <obs conceptId="474bb6aa-d3dd-4080-a9d3-438ea418ec67" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Leprosy</span> <obs conceptId="aa7d9ff1-a17d-4d42-9187-41f6d8ae83c8" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Severe pneumonia (oxygen therapy)</span> <obs conceptId="9fd4090c-4f22-4b8a-9b17-25709cadc78b" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Diarrhoea with severe dehydration (IV RL)</span> <obs conceptId="362c147d-3215-4043-8775-51348506000d" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Mumps</span> <obs conceptId="7ba8bd22-c70e-4914-8ea4-0758bd1b8e4d" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Sepsis</span> <obs conceptId="31f9e711-6b25-4fda-adb4-8e19aa00e2df" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Skin infection</span> <obs conceptId="510440a3-e05e-49d0-a833-0768740de721" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">PID</span> <obs conceptId="f55df4ef-1b86-42f9-bbd8-66913a7ab74e" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Genital discharge</span> <obs conceptId="e0eb290f-7b4f-40cd-bc91-e8cdd0d5aadd" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Genital ulcer</span> <obs conceptId="bee47d56-cbe0-47f2-a6fa-f2f867a9ce7e" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Tuberculosis (TB)</span> <obs conceptId="7fe05409-efc6-46c8-9257-20a544d37e18" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">UTI</span> <obs conceptId="70d4fd36-cb4e-46a9-937f-0ef35ba4070c" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Onchocerciasis</span> <obs conceptId="e07eaa27-172c-4f82-906f-33cea93a57e8" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Schistosomiasis</span> <obs conceptId="c397c617-97a0-4bac-be68-68f368534fb4" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Trachoma</span> <obs conceptId="53cbc9a8-91ff-49a9-b6b6-f0db243cbff5" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Other infectious conditions</span> <obs conceptId="fb417656-f2c3-4ee7-83b2-b7dc6e5bf11b" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Adverse drug reaction</span> <obs conceptId="a7f21431-5d05-483f-bc73-6b88b4413674" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Internal Medicine, NCD &amp; Mental</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Anaemia</span> <obs conceptId="44afe4b6-70d1-41b8-9514-eeaedfd163ca" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Asthma</span> <obs conceptId="a228f286-3b8d-4151-afb9-6717e03d29c7" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Sickle cell disease</span> <obs conceptId="f2b662e3-ce14-4d22-af0f-02a4e53a5f9f" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Cancer (all types)</span> <obs conceptId="e9468fa0-641c-443d-8648-cce2f2edcbd5" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Liver disease</span> <obs conceptId="fb9c870c-10e3-4095-acaf-70ffa4e7b5f2" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Cardiovascular disease (all types)</span> <obs conceptId="5a66a22a-19df-41b7-8074-494255823bd4" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Chronic respiratory disease</span> <obs conceptId="94ae30bc-c3fa-4504-887a-8f4e7a773452" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Diabetes (Type 1 or 2)</span> <obs conceptId="17c9396e-aa9b-46bf-81fe-7b92ff5ce4c0" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Epilepsy</span> <obs conceptId="6c371a68-4c70-4054-9229-0919a9d26ae6" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Hypertension</span> <obs conceptId="e11d1d99-b074-4bf9-8ed2-0eae05726c10" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Upper GI / Pancreatitis</span> <obs conceptId="60214245-c173-4a64-a00b-82e1bc801e97" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Chronic liver / Cirrhosis</span> <obs conceptId="62cab07d-026f-4992-8307-bbd24cc9dc32" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Appendicitis</span> <obs conceptId="28b0f52a-3c67-49f5-a633-814680e4cc43" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Ileus</span> <obs conceptId="0b91a7b8-fa77-495c-8dbd-83e2dba0022c" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Obstruction</span> <obs conceptId="3aaae386-ca7a-4a41-8fd2-163b339641df" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Stroke</span> <obs conceptId="d5c1995e-aaf9-4e46-87ab-a905f4bd32e1" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Heart failure</span> <obs conceptId="fa1bc75b-f257-4da8-a68b-8e72e17e6387" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Kidney disorders</span> <obs conceptId="23edac37-c75e-415b-a7d9-760906840ad2" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Mental disorder (all types)</span> <obs conceptId="f1a68e2a-1913-449c-a9d9-6af815bc0ef8" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Other NCD conditions</span> <obs conceptId="fb3f5ff6-f782-478b-9c1d-509291a6940b" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Suspected Cancer</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Breast</span> <obs conceptId="9c3b6256-5d3c-4a75-90d5-17b1be6da6f2" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Prostate</span> <obs conceptId="93b5bf5b-0dae-4f3e-b120-b3f8a8c90365" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Cervical</span> <obs conceptId="38be7097-2b04-4df1-80ec-9838750333ff" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Childhood</span> <obs conceptId="31005895-68de-4c61-a1e9-3b50f7d12200" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Lungs</span> <obs conceptId="9b32e470-e11e-4af0-bbc8-12187a288626" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Liver</span> <obs conceptId="66c6cacd-fe9a-4bbc-870b-97c3bc8cba61" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Others</span> <obs conceptId="92fb8200-5f8d-43e3-b8cf-99693bf7305b" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Suspected AVHL / Febrile &amp; other</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Lassa fever</span> <obs conceptId="97aa194b-ff8c-440f-bf5e-7def7cb64518" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Marburg</span> <obs conceptId="8cf7feff-81b6-4389-a388-ecffc98910f4" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Yellow fever</span> <obs conceptId="9aafdba1-62ac-4e27-8637-28ee98548dcf" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Others</span> <obs conceptId="a6cf24da-b177-4dc4-b51e-df55dc0c5867" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Suspected MPOX</span> <obs conceptId="937f42eb-57b4-43c5-aecf-a3037d4f17e5" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Ebola</span> <obs conceptId="0f73b0aa-1ef3-4011-acc5-48d6ab3b1f93" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Severe malaria</span> <obs conceptId="37d534cb-a35a-4913-bc41-f3538def7782" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">PPH &amp; APH</span> <obs conceptId="bce9f424-230a-45e0-8ae0-0f75166a3f5a" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Worm infestation</span> <obs conceptId="44ec868f-d821-4735-a896-b302fc0ec361" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Chronic diseases</span> <obs conceptId="13bc6a79-0fb9-49e9-bd80-82ef9f008b19" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Anaemia</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Severe malaria</span> <obs conceptId="37d534cb-a35a-4913-bc41-f3538def7782" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">PPH &amp; APH</span> <obs conceptId="bce9f424-230a-45e0-8ae0-0f75166a3f5a" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Worm infestation</span> <obs conceptId="44ec868f-d821-4735-a896-b302fc0ec361" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Chronic diseases</span> <obs conceptId="13bc6a79-0fb9-49e9-bd80-82ef9f008b19" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Dental Condition</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Caries</span> <obs conceptId="0874d7ac-f7d7-4add-8a3b-806bf7162048" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Abscess</span> <obs conceptId="263225d8-cd15-442e-8cbe-20ab134c96e8" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Fracture</span> <obs conceptId="e669cbc5-76db-4199-88c2-753ffab30e41" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Suspected Poison</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Food</span> <obs conceptId="10a4989f-e553-4235-ab02-dd1c0aa1bbe8" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Caustic soda</span> <obs conceptId="7d538977-821a-4ac0-8d6d-25c4db7aafcc" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Others</span> <obs conceptId="39e47f61-3985-4539-b63e-c301612738a5" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Diarrhoea</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">With blood — ORS &amp; Zinc</span> <obs conceptId="c25f1dd8-68ee-4c15-9649-53b889e0bd14" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Without blood — ORS &amp; Zinc</span> <obs conceptId="8170cef7-592d-4f3e-85b2-adc92c9694b2" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">With severe dehydration</span> <obs conceptId="1cb4c57d-9136-4409-9b7d-7bd1e45248d2" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Disability</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Physical</span> <obs conceptId="b382d354-d394-42d7-a629-1df356642c51" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Visual impairment</span> <obs conceptId="18d7e813-dc2b-4d1f-802e-cde9fe2aa13a" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Hearing impairment</span> <obs conceptId="c3ab3553-0e5b-4342-b9cf-83968974f36c" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Speech and language</span> <obs conceptId="3afa12ff-79aa-41d0-81a9-0cdfc22612a0" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Multiple</span> <obs conceptId="1ff094d8-973a-4b58-9b94-f6bbc1f92169" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Intellectual</span> <obs conceptId="7a4b0fb2-d87e-46c6-92ae-5a84656366dd" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">Surgical</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-3col"><span class="flabel">Acute abdomen</span> <obs conceptId="3a482da7-d298-40da-a43d-9ad2f6c74683" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Appendicitis</span> <obs conceptId="28b0f52a-3c67-49f5-a633-814680e4cc43" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">ENT disorder</span> <obs conceptId="8efe44ba-8f63-4198-9694-95b4a4c48d60" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Hernia</span> <obs conceptId="24cb46b7-d971-4d94-9cd1-9a5d4f4037f1" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Hydrocele</span> <obs conceptId="05bd7b50-666d-4722-b29a-c6f55d819c0d" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Lymphoedema</span> <obs conceptId="6332df1f-fa74-4ea0-a4d7-3bf934f22ec4" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Oral &amp; dental conditions</span> <obs conceptId="cc7139f8-83e1-420c-8079-954fdd57e0c5" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">PUD</span> <obs conceptId="51a97df0-cbdb-462d-98a7-dda3e326555f" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Wounds/Trauma — RTA</span> <obs conceptId="b3f91afa-0551-4cb1-a7bd-e2d1ec9afcc8" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Wounds/Trauma — Non-RTA</span> <obs conceptId="9dbd12ef-9ce3-41c5-aee5-208d22e7a393" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Burns</span> <obs conceptId="c2861101-2405-42fe-b826-5806c96d9a8b" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Typhoid perforation</span> <obs conceptId="7d0b12c4-b7fe-4233-a1a6-f3455bf0fb9c" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Haemorrhoids / Piles</span> <obs conceptId="0fdb2054-695f-4495-8187-3d9e4d26a5e2" style="checkbox"/></div>
+            <div class="uf-field uf-3col"><span class="flabel">Other surgical conditions</span> <obs conceptId="afe6d69f-4ece-40cf-bf89-52990016d8ab" style="checkbox"/></div>
+        </div>
+    </div>
+
+    <div class="uf-section">
+        <h4 class="uf-title">All Other Morbidities</h4>
+        <div class="uf-grid">
+            <div class="uf-field uf-full"><span class="flabel">Other condition / notes</span> <obs conceptId="d03e30ca-e9d8-4511-8dca-7b8588ee5cea" style="textarea"/></div>
+        </div>
+    </div>
+    <div id="buttons">
+        <submit submitClass="confirm right" submitCode="general.save"/>
+        <button type="button" class="cancel"><uimessage code="general.cancel"/></button>
+    </div>
+</htmlform>

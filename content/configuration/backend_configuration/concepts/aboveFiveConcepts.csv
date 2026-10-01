@@ -1,0 +1,133 @@
+uuid,fully specified name:en,fully specified name:en:preferred,fully specified name:en:uuid,description:en,data class,data type
+3a482da7-d298-40da-a43d-9ad2f6c74683,Acute abdomen (Above Five register),true,cfa56f95-ed1f-4983-915a-bfe638d39d71,,Finding,Boolean
+9244f9b0-63e5-4dd9-a995-726214965b40,Acute flaccid paralysis (AFP),true,d1872294-8f9c-4e3d-ae06-b593bd87ae3e,,Finding,Boolean
+78158612-4c10-4f2a-b7d5-d13c849c9bbf,Acute viral haemorrhagic fever (AVHF),true,aa95d1d8-13ef-4a87-bb18-1b6bfc725854,,Finding,Boolean
+a7f21431-5d05-483f-bc73-6b88b4413674,Adverse drug reaction,true,d13febf1-7057-4395-bea1-6bdbfceab375,,Finding,Boolean
+b60b9d4d-718a-4180-8773-741876da2755,AIDS,true,9cf9baca-5a85-4571-8156-4f7963ecda9a,,Finding,Boolean
+44afe4b6-70d1-41b8-9514-eeaedfd163ca,Anaemia,true,3606b8ea-50b9-4a17-ab26-e02bd34f8442,,Finding,Boolean
+e5eeb46b-2e38-4de8-a8b8-511321173de8,"Animal bites (dogs, snakes, cats)",true,fd14a133-b585-40c3-bc1c-afac865b45a7,,Finding,Boolean
+28b0f52a-3c67-49f5-a633-814680e4cc43,Appendicitis (Above Five register),true,90409714-4f46-4767-9af2-baa92b92f75d,,Finding,Boolean
+a228f286-3b8d-4151-afb9-6717e03d29c7,Asthma (Above Five register),true,8e7f9ae5-e569-4b6a-a84a-4e40eb0d0515,,Finding,Boolean
+c2861101-2405-42fe-b826-5806c96d9a8b,Burns,true,271a08b2-3194-415e-8fd1-fe2a83815ce9,,Finding,Boolean
+cba00176-dd4a-4024-b2a7-025680d7c621,Buruli ulcer,true,a0ae3b40-6e7c-4f49-9ac2-bf55136847e1,,Finding,Boolean
+e9468fa0-641c-443d-8648-cce2f2edcbd5,Cancer (all types),true,e7d5f17e-f9f8-40de-b9ac-3e67e9d0128f,,Finding,Boolean
+5a66a22a-19df-41b7-8074-494255823bd4,Cardiovascular disease (all types),true,521e1104-1702-477f-adee-da3378317e75,,Finding,Boolean
+1ce41cb6-3aca-424d-8545-5d7b56d8a343,Category of patient,true,7981a5d4-064b-4872-83fb-5dc9d514e167,,Finding,Coded
+7d7c330f-12b1-4f1f-b379-3d4fb148f456,Chicken pox,true,6d573b0a-4c62-4c4f-ad3a-e92a852bc57a,,Finding,Boolean
+2826d9b5-a5d9-4b2e-aea3-19a7b3cc54fb,Cholera (Above Five register),true,e159aa4b-9a4c-4f6a-b41e-6afd6dd18827,,Finding,Boolean
+13bc6a79-0fb9-49e9-bd80-82ef9f008b19,Chronic diseases,true,5ec7343c-4043-46f1-8c3b-1d6419314c02,,Finding,Boolean
+62cab07d-026f-4992-8307-bbd24cc9dc32,Chronic liver disease / Cirrhosis,true,acf5bc43-cde0-4384-a75d-9783c812b09f,,Finding,Boolean
+94ae30bc-c3fa-4504-887a-8f4e7a773452,Chronic respiratory disease,true,56a8b50b-91fa-458d-8237-1dcad13a3b94,,Finding,Boolean
+263225d8-cd15-442e-8cbe-20ab134c96e8,Dental abscess (Above Five register),true,7627a537-531a-43cd-899b-7d5463ef672e,,Finding,Boolean
+0874d7ac-f7d7-4add-8a3b-806bf7162048,Dental caries,true,8a113613-96cf-448e-91ea-a335033544ee,,Finding,Boolean
+e669cbc5-76db-4199-88c2-753ffab30e41,Dental fracture,true,2c2bddfa-678a-47cc-aaac-e34ad4ce9d70,,Finding,Boolean
+17c9396e-aa9b-46bf-81fe-7b92ff5ce4c0,Diabetes (Type 1 or 2),true,2db3c7f5-7ae2-4745-8e62-2c957456d0a8,,Finding,Boolean
+c25f1dd8-68ee-4c15-9649-53b889e0bd14,Diarrhoea with blood treated with ORS and Zinc,true,a714374f-51c6-407d-a0e6-cce9bc78d43f,,Finding,Boolean
+1cb4c57d-9136-4409-9b7d-7bd1e45248d2,Diarrhoea with severe dehydration,true,5901bcba-f224-498a-86fa-1e9333919daa,,Finding,Boolean
+362c147d-3215-4043-8775-51348506000d,Diarrhoea with severe dehydration treated with IV fluids (RL),true,da60d706-34af-48e7-9a20-7254b972b9de,,Finding,Boolean
+8170cef7-592d-4f3e-85b2-adc92c9694b2,Diarrhoea without blood treated with ORS and Zinc,true,2206dc22-1118-4e77-8ef1-078ba53723f6,,Finding,Boolean
+b72ad93c-69bd-4364-97cd-f3ebcd0f036a,Disability (Above Five register),true,65384fe0-2328-478b-8288-643150b19c54,,Misc,Coded
+c3ab3553-0e5b-4342-b9cf-83968974f36c,Disability: hearing impairment,true,ba5dbe37-d922-448d-80d3-8dd4f48d5dc5,,Finding,Boolean
+7a4b0fb2-d87e-46c6-92ae-5a84656366dd,Disability: intellectual,true,d33c8396-3336-402d-aefb-2abf9531d104,,Finding,Boolean
+1ff094d8-973a-4b58-9b94-f6bbc1f92169,Disability: multiple,true,1b837d4d-db95-47a4-bc06-0ea8a7ebf4ff,,Finding,Boolean
+b382d354-d394-42d7-a629-1df356642c51,Disability: physical,true,4b29ffa3-be79-4bf6-9450-06482e78ff74,,Finding,Boolean
+3afa12ff-79aa-41d0-81a9-0cdfc22612a0,Disability: speech and language,true,1128a47a-b23f-4381-bbeb-fe9a905dccc3,,Finding,Boolean
+18d7e813-dc2b-4d1f-802e-cde9fe2aa13a,Disability: visual impairment,true,f2bff0ec-ac6d-4523-908c-898f3179b359,,Finding,Boolean
+5abb022f-406a-4ee6-a223-abf11a944ca1,Dysentery (bloody diarrhoea),true,4341b71e-992b-4863-9bf6-276650abad77,,Finding,Boolean
+0f73b0aa-1ef3-4011-acc5-48d6ab3b1f93,Ebola,true,36243102-2d05-47a6-976d-57f35ee04c44,,Finding,Boolean
+8efe44ba-8f63-4198-9694-95b4a4c48d60,"ENT (ear, nose, throat) disorder",true,cee4f19e-4a4e-44fd-a944-c4b02eb4d59d,,Finding,Boolean
+6c371a68-4c70-4054-9229-0919a9d26ae6,Epilepsy (Above Five register),true,6ba3bdd3-808a-4d96-808e-29d20f9650b1,,Finding,Boolean
+71653506-cb1d-4411-994c-8018e245883a,EVD surv,true,d5bd158f-1a99-4fc0-9a38-8a49fd78e0c9,,Misc,Coded
+217b71b7-d457-47e9-9f29-9f34f75c1be8,Eye condition other than infection,true,d20d3826-c9d4-44f1-bfff-7a99d001a294,,Finding,Boolean
+3c960886-9501-4466-950a-5a6e30ac9034,Eye infection,true,4a9c3878-1cf7-448b-bf63-2a2916662841,,Finding,Boolean
+b891e640-5fe6-4833-9a20-f52c980c4505,Facility ownership,true,f8aacd35-3043-4c57-83c0-5882eb76d820,,Finding,Coded
+0fe727d2-30b3-4f2c-9ef5-637d01c01cd2,Faithbase,true,e98201f7-a52e-457c-821a-81e59f3ef5f1,,Misc,Coded
+6b1b7255-4bdf-4c9d-b411-314de1c11f9a,Fever cases (suspected malaria),true,2d3180c7-a116-43b1-936f-0cc28d13028c,,Finding,Boolean
+ce10f985-03ae-44c7-a63e-ec5fa7aae3c5,Follow up,true,b59b1f78-38d9-405b-a6dd-65c8aaa170ef,,Misc,Coded
+07586f12-635e-4c31-b293-aef383be4d9f,Gen,true,52dae988-02c7-4bc0-8906-51b78547c7e0,,Misc,Coded
+e0eb290f-7b4f-40cd-bc91-e8cdd0d5aadd,Genital discharge (Above Five register),true,efe54770-067f-48af-bcc1-341eecb1532f,,Finding,Boolean
+bee47d56-cbe0-47f2-a6fa-f2f867a9ce7e,Genital ulcer,true,852fe6cd-403f-4a9c-bb6f-1531f0aaf440,,Finding,Boolean
+0fdb2054-695f-4495-8187-3d9e4d26a5e2,Haemorrhoids / Piles,true,f7fa556e-b7d9-4c2f-9fc8-4d3c5c8d66ea,,Finding,Boolean
+fa1bc75b-f257-4da8-a68b-8e72e17e6387,Heart failure (Above Five register),true,34e6ad3c-4f20-48fb-89c4-d425cb31f7ae,,Finding,Boolean
+474bb6aa-d3dd-4080-a9d3-438ea418ec67,Hepatitis (all types),true,158d26b0-b68b-4343-a8f4-74eb5bdb1593,,Finding,Boolean
+24cb46b7-d971-4d94-9cd1-9a5d4f4037f1,Hernia,true,cd466705-bff2-48f8-825e-c89d6c8bc044,,Finding,Boolean
+05bd7b50-666d-4722-b29a-c6f55d819c0d,Hydrocele (Above Five register),true,becea870-7a7b-42c1-ba93-31ddc46c2628,,Finding,Boolean
+e11d1d99-b074-4bf9-8ed2-0eae05726c10,Hypertension (Above Five register),true,2ff54747-5d5c-4a75-8b39-59eff3cfaf7d,,Finding,Boolean
+0b91a7b8-fa77-495c-8dbd-83e2dba0022c,Ileus,true,74502b06-e085-4066-9ab0-494e6dc5d6f1,,Finding,Boolean
+cdc75415-678d-42ee-8d04-fe2404b6eb08,In Facility,true,ed147875-f9b4-4a83-ab46-6a1704e66583,,Misc,Coded
+23edac37-c75e-415b-a7d9-760906840ad2,Kidney disorders,true,e5661d79-5383-4bbf-bc65-16d0aad80542,,Finding,Boolean
+e5179039-ee3e-4634-aedb-803b0bb118f7,Lact,true,0cc5d6fe-5f9a-4b9b-a585-527fd7f767c2,,Misc,Coded
+97aa194b-ff8c-440f-bf5e-7def7cb64518,Lassa fever (Above Five register),true,3f1e1002-d2e9-498d-a0ce-2370321f7182,,Finding,Boolean
+aa7d9ff1-a17d-4d42-9187-41f6d8ae83c8,Leprosy (Above Five register),true,643be333-86e1-4c10-b16c-e46f73c7caa8,,Finding,Boolean
+fb9c870c-10e3-4095-acaf-70ffa4e7b5f2,Liver disease,true,820bc0ba-5cae-43d9-a856-08413e64c66a,,Finding,Boolean
+6332df1f-fa74-4ea0-a4d7-3bf934f22ec4,Lymphoedema,true,ee031030-7d73-474a-8b82-c61706fde9e5,,Finding,Boolean
+953a35a2-c6f7-4977-a3da-7efa7e31e74e,Malaria microscopy negative,true,529d16d1-aa1e-4977-8c98-d7ea1779b4f4,,Finding,Boolean
+31505342-ed59-4253-841f-43e8718467ca,Malaria microscopy positive,true,68dd47d3-5bac-426b-afec-3dee78f7c35a,,Finding,Boolean
+da85de75-b82d-4548-aa58-a9cf187dcfac,Malaria treated at facility without ACT,true,aed5a357-5920-44bd-b318-2ba6cb78e720,,Finding,Boolean
+ada12301-be11-4a63-9eb5-2a9d9b6e18de,Malaria treated with ACT less than 24 hours,true,97292342-3109-4df1-909a-e454cf023d7f,,Finding,Boolean
+da4dc155-856a-456e-bd82-4430d876bd35,Malaria treated with ACT more than 24 hours,true,33008207-5ba8-4d80-84ce-089006ca29b5,,Finding,Boolean
+8cf7feff-81b6-4389-a388-ecffc98910f4,Marburg,true,8c00f6a1-a29c-4796-ae35-7786ee00591d,,Finding,Boolean
+b8c1824d-3782-4511-88b8-c9ec16ad7cac,Measles (Above Five register),true,0607cb2b-3a45-4a2e-8d17-f5102e24eb72,,Finding,Boolean
+e9536cb1-30d1-42fa-bc7f-2ccc0d77bc11,Meningitis / Encephalitis,true,f83641b2-ebbc-4966-90d4-e7da347daeb7,,Finding,Boolean
+f1a68e2a-1913-449c-a9d9-6af815bc0ef8,Mental disorder (all types),true,84ed8ebf-372f-406a-9ae6-85c466066226,,Finding,Boolean
+50befc52-ebdc-44a8-92be-bb62eb0019ed,Moderate malnutrition (Above Five register),true,7e7ca5ee-89e8-4297-aa1e-9bae6c9a1206,,Finding,Boolean
+7ba8bd22-c70e-4914-8ea4-0758bd1b8e4d,Mumps (Above Five register),true,6ddf43b3-35f8-45de-954d-ceddbe467f1c,,Finding,Boolean
+1bfff36f-5ee3-4c22-ba99-5b981649ea30,New (Above Five register),true,d43b993b-4b5f-46c6-851f-7943111e4cc7,,Misc,Coded
+3aaae386-ca7a-4a41-8fd2-163b339641df,Obstruction,true,88817af4-07e8-4644-a115-5fdd9608f252,,Finding,Boolean
+e07eaa27-172c-4f82-906f-33cea93a57e8,Onchocerciasis (Above Five register),true,d7a76457-471c-4225-841d-5b3db7fcdd08,,Finding,Boolean
+cc7139f8-83e1-420c-8079-954fdd57e0c5,Oral and dental conditions,true,2512dcd7-fb69-497b-b12c-5054dfe93752,,Finding,Boolean
+fb417656-f2c3-4ee7-83b2-b7dc6e5bf11b,Other infectious conditions,true,b0f801f1-01ba-4f41-948d-16ecf6949295,,Finding,Boolean
+d03e30ca-e9d8-4511-8dca-7b8588ee5cea,Other morbidity (free text note),true,45009079-a657-406b-977c-74f48558a38f,,Misc,Text
+fb3f5ff6-f782-478b-9c1d-509291a6940b,Other NCD conditions,true,2d1a944b-49e1-4907-bbd3-081d45694124,,Finding,Boolean
+afe6d69f-4ece-40cf-bf89-52990016d8ab,Other surgical conditions,true,322e7e0a-4097-44d0-b770-b6ddfc155895,,Finding,Boolean
+a27dc8c2-28df-4d93-abce-ec7e37a81907,Outreach (Above Five register),true,111e8553-29ff-4ae7-a76d-381a37ff1c8f,,Misc,Coded
+f55df4ef-1b86-42f9-bbd8-66913a7ab74e,Pelvic inflammatory disease (PID),true,c24f7d42-dbea-4515-b7f6-db580ea7d6a1,,Finding,Boolean
+51a97df0-cbdb-462d-98a7-dda3e326555f,Peptic ulcer disease (PUD),true,b671d71b-251d-4654-851e-194c7fbd3273,,Finding,Boolean
+25a05262-2c2c-485a-9d0a-2c5e3cb9efdc,Pneumonia treated in facility,true,8ec1bfd8-fef5-4aa3-92f3-1c614d2190b1,,Finding,Boolean
+fe5cd35c-22c3-4af5-82bd-bbbc6763aa58,Pneumonia with antibiotic,true,fee97c15-eb60-424d-8fbf-eee586291533,,Finding,Boolean
+6a30671e-c024-4559-bef5-bf71a80efc14,Pneumonia without antibiotic,true,9769b78e-622e-4bf1-a9e8-11d76bc079dc,,Finding,Boolean
+bce9f424-230a-45e0-8ae0-0f75166a3f5a,Postpartum haemorrhage / Antepartum haemorrhage (PPH & APH),true,eac6c9a3-1588-4fc8-80a4-345f8cdef4ff,,Finding,Boolean
+401b121b-59a2-46ed-862a-d15df25d7bac,Preg,true,3720ba11-191d-487f-803d-9e3ffa4d2d6b,,Misc,Coded
+8c83a580-bf3c-4438-ab82-f07e5d2e6975,Private,true,4ff0f767-5afd-4fc2-beac-0610b2fbf128,,Misc,Coded
+01fdc579-378d-40cc-afcc-dcfc0c5c7133,Public,true,456d3263-9169-49bd-a522-4fdf314a0cb7,,Misc,Coded
+82752b4b-940a-462a-869a-d34e5f3c90b6,RDT negative,true,e0027ade-434f-4965-aa17-0ab2ad16470b,,Finding,Boolean
+128b88e4-49cd-4a8f-85b3-de536741cd54,RDT positive,true,d2354588-0df7-4bbf-bd60-2293280fe96b,,Finding,Boolean
+933872e1-c068-44d9-a0be-96b465327402,Rubella (Above Five register),true,c773af46-1b65-4a81-b2a4-df085d6e16a7,,Finding,Boolean
+c397c617-97a0-4bac-be68-68f368534fb4,Schistosomiasis (Above Five register),true,acfc7902-6e87-40eb-8b1f-bc4a8ba3fa96,,Finding,Boolean
+31f9e711-6b25-4fda-adb4-8e19aa00e2df,Sepsis (Above Five register),true,b2578c19-953b-4081-a61f-297e949bfbef,,Finding,Boolean
+fb953d82-5042-41c0-ba7b-cab46e34dc5e,Service point (in facility / outreach),true,4aea3356-0a34-4271-8187-e9b89af87e66,,Finding,Coded
+37d534cb-a35a-4913-bc41-f3538def7782,Severe malaria (Above Five register),true,3b483c0b-4652-4709-8887-6794ffa6eeb6,,Finding,Boolean
+da58522b-8e66-426f-9787-3d909918db56,Severe malaria treated with Artesunate (IV/IM & supp),true,f8f485f2-80dd-4414-acb0-cde19cfb8eed,,Finding,Boolean
+6b4685fe-b5f9-4634-8124-80045d9e269f,Severe malnutrition,true,f4720074-cb54-4931-aea6-1d3ccc016c2a,,Finding,Boolean
+9fd4090c-4f22-4b8a-9b17-25709cadc78b,Severe pneumonia treated with oxygen therapy,true,56e399e1-6409-4763-922b-0b0a3da7cbca,,Finding,Boolean
+f2b662e3-ce14-4d22-af0f-02a4e53a5f9f,Sickle cell disease (Above Five register),true,ca60a7f1-5605-4504-afea-312bc01e77e5,,Finding,Boolean
+510440a3-e05e-49d0-a833-0768740de721,Skin infection,true,d6cd4b0d-bad7-4dfe-9747-51478ec1c335,,Finding,Boolean
+d5c1995e-aaf9-4e46-87ab-a905f4bd32e1,Stroke,true,d1f0d05f-e301-4443-b83b-aa1fdbbf4858,,Finding,Boolean
+a6cf24da-b177-4dc4-b51e-df55dc0c5867,Suspected AVHL other,true,f7534e21-b440-41ad-8b1b-ed5d6f05f87c,,Finding,Boolean
+9c3b6256-5d3c-4a75-90d5-17b1be6da6f2,Suspected cancer: breast,true,15c847e9-c7ae-4ef1-afc4-55bbfb559c8b,,Finding,Boolean
+38be7097-2b04-4df1-80ec-9838750333ff,Suspected cancer: cervical,true,14d2ee24-5cc3-46da-b3c5-c691c8bd58e0,,Finding,Boolean
+31005895-68de-4c61-a1e9-3b50f7d12200,Suspected cancer: childhood,true,ef016e8c-eeb4-41dc-9437-03f1d347ed42,,Finding,Boolean
+66c6cacd-fe9a-4bbc-870b-97c3bc8cba61,Suspected cancer: liver,true,ea2a60e2-f7fe-4df9-bac0-ff31cd25ad33,,Finding,Boolean
+9b32e470-e11e-4af0-bbc8-12187a288626,Suspected cancer: lungs,true,50006ece-e598-4d6f-8c7b-262e8e0e157c,,Finding,Boolean
+92fb8200-5f8d-43e3-b8cf-99693bf7305b,Suspected cancer: others,true,5d8ffd20-93f4-4955-ba00-7d7002700d78,,Finding,Boolean
+93b5bf5b-0dae-4f3e-b120-b3f8a8c90365,Suspected cancer: prostate,true,60802935-2053-4a9f-b465-6c5b0a143bec,,Finding,Boolean
+937f42eb-57b4-43c5-aecf-a3037d4f17e5,Suspected MPOX,true,e93a58de-4d66-49f1-a120-69bd8fde0609,,Finding,Boolean
+7d538977-821a-4ac0-8d6d-25c4db7aafcc,Suspected poison: caustic soda,true,95058899-3247-48c4-b6e3-3cab1572e5d4,,Finding,Boolean
+10a4989f-e553-4235-ab02-dd1c0aa1bbe8,Suspected poison: food,true,e0d69f80-8029-4c5a-9359-bf0dcb914421,,Finding,Boolean
+39e47f61-3985-4539-b63e-c301612738a5,Suspected poison: other,true,aa5bb20b-b924-4a82-bff9-3c7a87e29b13,,Finding,Boolean
+890e2b34-9d08-4e95-a688-3407742f31bb,Tetanus (Above Five register),true,de8ce93e-cbc7-41a8-b8b8-99095cb5374a,,Finding,Boolean
+53cbc9a8-91ff-49a9-b6b6-f0db243cbff5,Trachoma,true,66a40e72-c49e-49a6-b654-8e54287e8e54,,Finding,Boolean
+85ba420b-17be-4f94-90a6-c253913cae93,Treated with Artesunate injection,true,c02b5d94-c212-4c9c-b4fa-bb40f3f1cb63,,Finding,Boolean
+9965b265-a15f-4150-887c-ed73fbe879fe,Treated with parenteral anti-malarial,true,d144facb-33b8-4ba1-afe8-b82d1fae6848,,Finding,Boolean
+7fe05409-efc6-46c8-9257-20a544d37e18,Tuberculosis (TB),true,7481c2de-99cd-4ebc-b920-92dedc70941d,,Finding,Boolean
+1515414d-5e68-42ef-a239-34c86e494679,Type of visit (new / follow-up),true,da91fa6c-ae09-4974-88c4-07a68296d917,,Finding,Coded
+a9796b0e-6e33-4bf9-a2bd-5c7b0524f0f3,Typhoid fever / Paratyphoid,true,c732bfe6-b17c-426b-b4fe-200fb1c08502,,Finding,Boolean
+7d0b12c4-b7fe-4233-a1a6-f3455bf0fb9c,Typhoid perforation,true,b0fbffdc-1a74-4d62-923c-9dc403c5bf2f,,Finding,Boolean
+60214245-c173-4a64-a00b-82e1bc801e97,Upper GI disease / Pancreatitis,true,7f8b2225-7c22-4201-8af1-c932b15c04eb,,Finding,Boolean
+70d4fd36-cb4e-46a9-937f-0ef35ba4070c,UTI (urinary tract infection),true,ae2a294f-2720-42dd-a45c-7eaa7217aae8,,Finding,Boolean
+6ace0b14-465e-44a9-97ce-350c40a52989,Watery diarrhoea treated with ORS and Zinc,true,f488c312-2507-466f-86e1-2f2cec480ceb,,Finding,Boolean
+29d49454-9cf6-43d1-8abe-7e37d065be54,Watery diarrhoea treated with ORS only,true,3abb5694-6573-4908-98ef-c544693f4db7,,Finding,Boolean
+44ec868f-d821-4735-a896-b302fc0ec361,Worm infestation,true,bbb23cda-91a6-436d-b5d3-fad4c68a2482,,Finding,Boolean
+9dbd12ef-9ce3-41c5-aee5-208d22e7a393,Wounds/Trauma: non-RTA,true,addd2251-07e7-4097-81eb-2dc907d85e6f,,Finding,Boolean
+b3f91afa-0551-4cb1-a7bd-e2d1ec9afcc8,Wounds/Trauma: road traffic accident (RTA),true,2f300855-fe47-480e-b0d2-8f9b7c510281,,Finding,Boolean
+9aafdba1-62ac-4e27-8637-28ee98548dcf,Yellow fever (Above Five register),true,a47ca861-39be-4a0a-8c87-e6f2d8d7977c,,Finding,Boolean
