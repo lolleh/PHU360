@@ -149,3 +149,202 @@ reports/reportdescriptors/dataexports/quietWardDischargeList.yml
 # workflow either by UUID or by concept. Left behind: the NCD workflow (NCD is
 # still active) and the Infant-bound EID treatment status, whose concept mentions
 # EID but whose program is Infant - it survives because Infant was not removed.
+
+# The ANC / maternity, delivery / newborn / NICU, family planning / gynecology /
+# OB-GYN, NCD and oncology / OVC / COVID program families. PHU360 does not run
+# these programs: 73 forms in all, across 68 files plus 5 under htmlforms/retired/.
+#
+# Every file here is stock config, not a tracked delta file, so excluding the path
+# is the only lever - there is nothing in the repo to delete.
+#
+# The three registers that survive (motherAndNeonateRegister, deliveryRegister,
+# familyPlanningRegister) are tracked delta files and are NOT on this list. They
+# are registers that record what a visit was, and a PHU360 visit note still
+# records a delivery, a family planning encounter or an ANC contact. Deleting the
+# clinical forms that capture a service means the register has nothing to summarise.
+#
+# CONSEQUENCE: four dashboard report types - mother-and-neonate, postnatal-care,
+# delivery-register and family-planning - were defined entirely by the encounter
+# types only these forms record (ANC Intake/Followup/Progress, Postnatal Followup,
+# Newborn Initial/Assessment/Daily Progress/Discharge/NICU Triage, Family Planning
+# Initial/Followup, Maternal Discharge/Death, Labor and Delivery Summary). With
+# no form left to create them, nothing can ever write those encounters, so all four
+# are removed from the report catalog rather than left to report a permanent 0.
+# The 7 remaining report types read encounter types that surviving forms produce.
+#
+# htmlforms/retired/ is emptied too. It exists so pihcore does not recreate an old
+# (name, version) with a different formUuid than the row it left behind; with every
+# form in it also excluded there is nothing left for it to protect.
+pih/htmlforms/ancFollowup_v1.0.xml
+pih/htmlforms/ancFollowup_v1.1.xml
+pih/htmlforms/ancFollowup_v2.0.xml
+pih/htmlforms/ancFollowup_v3.0.xml
+pih/htmlforms/ancFollowup.xml
+pih/htmlforms/ancIntake_v1.0.xml
+pih/htmlforms/ancIntake_v1.1.xml
+pih/htmlforms/ancIntake_v2.0.xml
+pih/htmlforms/ancIntake_v3.0.xml
+pih/htmlforms/ancIntake.xml
+pih/htmlforms/ancProgress.xml
+pih/htmlforms/ballardScore.xml
+pih/htmlforms/cervicalCancerScreening.xml
+pih/htmlforms/chemotherapyTreatment.xml
+pih/htmlforms/covid19Discharge.xml
+pih/htmlforms/covid19Followup.xml
+pih/htmlforms/covid19Intake.xml
+pih/htmlforms/delivery_v1.0.xml
+pih/htmlforms/delivery_v1.1.xml
+pih/htmlforms/delivery_v2.0.xml
+pih/htmlforms/delivery_v3.0.xml
+pih/htmlforms/delivery.xml
+pih/htmlforms/echocardiogram.xml
+pih/htmlforms/familyPlanningFollowup.xml
+pih/htmlforms/familyPlanningIntake.xml
+pih/htmlforms/gynecologyFollowup.xml
+pih/htmlforms/gynecologyIntake.xml
+pih/htmlforms/inpatientNewbornVitals.xml
+pih/htmlforms/laborDeliverySummary.xml
+pih/htmlforms/laborProgress.xml
+pih/htmlforms/maternalAdmission.xml
+pih/htmlforms/maternalDeath.xml
+pih/htmlforms/maternalDischarge-print.xml
+pih/htmlforms/maternalDischarge_v1.0.xml
+pih/htmlforms/maternalDischarge.xml
+pih/htmlforms/ncd-followup-part-1_v1.0.xml
+pih/htmlforms/ncd-followup-part-1.xml
+pih/htmlforms/ncd-followup-part-2.xml
+pih/htmlforms/ncd-followup_v0.5.xml
+pih/htmlforms/ncd-followup_v1.0.xml
+pih/htmlforms/ncd-followup.xml
+pih/htmlforms/ncd-initial-part-1_v1.0.xml
+pih/htmlforms/ncd-initial-part-1.xml
+pih/htmlforms/ncd-initial-part-2_v1.0.xml
+pih/htmlforms/ncd-initial-part-2.xml
+pih/htmlforms/ncd-initial_v0.5.xml
+pih/htmlforms/ncd-initial_v1.0.xml
+pih/htmlforms/ncd-initial.xml
+pih/htmlforms/newbornAdmissionNote.xml
+pih/htmlforms/newbornAssessment.xml
+pih/htmlforms/newbornDailyProgress_v1.0.xml
+pih/htmlforms/newbornDailyProgress.xml
+pih/htmlforms/newbornDischarge_v1.0.xml
+pih/htmlforms/newbornDischarge.xml
+pih/htmlforms/newbornInitial_v1.0.xml
+pih/htmlforms/newbornInitial.xml
+pih/htmlforms/nicuTriage.xml
+pih/htmlforms/obGyn_1.0.xml
+pih/htmlforms/obGyn.xml
+pih/htmlforms/oncologyConsult.xml
+pih/htmlforms/oncologyIntakeConsult_v2.0.xml
+pih/htmlforms/oncologyIntakeConsult.xml
+pih/htmlforms/oncologyTreatment.xml
+pih/htmlforms/ovcFollowup.xml
+pih/htmlforms/ovcIntake.xml
+pih/htmlforms/postnatalFollowup_v1.0.xml
+pih/htmlforms/postnatalFollowup.xml
+pih/htmlforms/postpartumDailyProgress.xml
+pih/htmlforms/retired/checkin_old.xml
+pih/htmlforms/retired/physicalRehab.xml
+pih/htmlforms/retired/section-anc-followup.xml
+pih/htmlforms/retired/section-anc-intake.xml
+pih/htmlforms/retired/section-ncd.xml
+
+# The documentation CSVs describing those same 73 forms, for the same reason.
+# 20 of the 73 never had one, so the list is shorter than the form list above.
+pih/htmlforms/documentation/ancFollowup.csv
+pih/htmlforms/documentation/ancFollowup_v1.0.csv
+pih/htmlforms/documentation/ancFollowup_v1.1.csv
+pih/htmlforms/documentation/ancFollowup_v2.0.csv
+pih/htmlforms/documentation/ancFollowup_v3.0.csv
+pih/htmlforms/documentation/ancIntake.csv
+pih/htmlforms/documentation/ancIntake_v1.0.csv
+pih/htmlforms/documentation/ancIntake_v1.1.csv
+pih/htmlforms/documentation/ancIntake_v2.0.csv
+pih/htmlforms/documentation/ancIntake_v3.0.csv
+pih/htmlforms/documentation/ancProgress.csv
+pih/htmlforms/documentation/ballardScore.csv
+pih/htmlforms/documentation/cervicalCancerScreening.csv
+pih/htmlforms/documentation/delivery.csv
+pih/htmlforms/documentation/delivery_v1.0.csv
+pih/htmlforms/documentation/delivery_v1.1.csv
+pih/htmlforms/documentation/delivery_v2.0.csv
+pih/htmlforms/documentation/delivery_v3.0.csv
+pih/htmlforms/documentation/familyPlanningFollowup.csv
+pih/htmlforms/documentation/familyPlanningIntake.csv
+pih/htmlforms/documentation/gynecologyFollowup.csv
+pih/htmlforms/documentation/gynecologyIntake.csv
+pih/htmlforms/documentation/inpatientNewbornVitals.csv
+pih/htmlforms/documentation/laborDeliverySummary.csv
+pih/htmlforms/documentation/laborProgress.csv
+pih/htmlforms/documentation/maternalAdmission.csv
+pih/htmlforms/documentation/maternalDeath.csv
+pih/htmlforms/documentation/maternalDischarge.csv
+pih/htmlforms/documentation/maternalDischarge-print.csv
+pih/htmlforms/documentation/maternalDischarge_v1.0.csv
+pih/htmlforms/documentation/ncd-followup.csv
+pih/htmlforms/documentation/ncd-followup-part-1.csv
+pih/htmlforms/documentation/ncd-followup-part-1_v1.0.csv
+pih/htmlforms/documentation/ncd-followup-part-2.csv
+pih/htmlforms/documentation/ncd-followup_v1.0.csv
+pih/htmlforms/documentation/ncd-initial.csv
+pih/htmlforms/documentation/ncd-initial-part-1.csv
+pih/htmlforms/documentation/ncd-initial-part-1_v1.0.csv
+pih/htmlforms/documentation/ncd-initial-part-2.csv
+pih/htmlforms/documentation/ncd-initial-part-2_v1.0.csv
+pih/htmlforms/documentation/ncd-initial_v1.0.csv
+pih/htmlforms/documentation/newbornAdmissionNote.csv
+pih/htmlforms/documentation/newbornAssessment.csv
+pih/htmlforms/documentation/newbornDailyProgress.csv
+pih/htmlforms/documentation/newbornDailyProgress_v1.0.csv
+pih/htmlforms/documentation/newbornDischarge.csv
+pih/htmlforms/documentation/newbornDischarge_v1.0.csv
+pih/htmlforms/documentation/newbornInitial.csv
+pih/htmlforms/documentation/newbornInitial_v1.0.csv
+pih/htmlforms/documentation/nicuTriage.csv
+pih/htmlforms/documentation/postnatalFollowup.csv
+pih/htmlforms/documentation/postnatalFollowup_v1.0.csv
+pih/htmlforms/documentation/postpartumDailyProgress.csv
+
+# The clinical measurement / exam images those forms were the only users of.
+# arm*/heel* are the MUAC tapes, square*/posture*/scarf* the oedema grading,
+# pop* the respiratory-rate diagram, CervixQuadrants the inspection grid.
+#
+# ic_launcher.png, moh-sierra-leone-seal.png and pih-sierra-leone-logo.png are
+# NOT excluded: nothing references them today, but they are branding rather than
+# exam assets and the branding is the reason they are tracked at all.
+pih/htmlforms/images/arm0.gif
+pih/htmlforms/images/arm1.gif
+pih/htmlforms/images/arm2.gif
+pih/htmlforms/images/arm3.gif
+pih/htmlforms/images/arm4.gif
+pih/htmlforms/images/CervixQuadrants.gif
+pih/htmlforms/images/heel0.gif
+pih/htmlforms/images/heel-1.gif
+pih/htmlforms/images/heel1.gif
+pih/htmlforms/images/heel2.gif
+pih/htmlforms/images/heel3.gif
+pih/htmlforms/images/heel4.gif
+pih/htmlforms/images/pop0.gif
+pih/htmlforms/images/pop-1.gif
+pih/htmlforms/images/pop1.gif
+pih/htmlforms/images/pop2.gif
+pih/htmlforms/images/pop3.gif
+pih/htmlforms/images/pop4.gif
+pih/htmlforms/images/pop5.gif
+pih/htmlforms/images/posture0.gif
+pih/htmlforms/images/posture1.gif
+pih/htmlforms/images/posture2.gif
+pih/htmlforms/images/posture3.gif
+pih/htmlforms/images/posture4.gif
+pih/htmlforms/images/scarf0.gif
+pih/htmlforms/images/scarf-1.gif
+pih/htmlforms/images/scarf1.gif
+pih/htmlforms/images/scarf2.gif
+pih/htmlforms/images/scarf3.gif
+pih/htmlforms/images/scarf4.gif
+pih/htmlforms/images/square0.gif
+pih/htmlforms/images/square-1.gif
+pih/htmlforms/images/square1.gif
+pih/htmlforms/images/square2.gif
+pih/htmlforms/images/square3.gif
+pih/htmlforms/images/square4.bmp

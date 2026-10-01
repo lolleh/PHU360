@@ -61,7 +61,6 @@ and sections.
 | `above-five-patient-list` | Above Five Register - Patient List | the `Visit Note` encounter type the register's form is attached to |
 | `under-five-register` | Under Five Register (2 Months - 5 Years) | the `Under Five IMNCI` encounter type the register's form is attached to |
 | `hf1/hf2/hf3/hf5/hf12-summary` | HF1, HF2, HF3, HF5, HF12 Summary | not mapped |
-| `mother-and-neonate` | Mother and Neonate | 22 maternal and newborn encounter type names |
 
 Two decisions worth knowing before editing these files:
 
@@ -348,10 +347,6 @@ would read as a clinical claim the report cannot make.
 | `all-encounter` | volume only — it is the unfiltered fallback view, so the shared KPIs are the point |
 | `under-five-register` | 12 indicators (volume, children seen, mean age, new/follow-up split, mean weight/MUAC/temperature, and the four IMNCI coverage checks) and 6 sections: visits by type, disease classification, outcome, disability type, age bands, and the 52 sign/condition/service tick boxes. Every concept and answer is named rather than numbered, and every name is checked against the database — see [Under Five, Above Five & Mother/Neonate registers](#under-five-above-five--motherneonate-registers) for why the names are generated from the same field spec that generates the form |
 | `above-five-patient-list` | encounters, patients seen, age bands. No conditions, deliberately: the register's 102 tick-boxes are a morbidity summary, and repeating them here would give one chart two names in two files that could drift. The Morbidity Summary report type has been removed from the catalog |
-| `mother-and-neonate` | 16 delivery and neonatal indicators including mean birth weight and both 24-hour survival checks, plus 5 breakdowns |
-| `postnatal-care` | 7: postnatal cases, 4 completion shares, and risk flags as counts. The counts and the shares are kept apart — "2 women were referred" and "2 of 12 had high blood pressure" are different findings about different questions, and flattening them into one list of percentages is how a dashboard comes to report a case count as a rate |
-| `delivery-register` | 8: volume, live-birth rate, and the five care-quality checks the labour register exists to record, plus 3 breakdowns. Built on the DR series rather than reusing the MNR layout, because DR is a different set of questions from D |
-| `family-planning` | 9: volume, three shares, and the same three as counts, plus the method mix. The shares are how a programme is assessed; the counts are what a district orders against, and 58% is not a number anyone stocks drugs by |
 | `hf1/hf2/hf3/hf5/hf12-summary` | none, on purpose — `mapped: false` with no mapping, so the API short-circuits before any layout is read. There is no data to be a layout of |
 
 `ReportLayout.standard()` — one encounter count and no sections — is what a
@@ -375,7 +370,6 @@ and center are different facts and live in different tables:
 | `above-five-patient-list` | `phu360_report_above_five_patient_list` |
 | `under-five-register` | `phu360_report_under_five_register` |
 | `hf1-summary` … `hf12-summary` | `phu360_report_hf1_summary` … |
-| `mother-and-neonate` | `phu360_report_mother_and_neonate` |
 
 `Phu360ReportingActivator` refreshes all of them on a `ScheduledExecutorService`
 every **15 minutes** and once at startup. OpenMRS's scheduler module is not in
@@ -729,10 +723,12 @@ What deliberately **stays**:
 - the mental-health *subforms*. `triage.xml` embeds
   `configuration/pih/subforms/mental-health-phq2.xml`, so removing the mental
   health forms does not license removing that widget.
-- `pih/scripts/visit/encounterTypeConfig.js` still has the bindings for these
-  types. It is stock config, and retiring the encounter types makes the entries
-  unreachable; it is only worth overriding if the visit UI is still seen
-  offering the forms.
+- the `hiv/*`, `epilepsy*.xml`, `ultrasound.xml` and similar
+  `getFormResource()` bindings in `pih/scripts/visit/encounterTypeConfig.js`.
+  Those are pre-existing: the file is stock config and has always referenced
+  forms this distribution never shipped. It already carried 30 such refs before
+  the [program-form removal](#program-forms-not-shipped) below, which is why the
+  visit UI tolerates them.
 - the mental-health and NCD *report descriptors* were already excluded (see
   `content/exclusions.txt`).
 
@@ -753,6 +749,64 @@ retirement costs:
   have stayed `mapped=true` on 12 resolving types while quietly showing no
   paediatric outpatient visits, because `ReportFilter.encounterTypesMissing` only
   fires when a report resolves *none* of its types.
+
+## Program forms not shipped
+
+PHU360 does not run the ANC, delivery, newborn, family planning, NCD, oncology,
+OVC or COVID programmes as *clinical* workflows, so the 73 forms that captured a
+visit for them are excluded: the ANC / maternity family, delivery / newborn /
+NICU, family planning / gynecology / OB-GYN, the NCD initial and followup parts,
+the oncology / OVC / COVID set, and the whole of `pih/htmlforms/retired/`. Their
+53 documentation CSVs go with them, as do the 36 clinical measurement images
+(MUAC tapes, oedema grading, the cervix inspection grid) that only those forms
+used. Every file is stock config, so `content/exclusions.txt` is the only lever —
+there is nothing in the repo to delete.
+
+| Family | Files | Retired encounter types |
+|--------|-------|--------------------------|
+| ANC / maternity | 21 | ANC Intake, ANC Followup, ANC Progress, MCH Delivery, Labor and Delivery Summary, Labour Progress, Maternal Admission, Maternal Discharge, Postnatal Followup |
+| Delivery / newborn / NICU | 16 | Newborn Initial, Newborn Assessment, Newborn Daily Progress, Newborn Discharge, Ballard Score |
+| FP / gynecology / OB-GYN | 7 | Family Planning Initial, Family Planning Followup, Gynecology Initial, Gynecology Followup, OB/GYN, Cervical Cancer Screening |
+| NCD | 13 | NCD Initial Consult + Part 1/2, NCD Followup Consult + Part 1/2 |
+| Oncology / OVC / COVID / other | 11 | Oncology Initial Consult, Oncology Consultation, Oncology Treatment Plan, Chemotheraphy treatment session, OVC Intake, OVC Follow-up, COVID-19 Admission/Progress/Discharge, Echocardiogram, Physical Rehab Evaluation |
+| `pih/htmlforms/retired/` | 5 | (none — the directory held no live encounter types) |
+| **Total** | **73** | **42 retired, 6 of them from the earlier outpatient removal** |
+
+Four consequences, each of which had to be handled in the same change:
+
+- **Four dashboard report types are gone** — `mother-and-neonate`,
+  `postnatal-care`, `delivery-register` and `family-planning`. Each was defined
+  entirely by encounter types that only the deleted forms record (`ANC Intake`,
+  `Postnatal Followup`, `Newborn Initial`, `NICU Triage`, `Family Planning
+  Initial`, …), so with no form left nothing can ever write them and all four
+  would have reported a permanent, confident `0`. They are removed from
+  `index.xml` rather than left to lie. Their `phu360_report_*` tables are left
+  in place: dropping a table is a data migration, and the module tolerates a
+  table no mapping names. The remaining 8 report types read encounter types that
+  surviving forms produce.
+- **42 encounter types are retired** in
+  `encountertypes/sierraLeoneEncounterTypes_retired.csv`. Retiring an encounter
+  type is what stops the visit UI listing a form that is no longer there — an
+  encounter type is what it lists. Verified in both directions: no retired type
+  still has a surviving form bound to it, and no deleted form leaves an
+  encounter type active.
+- **The 41 matching entries in `pih/scripts/visit/encounterTypeConfig.js` are
+  removed.** This file is tracked and its `getFormResource()` bindings name the
+  deleted XMLs, so leaving them would 404 the visit UI on 11 encounter types.
+  Retiring the types already made the entries unreachable; removing them stops
+  them being reachable by a stale id.
+- **The three registers survive** — `motherAndNeonateRegister.xml`,
+  `deliveryRegister.xml` and `familyPlanningRegister.xml` are tracked delta files
+  and are *not* excluded. A register records that a visit happened; a PHU360
+  visit note still records a delivery or a family planning contact. Deleting the
+  clinical forms that capture a service would leave the registers with nothing
+  to summarise.
+
+`patientRegistration-rs.xml` is now a tracked delta file declaring
+`formVersion="1.1"`. It previously shared `("Patient Registration", "1.0")` with
+`patientRegistration.xml`, and a form's identity is that pair — the two XMLs
+claimed one form, so a purge keyed on the pair could not tell them apart. The
+surviving set is 101 XMLs and 101 distinct identities, with no collisions.
 
 ## Configuration
 
