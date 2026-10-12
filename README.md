@@ -102,5 +102,8 @@ OpenMRS distribution for Sierra Leone PHUs (Falaba, Mongo Bendugu, Sinkunia) wit
 
 ## Development notes
 - `sync-agent/` is a standalone Spring Boot service (not an OpenMRS module)
-- `distro/` + `content/` built by OpenMRS SDK; `phu360reporting/` is a custom module
+- `distro/` + `content/` built by OpenMRS SDK; `clinicreporting/` is a custom module
+- `clinicreporting/` is the merged reporting module: it folds in the old `phu360reporting`
+  (facility dashboard + per-report-type indicator tables) and is built by
+  `scripts/build-clinicreporting-module.sh` (standard Maven `api` + `omod`)
 - Identifier types added: `PHU360 District ID`, `PHU360 Sync Origin`
