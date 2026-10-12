@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    This Source Code Form is subject to the terms of the Mozilla Public License,
+    v. 2.0. If a copy of the MPL was not distributed with this file, You can
+    obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
+    the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+
+    Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
+    graphic logo is a trademark of OpenMRS Inc.
+
+-->
+<module configVersion="1.2">
+
+	<id>${project.parent.artifactId}</id>
+	<name>${project.parent.name}</name>
+	<version>${project.parent.version}</version>
+	<package>org.openmrs.module.clinicreporting</package>
+	<author>OpenMRS</author>
+	<description>${project.parent.description}</description>
+	<activator>org.openmrs.module.clinicreporting.ClinicReportingActivator</activator>
+
+	<require_version>2.5.0</require_version>
+	<!--
+		appframework loads the apps/*.json definitions that put the "Clinic Reports" link on the
+		home page. It reads them only when loadAppsFromClasspath is true, which the PIH distribution
+		turns off in its own appframework-config.json; see the module README for the override.
+	-->
+	<require_modules>
+		<require_module version="2.20.0-SNAPSHOT">org.openmrs.module.appframework</require_module>
+		<!--
+			When reporting is installed, every saved export is mirrored as a ReportDefinition so it
+			shows up (and can be run) on the reportingui Reports page. Requiring the module guarantees
+			the reporting API is visible to this one at runtime and that it starts first; exports and
+			the REST endpoints work with or without it.
+		-->
+		<require_module version="2.0.0">org.openmrs.module.reporting</require_module>
+		<!--
+			pihcore registers the per-program dashboard apps during its own startup, and the facility
+			reporting bootstrap trims them off the Program Dashboards page. Requiring it guarantees that
+			ordering, and declaring the appframework dependency above is what puts AppFrameworkService on
+			this module's classloader. Ported from phu360reporting, which required the same two.
+		-->
+		<require_module version="2.2.0-SNAPSHOT">org.openmrs.module.pihcore</require_module>
+	</require_modules>
+
+	<!--
+		The REST endpoints enforce this privilege themselves. Core's @Authorized AOP advice is
+		wired into the service context, not the DispatcherServlet context that serves these
+		controllers, so an annotation alone would not be enforced here.
+	-->
+	<privilege>
+		<name>View Reports</name>
+		<description>Grants read access to the reporting REST API</description>
+	</privilege>
+
+	<!--
+		The indicator sandbox reads clinical tables directly, so it is split from View Reports and
+		given to administrators only. View Reports is granted broadly (clinicians included) and must
+		never imply access to raw rows. This privilege also opens the Data Exports workspace.
+	-->
+	<privilege>
+		<name>Manage Report Indicators</name>
+		<description>Grants access to the Data Exports workspace and its builder, where an administrator browses allowlisted clinical tables, previews data-cleaning transformations, and saves, runs and downloads the exports</description>
+	</privilege>
+
+	<!--
+		The raw SQL escape hatch is a separate privilege on purpose. It runs analyst-written
+		statements, so it is held independently of the sandbox and should go to fewer people still.
+	-->
+	<privilege>
+		<name>Run Raw Report SQL</name>
+		<description>Grants the audited raw SQL path inside the Data Exports workspace. Should be held only by staff who already have database-level read access.</description>
+	</privilege>
+
+	<!--
+		Every one of these is optional. A missing or unparseable value falls back to the default,
+		because a bad setting should degrade a report's shape rather than break it.
+	-->
+	<globalProperty>
+		<property>${project.parent.artifactId}.defaultPageSize</property>
+		<defaultValue>50</defaultValue>
+		<description>Page size used when a request does not ask for one</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>${project.parent.artifactId}.maxPageSize</property>
+		<defaultValue>1000</defaultValue>
+		<description>Largest page size a request may ask for</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>${project.parent.artifactId}.defaultGroupBy</property>
+		<defaultValue>MONTH</defaultValue>
+		<description>Period reports bucket by when a request does not ask for one: DAY, WEEK, MONTH, QUARTER or YEAR</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>${project.parent.artifactId}.programIndicatorDefinitions</property>
+		<defaultValue></defaultValue>
+		<description>Absolute path to an edited programme indicator definition file, for deployments that do not keep module configuration inside the webapp. Leave empty to use the copy in the module configuration directory, or the one this module ships.</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>${project.parent.artifactId}.maxExportRows</property>
+		<defaultValue>5000</defaultValue>
+		<description>Default row limit offered when a new data export is created. Bounded by the module's absolute ceiling of 20000; the on-screen preview always stays smaller than this.</description>
+	</globalProperty>
+
+	<!--
+		The facility reporting console (moduleResources/clinicreporting/index.html) talks to this
+		servlet. Ported from phu360reporting, where it was mounted at
+		/openmrs/moduleServlet/phu360reporting/reportApi; the module id change moves it to
+		/openmrs/moduleServlet/clinicreporting/reportApi with no code change.
+	-->
+	<servlet>
+		<servlet-name>reportApi</servlet-name>
+		<servlet-class>org.openmrs.module.clinicreporting.facility.web.ReportApiServlet</servlet-class>
+	</servlet>
+
+	<messages>
+		<lang>en</lang>
+		<file>messages.properties</file>
+	</messages>
+
+</module>

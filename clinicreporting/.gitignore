@@ -1,0 +1,14 @@
+target/
+*.omod
+*.class
+*.jar
+!**/src/**/*.jar
+# Compile-time-only API jars (system-scoped) that the running server supplies at
+# runtime; see api/pom.xml. Kept in the repo so the PHU360 build is self-contained.
+!lib/*.jar
+.idea/
+*.iml
+.settings/
+.classpath
+.project
+spotless-index

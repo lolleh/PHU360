@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.openmrs.module</groupId>
+		<artifactId>clinicreporting</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>clinicreporting-omod</artifactId>
+	<packaging>jar</packaging>
+	<name>Clinic Reporting OMOD</name>
+	<description>OMOD project for Clinic Reporting</description>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>${project.parent.artifactId}-api</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- Begin OpenMRS core -->
+		<dependency>
+			<groupId>org.openmrs.api</groupId>
+			<artifactId>openmrs-api</artifactId>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openmrs.web</groupId>
+			<artifactId>openmrs-web</artifactId>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openmrs.api</groupId>
+			<artifactId>openmrs-api</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openmrs.web</groupId>
+			<artifactId>openmrs-web</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openmrs.test</groupId>
+			<artifactId>openmrs-test</artifactId>
+			<type>pom</type>
+			<scope>test</scope>
+		</dependency>
+		<!-- End OpenMRS core -->
+
+	</dependencies>
+
+	<build>
+		<finalName>${project.parent.artifactId}-${project.parent.version}</finalName>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<!--
+				The REPORT TYPE data mappings. ReportMappings reads them off the module classpath
+				("reportmappings/<key>.xml"), so they must sit at the omod root. They already ship
+				inside the api jar (which lands in lib/), but the dependency-plugin unpack below only
+				matches top-level files, so this copies the same api resources - the module's own
+				sibling api module - to the root explicitly. Ported from phu360reporting, where they
+				sat at the omod root for the same reason.
+			-->
+			<resource>
+				<directory>${project.basedir}/../api/src/main/resources/reportmappings</directory>
+				<targetPath>reportmappings</targetPath>
+				<filtering>false</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/webapp</directory>
+				<excludes>
+					<exclude>resources</exclude>
+				</excludes>
+				<targetPath>web/module</targetPath>
+			</resource>
+			<resource>
+				<directory>src/main/webapp</directory>
+				<includes>
+					<include>resources</include>
+				</includes>
+				<targetPath>web/module</targetPath>
+			</resource>
+		</resources>
+
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.openmrs.maven.plugins</groupId>
+				<artifactId>maven-openmrs-plugin</artifactId>
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<id>init</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>initialize-module</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>pack</id>
+						<phase>package</phase>
+						<goals>
+							<goal>package-module</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- The API jar's moduleApplicationContext.xml must land at the root of the
+			     omod jar, because org.openmrs.module.web.WebModuleUtil looks the file up
+			     by that exact name when refreshing a module's application context. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>Expand moduleApplicationContext and messages</id>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<includeGroupIds>${project.parent.groupId}</includeGroupIds>
+							<includeArtifactIds>${project.parent.artifactId}-api</includeArtifactIds>
+							<excludeTransitive>true</excludeTransitive>
+							<includes>**/*</includes>
+							<outputDirectory>${project.build.directory}/classes</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

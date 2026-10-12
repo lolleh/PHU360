@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    This Source Code Form is subject to the terms of the Mozilla Public License,
+    v. 2.0. If a copy of the MPL was not distributed with this file, You can
+    obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
+    the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+
+    Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
+    graphic logo is a trademark of OpenMRS Inc.
+
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		    http://www.springframework.org/schema/context
+		    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!--
+		Beans here are merged into the core service context, so everything registered becomes
+		reachable through Context.getService(...). Each service is wrapped in a transaction
+		proxy using the same interceptor chain as core services, which is what makes DAO calls
+		session-bound and read-only reports safely repeatable.
+	-->
+
+	<!-- ============================ Patient and cohort reports ============================ -->
+
+	<bean id="patientReportDao"
+		  class="org.openmrs.module.clinicreporting.api.dao.hibernate.HibernatePatientReportDao">
+		<property name="sessionFactory" ref="dbSessionFactory"/>
+	</bean>
+
+	<bean id="patientReportService"
+		  class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="target">
+			<bean class="org.openmrs.module.clinicreporting.api.service.impl.PatientReportServiceImpl">
+				<property name="dao" ref="patientReportDao"/>
+			</bean>
+		</property>
+		<property name="preInterceptors" ref="serviceInterceptors"/>
+		<property name="transactionAttributeSource">
+			<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+		</property>
+	</bean>
+
+	<bean parent="serviceContext">
+		<property name="moduleService">
+			<list>
+				<value>org.openmrs.module.clinicreporting.api.service.PatientReportService</value>
+				<ref bean="patientReportService"/>
+			</list>
+		</property>
+	</bean>
+
+	<!-- ============================ Clinical register reports ============================ -->
+
+	<bean id="clinicalReportDao"
+		  class="org.openmrs.module.clinicreporting.api.dao.hibernate.HibernateClinicalReportDao">
+		<property name="sessionFactory" ref="dbSessionFactory"/>
+	</bean>
+
+	<bean id="clinicalReportService"
+		  class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="target">
+			<bean class="org.openmrs.module.clinicreporting.api.service.impl.ClinicalReportServiceImpl">
+				<property name="dao" ref="clinicalReportDao"/>
+			</bean>
+		</property>
+		<property name="preInterceptors" ref="serviceInterceptors"/>
+		<property name="transactionAttributeSource">
+			<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+		</property>
+	</bean>
+
+	<bean parent="serviceContext">
+		<property name="moduleService">
+			<list>
+				<value>org.openmrs.module.clinicreporting.api.service.ClinicalReportService</value>
+				<ref bean="clinicalReportService"/>
+			</list>
+		</property>
+	</bean>
+
+	<!-- ============================ Lab and LIMS reports ============================ -->
+
+	<bean id="labReportDao"
+		  class="org.openmrs.module.clinicreporting.api.dao.hibernate.HibernateLabReportDao">
+		<property name="sessionFactory" ref="dbSessionFactory"/>
+	</bean>
+
+	<bean id="labReportService"
+		  class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="target">
+			<bean class="org.openmrs.module.clinicreporting.api.service.impl.LabReportServiceImpl">
+				<property name="dao" ref="labReportDao"/>
+			</bean>
+		</property>
+		<property name="preInterceptors" ref="serviceInterceptors"/>
+		<property name="transactionAttributeSource">
+			<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+		</property>
+	</bean>
+
+	<bean parent="serviceContext">
+		<property name="moduleService">
+			<list>
+				<value>org.openmrs.module.clinicreporting.api.service.LabReportService</value>
+				<ref bean="labReportService"/>
+			</list>
+		</property>
+	</bean>
+
+	<!-- ============================ Programme dashboards ============================ -->
+
+	<bean id="programDashboardDao"
+		  class="org.openmrs.module.clinicreporting.api.dao.hibernate.HibernateProgramDashboardDao">
+		<property name="sessionFactory" ref="dbSessionFactory"/>
+	</bean>
+
+	<bean id="programDashboardService"
+		  class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="target">
+			<bean class="org.openmrs.module.clinicreporting.api.service.impl.ProgramDashboardServiceImpl">
+				<property name="dao" ref="programDashboardDao"/>
+			</bean>
+		</property>
+		<property name="preInterceptors" ref="serviceInterceptors"/>
+		<property name="transactionAttributeSource">
+			<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+		</property>
+	</bean>
+
+	<bean parent="serviceContext">
+		<property name="moduleService">
+			<list>
+				<value>org.openmrs.module.clinicreporting.api.service.ProgramDashboardService</value>
+				<ref bean="programDashboardService"/>
+			</list>
+		</property>
+	</bean>
+
+	<!-- ============================ Indicator sandbox ============================ -->
+
+	<!--
+		Read-only by construction: TransformRequest.build assembles the statement from allowlisted
+		identifiers and bound parameters, and RawQueryGuard vets the escape hatch. The DAO additionally
+		runs everything on a read-only connection with a statement timeout.
+	-->
+	<bean id="transformDao"
+		  class="org.openmrs.module.clinicreporting.api.dao.hibernate.HibernateTransformDao">
+		<property name="sessionFactory" ref="dbSessionFactory"/>
+	</bean>
+
+	<bean id="transformService"
+		  class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="target">
+			<bean class="org.openmrs.module.clinicreporting.api.service.impl.TransformServiceImpl">
+				<property name="dao" ref="transformDao"/>
+			</bean>
+		</property>
+		<property name="preInterceptors" ref="serviceInterceptors"/>
+		<property name="transactionAttributeSource">
+			<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+		</property>
+	</bean>
+
+	<bean parent="serviceContext">
+		<property name="moduleService">
+			<list>
+				<value>org.openmrs.module.clinicreporting.api.service.TransformService</value>
+				<ref bean="transformService"/>
+			</list>
+		</property>
+	</bean>
+
+	<!-- ============================ Saved data exports ============================ -->
+
+	<!--
+		Reads against an allowlist (or against the raw guard, which the page checks separately),
+		read-only and row-capped on every run. The writes go through this DAO's own statements and are
+		transactional, which is why the write methods carry @Transactional: a definition that is half
+		written would leave a report behind that showed less than it said it would.
+	-->
+	<bean id="dataExportDao"
+		  class="org.openmrs.module.clinicreporting.api.dao.hibernate.HibernateDataExportDao">
+		<property name="sessionFactory" ref="dbSessionFactory"/>
+	</bean>
+
+	<bean id="dataExportService"
+		  class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="target">
+			<bean class="org.openmrs.module.clinicreporting.api.service.impl.DataExportServiceImpl">
+				<property name="dao" ref="dataExportDao"/>
+				<property name="transformDao" ref="transformDao"/>
+			</bean>
+		</property>
+		<property name="preInterceptors" ref="serviceInterceptors"/>
+		<property name="transactionAttributeSource">
+			<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+		</property>
+	</bean>
+
+	<bean parent="serviceContext">
+		<property name="moduleService">
+			<list>
+				<value>org.openmrs.module.clinicreporting.api.service.DataExportService</value>
+				<ref bean="dataExportService"/>
+			</list>
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Facility Reporting Dashboard</title>
+<link rel="icon" type="image/x-icon" href="/openmrs/spa/favicon.ico">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <a class="brand-home" id="homeLink" href="../index.htm" title="Back to the OpenMRS home page" aria-label="Go to the OpenMRS home page">
+      <img src="assets/moh-heap-logo.png" alt="Ministry of Health and Sanitation and HEAP" class="brand-logo">
+    </a>
+    <div>
+      <h1>Facility Reporting Dashboard</h1>
+      <div class="subtitle">PHU360 &middot; Ministry of Health 2024&ndash;2030</div>
+    </div>
+  </div>
+</header>
+
+<section class="filters card">
+  <div class="filter-grid">
+    <label>Period from
+      <input type="date" id="fFrom">
+    </label>
+    <label>Period to
+      <input type="date" id="fTo">
+    </label>
+    <label>Health center
+      <select id="fLocation"><option value="">All health centers</option></select>
+    </label>
+    <label>REPORT TYPE
+      <select id="fReport"></select>
+    </label>
+  </div>
+  <div class="filter-actions">
+    <button class="btn btn-primary" id="btnApply">Apply</button>
+    <button class="btn" id="btnReset">Reset</button>
+    <span class="filter-summary" id="filterSummary"></span>
+  </div>
+  <p class="report-notice" id="reportNotice" hidden></p>
+</section>
+
+<!--
+     The report's own indicators, drawn from the layout its mapping declares.
+     Empty in the markup on purpose: a report that has never been selected has no
+     layout yet, and hardcoding a second copy of the cards here is exactly the
+     static page this replaced. app.js builds them from the API response, so a
+     report's page is defined by its mapping file.
+-->
+<section class="kpis" id="layoutIndicators"></section>
+
+<section class="charts" id="layoutSections"></section>
+
+<!--
+     The service volume every report shares, with the change against the previous
+     period of the same length. Kept below the layout's own indicators and separate
+     from them because they answer a different question: "how much is coming
+     through here" rather than "what does this register say". Both are shown,
+     since a report with a layout still needs the volume context.
+-->
+<section class="kpis">
+  <div class="kpi card" data-kpi="encounters">
+    <div class="kpi-title">Encounters</div>
+    <div class="kpi-value" id="kpi-encounters">&ndash;</div>
+    <div class="kpi-delta" id="delta-encounters"></div>
+  </div>
+  <div class="kpi card" data-kpi="patientsSeen">
+    <div class="kpi-title">Patient visits</div>
+    <div class="kpi-value" id="kpi-patientsSeen">&ndash;</div>
+    <div class="kpi-delta" id="delta-patientsSeen"></div>
+  </div>
+  <div class="kpi card" data-kpi="newRegistrations">
+    <div class="kpi-title">New registrations</div>
+    <div class="kpi-value" id="kpi-newRegistrations">&ndash;</div>
+    <div class="kpi-delta" id="delta-newRegistrations"></div>
+  </div>
+  <div class="kpi card" data-kpi="conditions">
+    <div class="kpi-title">Conditions recorded</div>
+    <div class="kpi-value" id="kpi-conditions">&ndash;</div>
+    <div class="kpi-delta" id="delta-conditions"></div>
+  </div>
+</section>
+
+<!--
+     The encounter-shape charts. Kept separate from the layout sections because
+     they describe the encounter set rather than the register's content, and every
+     report needs them.
+-->
+<section class="charts" id="shapeCharts">
+  <div class="chart-card card span2">
+    <h2>Service volume trend</h2>
+    <p class="card-sub">Encounters and patients seen per day across the selected period</p>
+    <div class="chart-box chart-box-lg"><canvas id="chartTrend"></canvas><div class="chart-empty">Service volume trend<br><span>no data for this selection</span></div></div>
+  </div>
+  <div class="chart-card card">
+    <h2>Encounters by type</h2>
+    <p class="card-sub">Share of encounters by visit type</p>
+    <div class="chart-box"><canvas id="chartType"></canvas><div class="chart-empty">Encounters by type<br><span>no data for this selection</span></div></div>
+  </div>
+  <div class="chart-card card">
+    <h2 id="chartLocTitle">Encounters by health center</h2>
+    <p class="card-sub" id="chartLocSub">Volume recorded at each facility</p>
+    <div class="chart-box"><canvas id="chartLocation"></canvas><div class="chart-empty">Location breakdown<br><span>no data for this selection</span></div></div>
+  </div>
+  <div class="chart-card card">
+    <h2>Patients by age group</h2>
+    <p class="card-sub">Unique patients per age band</p>
+    <div class="chart-box"><canvas id="chartAge"></canvas><div class="chart-empty">Age group breakdown<br><span>no data for this selection</span></div></div>
+  </div>
+  <div class="chart-card card">
+    <h2>Patients by sex</h2>
+    <p class="card-sub">Unique patients by recorded sex</p>
+    <div class="chart-box"><canvas id="chartSex"></canvas><div class="chart-empty">Sex breakdown<br><span>no data for this selection</span></div></div>
+  </div>
+</section>
+
+<section class="card table-card">
+  <div class="table-head">
+    <h2>Encounters by type</h2>
+    <button class="btn btn-export" id="btnCsv">Export CSV</button>
+  </div>
+  <div class="table-wrap">
+    <table id="typeTable">
+      <thead><tr><th>Report type breakdown</th><th class="num">Encounters</th><th class="num">Share</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<footer class="foot">
+  PHU360 Reporting module &middot; indicators computed live from the OpenMRS database &middot; aggregate counts only
+</footer>
+
+<script src="js/chart.umd.min.js"></script>
+<script src="js/app.js"></script>
+<script>
+  (function () {
+    var m = window.location.pathname.match(/(.*?)\/(?:moduleResources\/[^\/]+|dashboard|owa\/[^\/]+)\/index\.html$/);
+    var el = document.getElementById('homeLink');
+    if (el) { el.href = (m ? m[1] : '') + '/index.htm'; }
+  })();
+</script>
+</body>
+</html>

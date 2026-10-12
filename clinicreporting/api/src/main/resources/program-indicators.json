@@ -1,0 +1,733 @@
+{
+  "version": 1,
+
+  "_comment": [
+    "Programme dashboard definitions. Copy this file to",
+    "<openmrs-webapp>/WEB-INF/module-config/clinicreporting/program-indicators.json",
+    "and edit the copy: the file in the module configuration directory is read in preference to this",
+    "one, so a change needs no rebuild and no restart.",
+    "",
+    "program.uuid must be the OpenMRS programme's own UUID - find it in Administration > Manage",
+    "Programs. Enrolments are matched on it, so a wrong UUID produces no figures rather than",
+    "somebody else's.",
+    "",
+    "metric must be one of: activeEnrollments, newEnrollments, completedEnrollments,",
+    "enrolledByGender, enrolledByAgeBand, enrollmentsByMonth, encounters,",
+    "patientsWithObservation, observationCount, lowValueCount, averageValue,",
+    "valueDistribution, positiveRate, enrolledCoverageRate.",
+    "",
+    "lowValueCount counts only the numeric values under the required \"valueBelow\" limit,",
+    "which is what makes a low-birth-weight indicator mean low birth weight rather than",
+    "every weight recorded.",
+    "",
+    "enrolledCoverageRate divides by the programme's active enrolment rather than by another",
+    "concept, so it can read less than 100% and the gap is the people not reached. positiveRate",
+    "divides by the patients with a denominator concept, and so needs \"denominatorConcepts\"",
+    "naming something different from \"concepts\": a numerator equal to its own denominator",
+    "divides by itself and reports 100% whatever the data says.",
+    "",
+    "chart may be none, bar, hbar, line or doughnut. target is optional and is the figure the",
+    "indicator is measured against. higherIsBetter (default true) says which side of the target is",
+    "the good one - a stock-out rate or a positivity rate is better when it is lower.",
+    "",
+    "Concepts are named, not hard-coded by UUID, because a concept's UUID differs between OpenMRS",
+    "distributions while its name does not. Give {\"uuid\": \"...\"} when the server is known, and",
+    "the name is then the fallback. An indicator whose concept this server does not have is shown as",
+    "unavailable and says which concept is missing - it never reports a zero for it.",
+    "",
+    "Every indicator here is an aggregate. No definition can name a table or contribute SQL."
+  ],
+
+  "programs": [
+    {
+      "uuid": "3f257581-7e3a-4cf9-8a22-9a1dbd2a8c10",
+      "name": "Adolescent Youth Friendly Services",
+      "shortName": "AYFS",
+      "description": "Adolescents reached with youth-friendly services.",
+      "indicators": [
+        {
+          "id": "enrolled",
+          "label": "Currently enrolled",
+          "description": "Adolescents holding an open enrolment on any day of this period.",
+          "metric": "activeEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "new",
+          "label": "Newly enrolled",
+          "description": "Adolescents enrolled during this period.",
+          "metric": "newEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "enrollments-by-month",
+          "label": "Enrolments by month",
+          "description": "Adolescents enrolled in each month of the period.",
+          "metric": "enrollmentsByMonth",
+          "chart": "line"
+        },
+        {
+          "id": "by-gender",
+          "label": "Enrolled by sex",
+          "metric": "enrolledByGender",
+          "chart": "doughnut"
+        },
+        {
+          "id": "by-age",
+          "label": "Enrolled by age band",
+          "metric": "enrolledByAgeBand",
+          "chart": "hbar"
+        },
+        {
+          "id": "encounters",
+          "label": "Visits",
+          "description": "Visits by enrolled adolescents during this period.",
+          "metric": "encounters",
+          "chart": "none"
+        },
+        {
+          "id": "hiv-tested",
+          "label": "HIV tested",
+          "description": "Share of enrolled adolescents with an HIV test result recorded in this period.",
+          "metric": "enrolledCoverageRate",
+          "chart": "none",
+          "target": 90,
+          "concepts": [
+            { "name": "HIV Status" },
+            { "name": "HIV Tested" },
+            { "name": "HIV test result" }
+          ]
+        },
+        {
+          "id": "condom-distribution",
+          "label": "Condom distribution",
+          "description": "Adolescents recorded as receiving condoms in this period.",
+          "metric": "patientsWithObservation",
+          "chart": "none",
+          "concepts": [
+            { "name": "Condom distributed" },
+            { "name": "Condoms given" },
+            { "name": "Client receives condoms" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "uuid": "bfc32f7d-6e2b-48c2-aa43-9d4f7c87a8e4",
+      "name": "Family Planning",
+      "shortName": "FP",
+      "description": "Couples choosing and using a modern contraceptive method.",
+      "indicators": [
+        {
+          "id": "enrolled",
+          "label": "Currently enrolled",
+          "metric": "activeEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "new",
+          "label": "Newly enrolled",
+          "metric": "newEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "enrollments-by-month",
+          "label": "Enrolments by month",
+          "metric": "enrollmentsByMonth",
+          "chart": "line"
+        },
+        {
+          "id": "by-age",
+          "label": "Enrolled by age band",
+          "metric": "enrolledByAgeBand",
+          "chart": "hbar"
+        },
+        {
+          "id": "encounters",
+          "label": "Visits",
+          "metric": "encounters",
+          "chart": "none"
+        },
+        {
+          "id": "method-given",
+          "label": "Method recorded",
+          "description": "Clients with a contraceptive method recorded during this period.",
+          "metric": "patientsWithObservation",
+          "chart": "none",
+          "target": 95,
+          "higherIsBetter": true,
+          "concepts": [
+            { "name": "FP method" },
+            { "name": "Family planning method" },
+            { "name": "Contraceptive method" }
+          ]
+        },
+        {
+          "id": "method-mix",
+          "label": "Method mix",
+          "description": "The methods clients are recorded on.",
+          "metric": "valueDistribution",
+          "chart": "doughnut",
+          "concepts": [
+            { "name": "FP method" },
+            { "name": "Family planning method" },
+            { "name": "Contraceptive method" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "uuid": "a932f5d2-9f2b-4eab-823d-8d6a561e9d8c",
+      "name": "Gynecology",
+      "shortName": "GYN",
+      "description": "Gynaecological services and the women and girls using them.",
+      "indicators": [
+        {
+          "id": "enrolled",
+          "label": "Currently enrolled",
+          "metric": "activeEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "new",
+          "label": "Newly enrolled",
+          "metric": "newEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "enrollments-by-month",
+          "label": "Enrolments by month",
+          "metric": "enrollmentsByMonth",
+          "chart": "line"
+        },
+        {
+          "id": "by-age",
+          "label": "Enrolled by age band",
+          "metric": "enrolledByAgeBand",
+          "chart": "hbar"
+        },
+        {
+          "id": "encounters",
+          "label": "Visits",
+          "metric": "encounters",
+          "chart": "none"
+        },
+        {
+          "id": "cervical-screening",
+          "label": "Cervical screening",
+          "description": "Women screened for cervical cancer in this period.",
+          "metric": "patientsWithObservation",
+          "chart": "none",
+          "concepts": [
+            { "name": "Pap smear" },
+            { "name": "VIA" },
+            { "name": "Cervical screening" }
+          ]
+        },
+        {
+          "id": "screening-result",
+          "label": "Screening results",
+          "description": "What screening recorded, most frequent first.",
+          "metric": "valueDistribution",
+          "chart": "hbar",
+          "concepts": [
+            { "name": "Pap smear" },
+            { "name": "VIA" },
+            { "name": "Cervical screening" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "uuid": "2e9a4c7d-8257-4e1d-ae8f-51b29e3e7cfa",
+      "name": "Prevention of Mother to Child Transmission",
+      "shortName": "PMTCT",
+      "description": "Mothers and babies enrolled in PMTCT care.",
+      "indicators": [
+        {
+          "id": "enrolled",
+          "label": "Currently enrolled",
+          "metric": "activeEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "new",
+          "label": "Newly enrolled",
+          "metric": "newEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "enrollments-by-month",
+          "label": "Enrolments by month",
+          "metric": "enrollmentsByMonth",
+          "chart": "line"
+        },
+        {
+          "id": "by-gender",
+          "label": "Enrolled by sex",
+          "metric": "enrolledByGender",
+          "chart": "doughnut"
+        },
+        {
+          "id": "by-age",
+          "label": "Enrolled by age band",
+          "metric": "enrolledByAgeBand",
+          "chart": "hbar"
+        },
+        {
+          "id": "encounters",
+          "label": "Visits",
+          "metric": "encounters",
+          "chart": "none"
+        },
+        {
+          "id": "hiv-tested",
+          "label": "HIV tested",
+          "description": "Share of enrolled clients with an HIV test result recorded in this period.",
+          "metric": "enrolledCoverageRate",
+          "chart": "none",
+          "target": 95,
+          "concepts": [
+            { "name": "HIV Status" },
+            { "name": "HIV Tested" }
+          ]
+        },
+        {
+          "id": "infant-result",
+          "label": "Infant HIV test results",
+          "description": "What infants in the programme were tested as, most frequent first.",
+          "metric": "valueDistribution",
+          "chart": "doughnut",
+          "concepts": [
+            { "name": "Infant HIV status" },
+            { "name": "Infant HIV test result" }
+          ]
+        },
+        {
+          "id": "art",
+          "label": "On ART",
+          "description": "Clients recorded as receiving antiretroviral therapy.",
+          "metric": "patientsWithObservation",
+          "chart": "none",
+          "target": 95,
+          "concepts": [
+            { "name": "On ART" },
+            { "name": "Antiretroviral therapy" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "uuid": "8d7f6e9c-d2c9-4a7f-9ddc-23a8a5e9fc92",
+      "name": "Pregnancy Mental Health",
+      "shortName": "PMH",
+      "description": "Mental health and psychosocial support during pregnancy.",
+      "indicators": [
+        {
+          "id": "enrolled",
+          "label": "Currently enrolled",
+          "metric": "activeEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "new",
+          "label": "Newly enrolled",
+          "metric": "newEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "by-age",
+          "label": "Enrolled by age band",
+          "metric": "enrolledByAgeBand",
+          "chart": "hbar"
+        },
+        {
+          "id": "encounters",
+          "label": "Visits",
+          "metric": "encounters",
+          "chart": "none"
+        },
+        {
+          "id": "screened",
+          "label": "Screened for a mental health condition",
+          "description": "Pregnant women screened in this period.",
+          "metric": "patientsWithObservation",
+          "chart": "none",
+          "target": 80,
+          "concepts": [
+            { "name": "PHQ-9 score" },
+            { "name": "Edinburgh Postnatal Depression Scale" },
+            { "name": "Mental health screening" },
+            { "name": "Depression screening" }
+          ]
+        },
+        {
+          "id": "screening-outcome",
+          "label": "Screening outcomes",
+          "description": "What screening recorded, most frequent first.",
+          "metric": "valueDistribution",
+          "chart": "hbar",
+          "concepts": [
+            { "name": "Depression status" },
+            { "name": "Mental health screening result" },
+            { "name": "Referral outcome" }
+          ]
+        },
+        {
+          "id": "mean-phq9",
+          "label": "Mean PHQ-9 score",
+          "description": "Average screening score. Lower is better; a rise suggests the caseload is worsening.",
+          "metric": "averageValue",
+          "chart": "none",
+          "higherIsBetter": false,
+          "concepts": [
+            { "name": "PHQ-9 score" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "uuid": "6a5713c2-3fd5-46e7-8f25-36a0f7871e12",
+      "name": "Pregnancy",
+      "shortName": "PREG",
+      "description": "Antenatal care and safe delivery.",
+      "indicators": [
+        {
+          "id": "enrolled",
+          "label": "Currently enrolled",
+          "metric": "activeEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "new",
+          "label": "Newly enrolled",
+          "metric": "newEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "completed",
+          "label": "Completed the programme",
+          "description": "Women who completed antenatal care in this period.",
+          "metric": "completedEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "enrollments-by-month",
+          "label": "Enrolments by month",
+          "metric": "enrollmentsByMonth",
+          "chart": "line"
+        },
+        {
+          "id": "by-age",
+          "label": "Enrolled by age band",
+          "metric": "enrolledByAgeBand",
+          "chart": "hbar"
+        },
+        {
+          "id": "encounters",
+          "label": "Visits",
+          "metric": "encounters",
+          "chart": "none"
+        },
+        {
+          "id": "anc-visits",
+          "label": "ANC visits recorded",
+          "description": "Women with at least one antenatal contact recorded in this period.",
+          "metric": "patientsWithObservation",
+          "chart": "none",
+          "target": 90,
+          "concepts": [
+            { "name": "Antenatal care" },
+            { "name": "ANC" },
+            { "name": "Number of ANC visits" }
+          ]
+        },
+        {
+          "id": "mean-anc-visits",
+          "label": "Mean ANC visits",
+          "description": "Average antenatal contacts recorded. WHO recommends eight or more.",
+          "metric": "averageValue",
+          "chart": "none",
+          "target": 8,
+          "higherIsBetter": true,
+          "concepts": [
+            { "name": "Number of ANC visits" },
+            { "name": "ANC visits" }
+          ]
+        },
+        {
+          "id": "anc-timing",
+          "label": "ANC timing",
+          "description": "When the first antenatal contact happened, most frequent first.",
+          "metric": "valueDistribution",
+          "chart": "hbar",
+          "concepts": [
+            { "name": "Timing of first ANC" },
+            { "name": "ANC timing" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "uuid": "dc1b588a-9b94-45e4-8346-71b7c9a24845",
+      "name": "Infant",
+      "shortName": "INF",
+      "description": "Infants enrolled for growth monitoring and immunisation.",
+      "indicators": [
+        {
+          "id": "enrolled",
+          "label": "Currently enrolled",
+          "metric": "activeEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "new",
+          "label": "Newly enrolled",
+          "metric": "newEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "enrollments-by-month",
+          "label": "Enrolments by month",
+          "metric": "enrollmentsByMonth",
+          "chart": "line"
+        },
+        {
+          "id": "by-age",
+          "label": "Enrolled by age band",
+          "metric": "enrolledByAgeBand",
+          "chart": "hbar"
+        },
+        {
+          "id": "encounters",
+          "label": "Visits",
+          "metric": "encounters",
+          "chart": "none"
+        },
+        {
+          "id": "weighed",
+          "label": "Weighed",
+          "description": "Infants with a weight recorded in this period.",
+          "metric": "patientsWithObservation",
+          "chart": "none",
+          "target": 90,
+          "concepts": [
+            { "name": "Weight" },
+            { "name": "Infant weight" },
+            { "name": "Birth Weight" }
+          ]
+        },
+        {
+          "id": "low-birth-weight",
+          "label": "Low birth weight",
+          "description": "Infants recorded with a birth weight below 2.5 kg.",
+          "metric": "lowValueCount",
+          "chart": "none",
+          "valueBelow": 2.5,
+          "concepts": [
+            { "name": "Birth Weight" }
+          ]
+        },
+        {
+          "id": "immunisation-status",
+          "label": "Immunisation status",
+          "description": "What infants are recorded as immunised against, most frequent first.",
+          "metric": "valueDistribution",
+          "chart": "doughnut",
+          "concepts": [
+            { "name": "Immunization status" },
+            { "name": "Vaccination status" }
+          ]
+        },
+        {
+          "id": "mean-weight",
+          "label": "Mean weight (kg)",
+          "description": "Average recorded weight.",
+          "metric": "averageValue",
+          "chart": "none",
+          "concepts": [
+            { "name": "Weight" },
+            { "name": "Infant weight" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "uuid": "0e69c3ab-1ccb-430b-b0db-b9760319230f",
+      "name": "Mental Health",
+      "shortName": "MH",
+      "description": "Adult mental health and psychosocial support.",
+      "indicators": [
+        {
+          "id": "enrolled",
+          "label": "Currently enrolled",
+          "metric": "activeEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "new",
+          "label": "Newly enrolled",
+          "metric": "newEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "enrollments-by-month",
+          "label": "Enrolments by month",
+          "metric": "enrollmentsByMonth",
+          "chart": "line"
+        },
+        {
+          "id": "by-gender",
+          "label": "Enrolled by sex",
+          "metric": "enrolledByGender",
+          "chart": "doughnut"
+        },
+        {
+          "id": "by-age",
+          "label": "Enrolled by age band",
+          "metric": "enrolledByAgeBand",
+          "chart": "hbar"
+        },
+        {
+          "id": "encounters",
+          "label": "Visits",
+          "metric": "encounters",
+          "chart": "none"
+        },
+        {
+          "id": "screened",
+          "label": "Screened",
+          "description": "Clients screened in this period.",
+          "metric": "patientsWithObservation",
+          "chart": "none",
+          "target": 80,
+          "concepts": [
+            { "name": "Mental health screening" },
+            { "name": "Depression screening" },
+            { "name": "PHQ-9 score" }
+          ]
+        },
+        {
+          "id": "diagnosis",
+          "label": "Diagnoses recorded",
+          "description": "What clients were diagnosed with, most frequent first.",
+          "metric": "valueDistribution",
+          "chart": "hbar",
+          "concepts": [
+            { "name": "Mental health diagnosis" },
+            { "name": "Diagnosis" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "uuid": "515796ec-bf3a-11e7-abc4-cec278b6b50a",
+      "name": "Non-Communicable Diseases",
+      "shortName": "NCD",
+      "description": "Screening and follow-up for hypertension, diabetes and related conditions.",
+      "indicators": [
+        {
+          "id": "enrolled",
+          "label": "Currently enrolled",
+          "metric": "activeEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "new",
+          "label": "Newly enrolled",
+          "metric": "newEnrollments",
+          "chart": "none"
+        },
+        {
+          "id": "enrollments-by-month",
+          "label": "Enrolments by month",
+          "metric": "enrollmentsByMonth",
+          "chart": "line"
+        },
+        {
+          "id": "by-gender",
+          "label": "Enrolled by sex",
+          "metric": "enrolledByGender",
+          "chart": "doughnut"
+        },
+        {
+          "id": "by-age",
+          "label": "Enrolled by age band",
+          "metric": "enrolledByAgeBand",
+          "chart": "hbar"
+        },
+        {
+          "id": "encounters",
+          "label": "Visits",
+          "metric": "encounters",
+          "chart": "none"
+        },
+        {
+          "id": "bp-measured",
+          "label": "Blood pressure measured",
+          "description": "Clients with a blood pressure recorded in this period.",
+          "metric": "patientsWithObservation",
+          "chart": "none",
+          "target": 90,
+          "concepts": [
+            { "name": "Blood pressure" },
+            { "name": "Systolic blood pressure" },
+            { "name": "BP" }
+          ]
+        },
+        {
+          "id": "bp-controlled",
+          "label": "Blood pressure controlled",
+          "description": "Share of clients with a blood pressure reading at or below 140/90.",
+          "metric": "positiveRate",
+          "chart": "none",
+          "target": 60,
+          "higherIsBetter": true,
+          "concepts": [
+            { "name": "Blood pressure controlled" },
+            { "name": "Controlled blood pressure" }
+          ],
+          "denominatorConcepts": [
+            { "name": "Blood pressure" },
+            { "name": "Systolic blood pressure" },
+            { "name": "BP" }
+          ]
+        },
+        {
+          "id": "glucose-measured",
+          "label": "Glucose measured",
+          "description": "Clients with a blood glucose result recorded in this period.",
+          "metric": "patientsWithObservation",
+          "chart": "none",
+          "target": 80,
+          "concepts": [
+            { "name": "Blood glucose" },
+            { "name": "Glucose" },
+            { "name": "Fasting blood glucose" }
+          ]
+        },
+        {
+          "id": "mean-systolic",
+          "label": "Mean systolic BP",
+          "description": "Average systolic reading. A rising mean means the caseload is getting harder to control.",
+          "metric": "averageValue",
+          "chart": "none",
+          "higherIsBetter": false,
+          "target": 140,
+          "concepts": [
+            { "name": "Systolic blood pressure" },
+            { "name": "Systolic BP" }
+          ]
+        }
+      ]
+    }
+  ]
+}

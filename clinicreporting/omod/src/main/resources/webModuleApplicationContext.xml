@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    This Source Code Form is subject to the terms of the Mozilla Public License,
+    v. 2.0. If a copy of the MPL was not distributed with this file, You can
+    obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
+    the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+
+    Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
+    graphic logo is a trademark of OpenMRS Inc.
+
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		    http://www.springframework.org/schema/context
+		    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!--
+		Core only component-scans org.openmrs.web.controller, so module controllers must be
+		picked up here. org.openmrs.web.DispatcherServlet wires the handler mapping/adapter
+		(with the Jackson message converter) into the DispatcherServlet context, and this
+		file is merged into that context by org.openmrs.module.web.WebModuleUtil.
+	-->
+	<context:component-scan base-package="org.openmrs.module.clinicreporting.web.controller"/>
+
+	<!--
+		web.page holds the legacyui page controller behind the home-page link. It is scanned into the
+		openmrs-servlet context (which maps @RequestMapping under /module) as well as the
+		DispatcherServlet context. Keeping it out of web.controller above stops a JSP view from
+		being resolved by the REST servlet, which has no JSP view resolver.
+	-->
+	<context:component-scan base-package="org.openmrs.module.clinicreporting.web.page"/>
+
+	<!--
+		Points the indicator catalogue at WEB-INF/module-config/clinicreporting, which is where an
+		administrator edits program-indicators.json. Constructed once, at context start-up, so the
+		catalogue has the directory before the first dashboard is opened. The directory is not created:
+		a missing one simply means the definitions this module ships are used.
+
+		The bean is ServletContextAware rather than taking the context as an argument, because this
+		context has no servletContext bean to reference - asking for one fails the whole context refresh
+		at start-up, taking every other module page down with it.
+	-->
+	<bean id="dashboardDefinitionLocation"
+		  class="org.openmrs.module.clinicreporting.web.DashboardDefinitionLocation"/>
+
+</beans>

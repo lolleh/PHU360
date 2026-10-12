@@ -1,5 +1,9 @@
 # OpenMRS distribution build
 # ---------------------------
+# Maven module build output (the merged reporting module and the sync agent)
+clinicreporting/api/target/
+clinicreporting/omod/target/
+sync-agent/target/
 # Full materialized config produced by scripts/seed-distro-maven-repo.sh
 # (stock image config + tracked delta - exclusions.txt). Only the tracked
 # configuration/backend_configuration delta is committed.
