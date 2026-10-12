@@ -46,15 +46,15 @@ mvn "${OFFLINE[@]}" -q org.apache.maven.plugins:maven-install-plugin:3.1.2:insta
   -DgroupId="$SL_GROUP" -DartifactId="$SL_ARTIFACT" \
   -Dversion="$SL_VERSION" -Dpackaging=zip -DgeneratePom=true
 
-echo "==> Build PHU360 Reporting module (phu360reporting omod)"
-bash "$ROOT_DIR/scripts/build-phu360reporting-module.sh"
+echo "==> Build PHU360 reporting module (clinicreporting omod)"
+bash "$ROOT_DIR/scripts/build-clinicreporting-module.sh"
 # The SDK resolves modules from ~/.m2, not from openmrs-image/, and the seed
 # script (which normally does this install) is skipped once content/build
 # exists. Without this the distro keeps shipping the omod installed at seed
 # time, silently ignoring every edit to the module.
 mvn -q org.apache.maven.plugins:maven-install-plugin:3.1.2:install-file \
-  -Dfile="$ROOT_DIR/openmrs-image/phu360reporting-1.0.0-SNAPSHOT.omod" \
-  -DgroupId="org.openmrs.module" -DartifactId="phu360reporting-omod" \
+  -Dfile="$ROOT_DIR/openmrs-image/clinicreporting-1.0.0-SNAPSHOT.omod" \
+  -DgroupId="org.openmrs.module" -DartifactId="clinicreporting-omod" \
   -Dversion="1.0.0-SNAPSHOT" -Dpackaging=omod -DgeneratePom=true
 
 echo "==> Patch reportingui module (DASHBOARDS section on the reports page)"
@@ -96,7 +96,7 @@ WEB_DIR="$ROOT_DIR/distro/target/distro/web"
 echo "==> Output: $WEB_DIR"
 echo "    openmrs_core/openmrs.war : $([ -f "$WEB_DIR/openmrs_core/openmrs.war" ] && stat -c%s "$WEB_DIR/openmrs_core/openmrs.war" || echo MISSING) bytes"
 echo "    modules                  : $(find "$WEB_DIR/openmrs_modules" -name '*.omod' | wc -l)"
-echo "    phu360reporting omod        : $([ -f "$ROOT_DIR/openmrs-image/phu360reporting-1.0.0-SNAPSHOT.omod" ] && echo present || echo MISSING)"
+echo "    clinicreporting omod        : $([ -f "$ROOT_DIR/openmrs-image/clinicreporting-1.0.0-SNAPSHOT.omod" ] && echo present || echo MISSING)"
 echo "    reportingui omod         : $([ -f "$ROOT_DIR/openmrs-image/reportingui-1.15.0-SNAPSHOT.omod" ] && echo present || echo MISSING)"
 echo "    coreapps omod            : $([ -f "$ROOT_DIR/openmrs-image/coreapps-4.0.0-SNAPSHOT.omod" ] && echo present || echo MISSING)"
 echo "    config files             : $(find "$WEB_DIR/openmrs_config" -type f | wc -l)"

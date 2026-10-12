@@ -34,7 +34,7 @@ WORK_DIR="$ROOT_DIR/distro/template"
 CONFIG_BUILD="$ROOT_DIR/content/build"
 DELTA_DIR="$ROOT_DIR/content/configuration/backend_configuration"
 PATCHED_PIHCORE="$ROOT_DIR/openmrs-image/pihcore-2.2.0-SNAPSHOT.omod"
-PATCHED_PHU360REPORTING="$ROOT_DIR/openmrs-image/phu360reporting-1.0.0-SNAPSHOT.omod"
+PATCHED_CLINICREPORTING="$ROOT_DIR/openmrs-image/clinicreporting-1.0.0-SNAPSHOT.omod"
 PATCHED_REPORTINGUI="$ROOT_DIR/openmrs-image/reportingui-1.15.0-SNAPSHOT.omod"
 PATCHED_COREAPPS="$ROOT_DIR/openmrs-image/coreapps-4.0.0-SNAPSHOT.omod"
 
@@ -82,8 +82,8 @@ with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
 print("    wrote", out)
 PY
 
-echo "==> Building PHU360 Reporting module (phu360reporting omod)"
-bash "$ROOT_DIR/scripts/build-phu360reporting-module.sh"
+echo "==> Building PHU360 reporting module (clinicreporting omod)"
+bash "$ROOT_DIR/scripts/build-clinicreporting-module.sh"
 
 echo "==> Patching reportingui module (DASHBOARDS section on the reports page)"
 bash "$ROOT_DIR/scripts/patch-reportingui-module.sh"
@@ -140,8 +140,8 @@ for m in "${OMODS[@]}"; do
   if [[ "$name" == "pihcore" && -f "$PATCHED_PIHCORE" ]]; then
     file="$PATCHED_PIHCORE"
   fi
-  if [[ "$name" == "phu360reporting" && -f "$PATCHED_PHU360REPORTING" ]]; then
-    file="$PATCHED_PHU360REPORTING"
+  if [[ "$name" == "clinicreporting" && -f "$PATCHED_CLINICREPORTING" ]]; then
+    file="$PATCHED_CLINICREPORTING"
   fi
   if [[ "$name" == "reportingui" && -f "$PATCHED_REPORTINGUI" ]]; then
     file="$PATCHED_REPORTINGUI"
