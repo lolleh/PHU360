@@ -1,0 +1,22 @@
+[
+  {
+    "id": "clinicreporting.reports.home",
+    "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+    "type": "link",
+    "label": "Clinic Reports",
+    "url": "module/clinicreporting/reports.htm",
+    "icon": "fas fa-fw fa-clipboard-list",
+    "requiredPrivilege": "View Reports",
+    "order": 30
+  },
+  {
+    "id": "clinicreporting.programs",
+    "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+    "type": "link",
+    "label": "Programme Dashboards",
+    "url": "module/clinicreporting/programs.htm",
+    "icon": "fas fa-fw fa-chart-pie",
+    "requiredPrivilege": "View Reports",
+    "order": 31
+  }
+]
