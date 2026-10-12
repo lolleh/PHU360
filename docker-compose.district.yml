@@ -1,0 +1,129 @@
+# District hub + spoke sync agents (B2: hub-and-spoke on fhir2 _lastUpdated polling)
+services:
+  openmrs-hub:
+    build:
+      context: ./distro
+      dockerfile: Dockerfile
+    image: ${OPENMRS_IMAGE:-phu360:latest}
+    pull_policy: build
+    depends_on:
+      openmrs-db:
+        condition: service_healthy
+    environment:
+      OMRS_DB: mysql
+      OMRS_DB_HOSTNAME: openmrs-db
+      OMRS_DB_PORT: '3306'
+      OMRS_DB_NAME: ${OPENMRS_DB_NAME:-openmrs}
+      OMRS_DB_USERNAME: ${OPENMRS_DB_USER:-openmrs}
+      OMRS_DB_PASSWORD: ${OPENMRS_DB_PASSWORD:-Admin123}
+      OMRS_ADMIN_USER_PASSWORD: ${OPENMRS_PASSWORD:-Admin123}
+      OMRS_ADMIN_PASSWORD_LOCKED: 'false'
+      OMRS_AUTO_UPDATE_DATABASE: 'true'
+      OMRS_CREATE_TABLES: 'true'
+      OMRS_MODULE_WEB_ADMIN: 'true'
+      OMRS_SEARCH: lucene
+      OMRS_JAVA_MEMORY_OPTS: "-Xms512m -Xmx4g -XX:NewSize=128m"
+      OMRS_EXTRA_pih_config: ${OPENMRS_HUB_PIH_CONFIG:-sierraLeone,sierraLeone-hub}
+      OMRS_EXTRA_initializer_startup_load: continue_on_error
+    ports:
+      - "127.0.0.1:${OPENMRS_HUB_PORT:-8095}:8080"
+    volumes:
+      - phu360-hub-data:/openmrs/data
+    healthcheck:
+      test: ["CMD-SHELL", "code=$$(curl -sk -o /dev/null -w '%{http_code}' http://localhost:8080/openmrs/ws/rest/v1/session || echo 000); case $$code in 000|5*) exit 1;; *) exit 0;; esac"]
+      start_period: 1500s
+      interval: 30s
+      timeout: 10s
+      retries: 60
+
+  sync-agent-falaba:
+    build:
+      context: ./sync-agent
+      dockerfile: Dockerfile
+    image: ${SYNC_AGENT_IMAGE:-phu360-sync-agent:latest}
+    pull_policy: build
+    depends_on:
+      openmrs:
+        condition: service_healthy
+      openmrs-hub:
+        condition: service_healthy
+    environment:
+      SYNC_SITE_CODE: FAL
+      SYNC_HUB_SITE_CODE: HUB
+      SYNC_LOCAL_BASE_URL: http://openmrs:8080/openmrs/ws/fhir2/R4
+      SYNC_HUB_BASE_URL: http://openmrs-hub:8080/openmrs/ws/fhir2/R4
+      SYNC_LOCAL_USERNAME: ${SYNC_LOCAL_USERNAME:-admin}
+      SYNC_LOCAL_PASSWORD: ${SYNC_LOCAL_PASSWORD:-Admin123}
+      SYNC_HUB_USERNAME: ${SYNC_HUB_USERNAME:-sync-bot}
+      SYNC_HUB_PASSWORD: ${SYNC_HUB_PASSWORD:-sync-bot}
+      SYNC_POLL_INTERVAL_MS: ${SYNC_POLL_INTERVAL_MS:-300000}
+      SYNC_PAGE_SIZE: ${SYNC_PAGE_SIZE:-100}
+      SYNC_OVERLAP_SECONDS: ${SYNC_OVERLAP_SECONDS:-30}
+      SYNC_WATERMARK_FILE: /var/lib/phu360-sync/watermarks.json
+      SYNC_PUSH_ENABLED: ${SYNC_PUSH_ENABLED:-true}
+      SYNC_PULL_ENABLED: ${SYNC_PULL_ENABLED:-true}
+    volumes:
+      - phu360-sync-falaba:/var/lib/phu360-sync
+    restart: unless-stopped
+
+  sync-agent-mongo:
+    build:
+      context: ./sync-agent
+      dockerfile: Dockerfile
+    image: ${SYNC_AGENT_IMAGE:-phu360-sync-agent:latest}
+    pull_policy: build
+    depends_on:
+      openmrs-hub:
+        condition: service_healthy
+    environment:
+      SYNC_SITE_CODE: MON
+      SYNC_HUB_SITE_CODE: HUB
+      SYNC_LOCAL_BASE_URL: ${MON_LOCAL_FHIR_URL:-http://host.docker.internal:8082/openmrs/ws/fhir2/R4}
+      SYNC_HUB_BASE_URL: http://openmrs-hub:8080/openmrs/ws/fhir2/R4
+      SYNC_LOCAL_USERNAME: ${SYNC_LOCAL_USERNAME:-admin}
+      SYNC_LOCAL_PASSWORD: ${SYNC_LOCAL_PASSWORD:-Admin123}
+      SYNC_HUB_USERNAME: ${SYNC_HUB_USERNAME:-sync-bot}
+      SYNC_HUB_PASSWORD: ${SYNC_HUB_PASSWORD:-sync-bot}
+      SYNC_POLL_INTERVAL_MS: ${SYNC_POLL_INTERVAL_MS:-300000}
+      SYNC_PAGE_SIZE: ${SYNC_PAGE_SIZE:-100}
+      SYNC_OVERLAP_SECONDS: ${SYNC_OVERLAP_SECONDS:-30}
+      SYNC_WATERMARK_FILE: /var/lib/phu360-sync/watermarks.json
+      SYNC_PUSH_ENABLED: ${SYNC_PUSH_ENABLED:-true}
+      SYNC_PULL_ENABLED: ${SYNC_PULL_ENABLED:-true}
+    volumes:
+      - phu360-sync-mongo:/var/lib/phu360-sync
+    restart: unless-stopped
+
+  sync-agent-sinkunia:
+    build:
+      context: ./sync-agent
+      dockerfile: Dockerfile
+    image: ${SYNC_AGENT_IMAGE:-phu360-sync-agent:latest}
+    pull_policy: build
+    depends_on:
+      openmrs-hub:
+        condition: service_healthy
+    environment:
+      SYNC_SITE_CODE: SIN
+      SYNC_HUB_SITE_CODE: HUB
+      SYNC_LOCAL_BASE_URL: ${SIN_LOCAL_FHIR_URL:-http://host.docker.internal:8083/openmrs/ws/fhir2/R4}
+      SYNC_HUB_BASE_URL: http://openmrs-hub:8080/openmrs/ws/fhir2/R4
+      SYNC_LOCAL_USERNAME: ${SYNC_LOCAL_USERNAME:-admin}
+      SYNC_LOCAL_PASSWORD: ${SYNC_LOCAL_PASSWORD:-Admin123}
+      SYNC_HUB_USERNAME: ${SYNC_HUB_USERNAME:-sync-bot}
+      SYNC_HUB_PASSWORD: ${SYNC_HUB_PASSWORD:-sync-bot}
+      SYNC_POLL_INTERVAL_MS: ${SYNC_POLL_INTERVAL_MS:-300000}
+      SYNC_PAGE_SIZE: ${SYNC_PAGE_SIZE:-100}
+      SYNC_OVERLAP_SECONDS: ${SYNC_OVERLAP_SECONDS:-30}
+      SYNC_WATERMARK_FILE: /var/lib/phu360-sync/watermarks.json
+      SYNC_PUSH_ENABLED: ${SYNC_PUSH_ENABLED:-true}
+      SYNC_PULL_ENABLED: ${SYNC_PULL_ENABLED:-true}
+    volumes:
+      - phu360-sync-sinkunia:/var/lib/phu360-sync
+    restart: unless-stopped
+
+volumes:
+  phu360-hub-data:
+  phu360-sync-falaba:
+  phu360-sync-mongo:
+  phu360-sync-sinkunia:

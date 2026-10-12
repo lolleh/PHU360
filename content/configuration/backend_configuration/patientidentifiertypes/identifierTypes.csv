@@ -2,5 +2,7 @@ Uuid,Void/Retire,Name,Description,Required,Format,Format description,Validator,L
 1a2acce0-7426-11e5-a837-0800200c9a66,,Voters ID,A unique identifier representing a voter's National Registration Card.,FALSE,,,,NOT_USED,
 c09a1d24-7162-11eb-8aa6-0242ac110002,,EMR ID,A unique identifier assigned at registration.,FALSE,,,,NOT_USED,
 eb201574-8abe-4393-9a8a-8d30a48a08ad,,National ID Number,National ID Number,FALSE,"^[a-zA-Z0-9]{0,10}$","alphanumeric up to 10 characters long",,NOT_USED,
+f7c6b3e0-4299-4f77-860a-0a1ad60f0b5d,,PHU360 District ID,District-wide unique identifier issued by the hub.,FALSE,,,,NOT_USED,
+f1f5cfae-4577-4b0c-9029-5b0dfd9d28f8,,PHU360 Sync Origin,Site code of the source system that created/last pushed this record (e.g. FAL/MON/SIN/HUB).,FALSE,,,,NOT_USED,
 f141f055-32ea-4261-83fa-2054a9ad70a5,TRUE,Voters ID,A unique identifier representing a voter's National Registration Card.,FALSE,,,,NOT_USED,
 d6041ebe-7b55-4454-bc7e-1d388d9bd82c,TRUE,EMR ID,A unique identifier assigned at registration.,FALSE,,,,NOT_USED,

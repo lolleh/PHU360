@@ -1,0 +1,51 @@
+server:
+  port: ${SYNC_SERVER_PORT:8091}
+
+spring:
+  application:
+    name: phu360-sync-agent
+  jackson:
+    default-property-inclusion: non_null
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+phu360:
+  sync:
+    site-code: ${SYNC_SITE_CODE:}
+    hub-site-code: ${SYNC_HUB_SITE_CODE:HUB}
+    hub-base-url: ${SYNC_HUB_BASE_URL:}
+    local-base-url: ${SYNC_LOCAL_BASE_URL:http://localhost:8080/openmrs/ws/fhir2/R4}
+    local:
+      username: ${SYNC_LOCAL_USERNAME:admin}
+      password: ${SYNC_LOCAL_PASSWORD:Admin123}
+    hub:
+      username: ${SYNC_HUB_USERNAME:sync-bot}
+      password: ${SYNC_HUB_PASSWORD:}
+    page-size: ${SYNC_PAGE_SIZE:100}
+    poll-interval-ms: ${SYNC_POLL_INTERVAL_MS:300000}
+    overlap-seconds: ${SYNC_OVERLAP_SECONDS:30}
+    watermark-file: ${SYNC_WATERMARK_FILE:/var/lib/phu360-sync/watermarks.json}
+    push-enabled: ${SYNC_PUSH_ENABLED:true}
+    pull-enabled: ${SYNC_PULL_ENABLED:true}
+    resources:
+      - Patient
+      - Person
+      - Encounter
+      - Observation
+      - Condition
+      - MedicationRequest
+      - MedicationDispense
+      - ServiceRequest
+      - Immunization
+      - AllergyIntolerance
+      - DiagnosticReport
+      - Practitioner
+      - Location

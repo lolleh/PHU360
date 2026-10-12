@@ -1,0 +1,110 @@
+{
+  "groups": [
+    {
+      "name": "phu360.sync",
+      "type": "org.phu360.sync.config.SyncProperties",
+      "sourceType": "org.phu360.sync.config.SyncProperties"
+    },
+    {
+      "name": "phu360.sync.hub",
+      "type": "org.phu360.sync.config.SyncProperties$Hub",
+      "sourceType": "org.phu360.sync.config.SyncProperties",
+      "sourceMethod": "getHub()"
+    },
+    {
+      "name": "phu360.sync.local",
+      "type": "org.phu360.sync.config.SyncProperties$Local",
+      "sourceType": "org.phu360.sync.config.SyncProperties",
+      "sourceMethod": "getLocal()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "phu360.sync.hub-base-url",
+      "type": "java.lang.String",
+      "sourceType": "org.phu360.sync.config.SyncProperties"
+    },
+    {
+      "name": "phu360.sync.hub-site-code",
+      "type": "java.lang.String",
+      "sourceType": "org.phu360.sync.config.SyncProperties",
+      "defaultValue": "HUB"
+    },
+    {
+      "name": "phu360.sync.hub.password",
+      "type": "java.lang.String",
+      "sourceType": "org.phu360.sync.config.SyncProperties$Hub"
+    },
+    {
+      "name": "phu360.sync.hub.username",
+      "type": "java.lang.String",
+      "sourceType": "org.phu360.sync.config.SyncProperties$Hub",
+      "defaultValue": "sync-bot"
+    },
+    {
+      "name": "phu360.sync.local-base-url",
+      "type": "java.lang.String",
+      "sourceType": "org.phu360.sync.config.SyncProperties",
+      "defaultValue": "http:\/\/localhost:8080\/openmrs\/ws\/fhir2\/R4"
+    },
+    {
+      "name": "phu360.sync.local.password",
+      "type": "java.lang.String",
+      "sourceType": "org.phu360.sync.config.SyncProperties$Local",
+      "defaultValue": "Admin123"
+    },
+    {
+      "name": "phu360.sync.local.username",
+      "type": "java.lang.String",
+      "sourceType": "org.phu360.sync.config.SyncProperties$Local",
+      "defaultValue": "admin"
+    },
+    {
+      "name": "phu360.sync.overlap-seconds",
+      "type": "java.lang.Integer",
+      "sourceType": "org.phu360.sync.config.SyncProperties",
+      "defaultValue": 30
+    },
+    {
+      "name": "phu360.sync.page-size",
+      "type": "java.lang.Integer",
+      "sourceType": "org.phu360.sync.config.SyncProperties",
+      "defaultValue": 100
+    },
+    {
+      "name": "phu360.sync.poll-interval-ms",
+      "type": "java.lang.Long",
+      "sourceType": "org.phu360.sync.config.SyncProperties",
+      "defaultValue": 300000
+    },
+    {
+      "name": "phu360.sync.pull-enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "org.phu360.sync.config.SyncProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "phu360.sync.push-enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "org.phu360.sync.config.SyncProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "phu360.sync.resources",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "org.phu360.sync.config.SyncProperties"
+    },
+    {
+      "name": "phu360.sync.site-code",
+      "type": "java.lang.String",
+      "sourceType": "org.phu360.sync.config.SyncProperties"
+    },
+    {
+      "name": "phu360.sync.watermark-file",
+      "type": "java.lang.String",
+      "sourceType": "org.phu360.sync.config.SyncProperties",
+      "defaultValue": "\/var\/lib\/phu360-sync\/watermarks.json"
+    }
+  ],
+  "hints": []
+}

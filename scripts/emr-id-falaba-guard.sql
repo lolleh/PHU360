@@ -1,38 +1,31 @@
--- EMR ID generator FAL-prefix guard (Falaba deployment)
+-- EMR ID generator prefix guard (per-site deployment)
 --
 -- pihcore 2.2.0 hardcodes a "KGH Primary Identifier Source" (uuid
 -- 809b23e3-7162-11eb-8aa6-0242ac110002, prefix 'KGH'yyMM) for all Sierra Leone
--- KGH-family sites and re-applies it on EVERY OpenMRS boot. This repo/city
--- runs the Falaba site, so we hold the generator on the FAL prefix.
+-- KGH-family sites and re-applies it on EVERY OpenMRS boot. This script
+-- holds the generator on the correct site prefix. Run against the OpenMRS DB
+-- for the site instance. The scheduler events below re-assert every 15s.
 --
--- Apply once against the OpenMRS DB (mysql client). The scheduler events below
--- re-assert the FAL prefix/name every 15s, so a pihcore reset at boot is
--- corrected within seconds. The OpenMRS db service must run mysqld with
--- --event-scheduler=ON (docker-compose.yml does this) for the events to fire.
---
---   docker exec -i phu360-openmrs-db-1 mysql -uroot -pAdmin123 openmrs < scripts/emr-id-falaba-guard.sql
+-- The OpenMRS db service must run mysqld with --event-scheduler=ON (docker-compose.yml
+-- does this) for the events to fire.
 
-CREATE EVENT IF NOT EXISTS emr_id_falaba_prefix_guard
+SET @site_code := 'FAL'; -- Change to MON or SIN per site
+
+CREATE EVENT IF NOT EXISTS emr_id_prefix_guard
   ON SCHEDULE EVERY 15 SECOND
-  DO UPDATE idgen_seq_id_gen SET prefix = '''FAL''yyMM'
-     WHERE id = 1 AND prefix <> '''FAL''yyMM';
+  DO UPDATE idgen_seq_id_gen SET prefix = CONCAT('''', @site_code, '''yyMM')
+     WHERE id = 1 AND prefix <> CONCAT('''', @site_code, '''yyMM');
 
-CREATE EVENT IF NOT EXISTS emr_id_falaba_source_name_guard
+CREATE EVENT IF NOT EXISTS emr_id_source_name_guard
   ON SCHEDULE EVERY 15 SECOND
   DO UPDATE idgen_identifier_source i JOIN idgen_seq_id_gen s ON s.id = i.id
-     SET i.name = 'FAL Primary Identifier Source',
-         i.description = 'Primary Identifier Generator for FAL'
+     SET i.name = CONCAT(@site_code, ' Primary Identifier Source'),
+         i.description = CONCAT('Primary Identifier Generator for ', @site_code)
      WHERE i.uuid = '809b23e3-7162-11eb-8aa6-0242ac110002'
-       AND i.name <> 'FAL Primary Identifier Source';
+       AND i.name <> CONCAT(@site_code, ' Primary Identifier Source');
 
--- Registration-facility guard: a patient's registration facility must be one of
--- the three CHCs (Falaba CHC, Mongo Bendugu CHC, Sinkunia CHC). Registration
--- stamps the EMR identifier with the staff sub-location (e.g. "Falaba CHC
--- Clinic", "Mongo Bendugu CHC Triage"), whose parent is the CHC. This event
--- normalizes the EMR identifier location up to its top-level CHC (parent with
--- parent_location IS NULL among the three CHCs) every 30s, so the patient
--- search "Reg Facility" column only ever shows one of the three health centers.
-
+-- Registration-facility guard: normalize the EMR identifier location up to its
+-- top-level CHC (parent with parent_location IS NULL among the three CHCs) every 30s.
 CREATE EVENT IF NOT EXISTS emr_id_reg_facility_guard
   ON SCHEDULE EVERY 30 SECOND
   DO UPDATE patient_identifier pi

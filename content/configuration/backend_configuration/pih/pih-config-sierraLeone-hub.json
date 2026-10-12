@@ -1,0 +1,123 @@
+{
+  "welcomeMessage": "PHU360 District Hub",
+  "providerIdentifierPrefix": "H",
+  "site": "KGH-HUB",
+  "components": [
+    "activeVisits",
+    "adtO3",
+    "allergies",
+    "appointments",
+    "ayfsProgram",
+    "bedAdministration",
+    "checkIn",
+    "checkInHomepageApp",
+    "children",
+    "clinicianDashboard",
+    "dataExports",
+    "edTriage",
+    "edTriageQueue",
+    "familyPlanningProgram",
+    "growthChart",
+    "gynecologyProgram",
+    "idcardPrinting",
+    "infantProgram",
+    "labResults",
+    "labs",
+    "managePrinters",
+    "markPatientDead",
+    "mchForms",
+    "mchGynecologyForms",
+    "mcoeForms",
+    "mchTriage",
+    "medicationDispensing",
+    "mentalHealth",
+    "myAccount",
+    "ncd",
+    "overviewReports",
+    "patientDocuments",
+    "patientRegistration",
+    "pmtctProgram",
+    "pregnancyProgram",
+    "pregnancyMentalHealthProgram",
+    "primaryCare",
+    "programs",
+    "relationships",
+    "surgery",
+    "systemAdministration",
+    "visitManagement",
+    "visitNote",
+    "vitals",
+    "vitalsHomepageApp",
+    "wristbands",
+    "phu360reporting"
+  ],
+  "idCardLabel": "PHU360 District Hub",
+  "dossierIdentifierPrefix": "HUB",
+  "registrationConfig": {
+    "allowManualEntryOfPrimaryIdentifier": true,
+    "allowUnknownPatients": true,
+    "afterCreatedActions": [
+      "bean:registerBaby"
+    ]
+  },
+  "extraIdentifierTypes": [
+    "eb201574-8abe-4393-9a8a-8d30a48a08ad",
+    "1a2acce0-7426-11e5-a837-0800200c9a66"
+  ],
+  "findPatientColumnConfig": [
+    {
+      "type": "identifier",
+      "value": "1a2acce0-7426-11e5-a837-0800200c9a66",
+      "label": "ui.i18n.PatientIdentifierType.name.1a2acce0-7426-11e5-a837-0800200c9a66",
+      "width": "80px"
+    },
+    {
+      "type": "name",
+      "label": "coreapps.search.name",
+      "width": "200px"
+    },
+    {
+      "type": "gender",
+      "label": "coreapps.gender",
+      "width": "65px"
+    },
+    {
+      "type": "age",
+      "label": "coreapps.age",
+      "width": "50px"
+    },
+    {
+      "type": "birthdate",
+      "label": "coreapps.birthdate",
+      "width": "100px"
+    },
+    {
+      "type": "identifier",
+      "value": "c09a1d24-7162-11eb-8aa6-0242ac110002",
+      "label": "ui.i18n.PatientIdentifierType.name.c09a1d24-7162-11eb-8aa6-0242ac110002",
+      "width": "80px"
+    },
+    {
+      "type": "identifier",
+      "value": "f7c6b3e0-4299-4f77-860a-0a1ad60f0b5d",
+      "label": "PHU360 District ID",
+      "width": "120px"
+    },
+    {
+      "type": "identifier",
+      "value": "f1f5cfae-4577-4b0c-9029-5b0dfd9d28f8",
+      "label": "PHU360 Sync Origin",
+      "width": "120px"
+    },
+    {
+      "type": "identifierLocation",
+      "value": "c09a1d24-7162-11eb-8aa6-0242ac110002",
+      "label": "emr.regFacility",
+      "width": "160px"
+    }
+  ],
+  "globalProperties": {
+    "edtriageapp.config": "sierraleone"
+  },
+  "dispositionConfig": "file:configuration/pih/pih-dispositions-sierraLeone-mcoe.json"
+}
