@@ -49,7 +49,7 @@
     "vitals",
     "vitalsHomepageApp",
     "wristbands",
-    "phu360reporting"
+    "clinicreporting"
   ],
   "idCardLabel": "PHU360 District Hub",
   "dossierIdentifierPrefix": "HUB",

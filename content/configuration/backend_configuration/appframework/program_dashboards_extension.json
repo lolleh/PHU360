@@ -14,7 +14,7 @@
     "extensionPointId": "pih.app.programSummaryList.apps",
     "type": "link",
     "label": "PHU360 Reporting Dashboard",
-    "url": "moduleResources/phu360reporting/index.html",
+    "url": "moduleResources/clinicreporting/index.html",
     "icon": "fas fa-fw fa-chart-pie",
     "requiredPrivilege": "App: reportingui.reports",
     "order": 2
@@ -34,7 +34,7 @@
     "extensionPointId": "org.openmrs.module.reportingui.reports.dashboards",
     "type": "link",
     "label": "PHU360 Reporting Dashboard",
-    "url": "moduleResources/phu360reporting/index.html",
+    "url": "moduleResources/clinicreporting/index.html",
     "icon": "fas fa-fw fa-chart-pie",
     "requiredPrivilege": "App: reportingui.reports",
     "order": 2
