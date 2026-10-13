@@ -1,0 +1,63 @@
+{
+  "source": "source/under5-register-imnci.xlsx",
+  "sheet": "2 Month-5 Years Register",
+  "note": "What the printed register says that the form does not do, and why. Each entry is either a place the workbook contradicts itself, or a decision taken while digitising it. `columns` names the printed columns the entry is about - a decision about how a column was captured still counts as captured. `uncapturedColumns` is the one that gives up on a column entirely, and only that one is checked by verify_source_coverage.py, so a column that quietly falls out of the form is caught even though nothing on the form would show it. No printed column of this register is uncaptured; every one of the 46 is captured or taken from the patient record.",
+  "anomalies": [
+    {
+      "id": "disability-census-needs-an-explicit-no",
+      "columns": ["E", "F"],
+      "kind": "decision",
+      "sourceSays": "E: \"Screened for disability (Y/N)\". F: \"Disability (Y/N/NA)\".",
+      "resolution": "Both are captured as questions with the register's own printed answer marks - U5 Yes / U5 No for E, and the same plus U5 Not applicable for F - rather than as the tick boxes they were before. The register counts disabled children from these two columns, and a tick box can only ever say yes: a child screened and found not disabled, and a child not screened at all, both record identically, so the denominator of every disability figure is unknowable. The workbook wording itself is not changed.",
+      "affectsReporting": "The report counts this column with kind=\"answer\": the register's \"Yes\" is this register's concept, not the dictionary's, so a yes-count would have matched nothing."
+    },
+    {
+      "id": "drugs-are-counts-not-ticks",
+      "columns": ["AJ", "AK", "AL", "AM", "AN", "AO", "AP", "AQ", "AR", "AS"],
+      "kind": "decision",
+      "sourceSays": "AJ: \"Drug(s) Provided (No.)\" as the heading of AK-AS.",
+      "resolution": "The ten drugs are captured as numbers, matching the \"(No.)\" the heading prints, instead of the tick boxes they were before. A course of treatment is several doses; a tick records only that something was given. The counts are whole numbers, so these concepts do not allow decimals, unlike the measurements in the anthropometry block. \"Other (Specify)\" (AT) stays free text because the workbook gives it no quantity.",
+      "affectsReporting": "The report counts these with kind=\"recorded\": present when a value above zero was written, so a visit that gave no ORS is not counted as having given one."
+    },
+    {
+      "id": "appetite-test-outcome",
+      "columns": ["U"],
+      "kind": "decision",
+      "sourceSays": "U: \"Malnutrition or Anaemia (check all)\", whose printed sub-rows include an appetite test with both outcomes.",
+      "resolution": "The form asked only for \"Appetite test: pass\". A failed appetite test is one of the criteria for classifying severe acute malnutrition and cannot be inferred from the absence of a pass, so \"Appetite test: fail\" was added as its own tick box (U5 Appetite test failed).",
+      "affectsReporting": "Not in the condition breakdown. Adding it would count children who failed the test twice, once here and once under the classification they were given."
+    },
+    {
+      "id": "age-in-months-not-in-the-patient-header",
+      "columns": ["C"],
+      "kind": "decision",
+      "sourceSays": "C: \"Age (Months)\", with a \"……Month\" sub-label.",
+      "resolution": "Captured as U5 Age in months rather than read from the patient header, because the header carries age in years and this register's own bands are read off months - its title is \"AGE 2 MONTH-5 YEARS\", its MUAC column is headed \"6M-59M\" and its WHZ column \"2M-59M\". Name (B) and Sex (D) are the reverse case and are read from the patient record, so the printed register and the patient header cannot disagree about who the row is about.",
+      "affectsReporting": "The mean-age indicator reads the patient birthdate and is unchanged. Age in months is what a band this fine is read from."
+    },
+    {
+      "id": "printed-copies-of-the-header-are-not-identical",
+      "columns": [],
+      "kind": "source-defect",
+      "sourceSays": "The sheet prints the same 11-row page header six times, once per printed page. Rows 32, 43, 54, 65 and 76 - one per repeat after the first - are not the same as their counterparts in the first copy.",
+      "resolution": "The first copy is taken as the column layout. The differences are recorded here rather than merged away, because a repeat that differs from its first copy is either a later correction to the layout or a printing artefact, and which of those it is cannot be told from the workbook. The columns the differing rows carry are all captured either way, so nothing on the form depends on which copy is read.",
+      "affectsReporting": "None."
+    },
+    {
+      "id": "column-x-is-not-printed",
+      "columns": [],
+      "kind": "source-defect",
+      "sourceSays": "The sheet's columns run A-W, then Y-AU. X is skipped.",
+      "resolution": "Treated as an empty spacer column rather than a question, so nothing is captured for it. Flagged because a skipped letter in a print layout usually means a column was deleted and the rest of the row shifted left at some point; if a question ever appears there it belongs in the immunisation block (W) that the gap follows.",
+      "affectsReporting": "None."
+    },
+    {
+      "id": "banner-describes-the-visit-not-the-child",
+      "columns": [],
+      "kind": "decision",
+      "sourceSays": "Row 6: \"District: Facility Name: Facility Type: Chiefdom/Zone Year: 20 yy Month: mm In Facility: Outreach:\".",
+      "resolution": "Not captured per row. OpenMRS already records the location on the encounter and the reporting month is the encounter's own date, so capturing them again would allow the printed banner and the encounter to disagree, and the printed page has no separate cell for them besides its header. The banner names no ownership, so unlike the Above Five register there is nothing here to leave unmapped either.",
+      "affectsReporting": "None. Encounter location and date are what the report already filters on."
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    This Source Code Form is subject to the terms of the Mozilla Public License,
+    v. 2.0. If a copy of the MPL was not distributed with this file, You can
+    obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
+    the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+
+    Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
+    graphic logo is a trademark of OpenMRS Inc.
+
+-->
+
+<reportMapping>
+
+    <!-- The key the reportApi request carries and this file's name. -->
+    <key>family-planning-register</key>
+    <label>Family Planning Register</label>
+    <table>phu360_report_family_planning</table>
+
+    <mapped>true</mapped>
+
+    <!-- The register's own encounter type, resolved to an id per
+         installation by ReportCatalog. -->
+    <encounterTypes>
+        <encounterType>Family Planning Register</encounterType>
+    </encounterTypes>
+
+    <indicators>
+        <indicator>
+            <key>encounters</key>
+            <label>Visits recorded</label>
+            <kind>encounterCount</kind>
+        </indicator>
+        <indicator>
+            <key>clients</key>
+            <label>Clients seen</label>
+            <kind>distinctPatients</kind>
+        </indicator>
+        <indicator>
+            <key>meanAge</key>
+            <label>Mean age (months)</label>
+            <kind>meanAgeMonths</kind>
+        </indicator>
+        <indicator>
+            <key>newClients</key>
+            <label>New clients</label>
+            <kind>codedCount</kind>
+            <concept>MNR FP6 Client Type</concept>
+            <answer>MNR FP6 Client Type :: New Client (First time user)</answer>
+        </indicator>
+        <indicator>
+            <key>emergency</key>
+            <label>Emergency contraceptive</label>
+            <kind>codedRate</kind>
+            <concept>MNR FP17 Emergency contraceptive</concept>
+            <answer>Yes</answer>
+        </indicator>
+    </indicators>
+
+    <sections>
+        <section>
+            <key>ageBands</key>
+            <label>Clients by age band</label>
+            <kind>ageBreakdown</kind>
+        </section>
+        <section>
+            <key>fp5</key>
+            <label>Disability</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR FP5 Disability</concept>
+        </section>
+        <section>
+            <key>fp6</key>
+            <label>Client Type</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR FP6 Client Type</concept>
+        </section>
+        <section>
+            <key>fp7</key>
+            <label>Client Type - Post Partum Family Planning</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR FP7 Client Type - Post Partum Family Planning</concept>
+        </section>
+        <section>
+            <key>fp11</key>
+            <label>COMBINED ORAL CONTRACEPTIVE</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR FP11 COMBINED ORAL CONTRACEPTIVE</concept>
+        </section>
+        <section>
+            <key>fp12</key>
+            <label>PROGESTIN ONLY ORALS</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR FP12 PROGESTIN ONLY ORALS</concept>
+        </section>
+        <section>
+            <key>fp13</key>
+            <label>INJECTABLES</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR FP13 INJECTABLES</concept>
+        </section>
+        <section>
+            <key>fp14</key>
+            <label>IUCD</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR FP14 IUCD</concept>
+        </section>
+        <section>
+            <key>fp15</key>
+            <label>IMPLANTS</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR FP15 IMPLANTS</concept>
+        </section>
+        <section>
+            <key>fp16</key>
+            <label>CONDOM</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR FP16 CONDOM</concept>
+        </section>
+        <section>
+            <key>fp18</key>
+            <label>PERMANENT METHOD</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR FP18 PERMANENT METHOD</concept>
+        </section>
+        <section>
+            <key>conditions</key>
+            <label>Findings and services recorded</label>
+            <kind>conditionBreakdown</kind>
+        </section>
+    </sections>
+
+    <conditionConcepts>
+        <conditionConcept>
+            <name>MNR FP19 Lactation Amenorhea Method (LAM)</name>
+            <label>Lactation Amenorhea Method (LAM)</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR FP20 Method Switch</name>
+            <label>Method Switch</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR FP23 Referred in from CHW/Facility</name>
+            <label>Referred in from CHW/Facility</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR FP24 Referred out to other facility</name>
+            <label>Referred out to other facility</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR FP17 Emergency contraceptive</name>
+            <label>Emergency contraceptive</label>
+        </conditionConcept>
+    </conditionConcepts>
+
+</reportMapping>

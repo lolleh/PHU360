@@ -21,6 +21,9 @@
     <report>all-encounter</report>
     <report>above-five-patient-list</report>
     <report>under-five-register</report>
+    <report>mother-and-neonate-register</report>
+    <report>delivery-register</report>
+    <report>family-planning-register</report>
     <report>hf1-summary</report>
     <report>hf2-summary</report>
     <report>hf3-summary</report>

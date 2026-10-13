@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    This Source Code Form is subject to the terms of the Mozilla Public License,
+    v. 2.0. If a copy of the MPL was not distributed with this file, You can
+    obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
+    the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+
+    Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
+    graphic logo is a trademark of OpenMRS Inc.
+
+-->
+
+<reportMapping>
+
+    <!-- The key the reportApi request carries and this file's name. -->
+    <key>mother-and-neonate-register</key>
+    <label>Mother and Neonate Register</label>
+    <table>phu360_report_mother_and_neonate</table>
+
+    <mapped>true</mapped>
+
+    <!-- The register's own encounter type, resolved to an id per
+         installation by ReportCatalog. -->
+    <encounterTypes>
+        <encounterType>Maternity and Delivery Register</encounterType>
+    </encounterTypes>
+
+    <indicators>
+        <indicator>
+            <key>encounters</key>
+            <label>Visits recorded</label>
+            <kind>encounterCount</kind>
+        </indicator>
+        <indicator>
+            <key>clients</key>
+            <label>Clients seen</label>
+            <kind>distinctPatients</kind>
+        </indicator>
+        <indicator>
+            <key>meanAge</key>
+            <label>Mean age (months)</label>
+            <kind>meanAgeMonths</kind>
+        </indicator>
+        <indicator>
+            <key>anc4</key>
+            <label>ANC 4+ contacts</label>
+            <kind>codedRateAnyOf</kind>
+            <concept>MNR PP3 Stage of ANC Contact</concept>
+            <answer>MNR PP3 Stage of ANC Contact :: 4</answer>
+            <answer>MNR PP3 Stage of ANC Contact :: 5</answer>
+            <answer>MNR PP3 Stage of ANC Contact :: 6</answer>
+            <answer>MNR PP3 Stage of ANC Contact :: 7</answer>
+            <answer>MNR PP3 Stage of ANC Contact :: 8</answer>
+        </indicator>
+        <indicator>
+            <key>liveBirths</key>
+            <label>Live births</label>
+            <kind>codedCount</kind>
+            <concept>MNR D13 Live Birth</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>lowBirthWeight</key>
+            <label>Birth weight under 2.5 kg</label>
+            <kind>codedRate</kind>
+            <concept>MNR D21 Birth weight under 2.5kg</concept>
+            <answer>Yes</answer>
+        </indicator>
+    </indicators>
+
+    <sections>
+        <section>
+            <key>ageBands</key>
+            <label>Clients by age band</label>
+            <kind>ageBreakdown</kind>
+        </section>
+        <section>
+            <key>bg</key>
+            <label>Client Blood Group</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR BG Client Blood Group</concept>
+        </section>
+        <section>
+            <key>pp3</key>
+            <label>Stage of ANC Contact</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR PP3 Stage of ANC Contact</concept>
+        </section>
+        <section>
+            <key>d7</key>
+            <label>Delivery Type</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR D7 Delivery Type</concept>
+        </section>
+        <section>
+            <key>d10</key>
+            <label>Delivery Conducted By</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR D10 Delivery Conducted By</concept>
+        </section>
+        <section>
+            <key>d11</key>
+            <label>Delivered at</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR D11 Delivered at</concept>
+        </section>
+        <section>
+            <key>d19</key>
+            <label>Sex of Baby</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR D19 Sex of Baby</concept>
+        </section>
+        <section>
+            <key>m2</key>
+            <label>State of the Perineum</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR M2 State of the Perineum</concept>
+        </section>
+        <section>
+            <key>m3</key>
+            <label>If Tear in M2</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR M3 If Tear in M2</concept>
+        </section>
+        <section>
+            <key>m10</key>
+            <label>General condition of mother</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR M10 General condition of mother</concept>
+        </section>
+        <section>
+            <key>m11</key>
+            <label>Symptoms observed?</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR M11 Symptoms observed?</concept>
+        </section>
+        <section>
+            <key>m19</key>
+            <label>Is mother referred to (Hosp./CHC/CHP)</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR M19 Is mother referred to (Hosp./CHC/CHP)</concept>
+        </section>
+        <section>
+            <key>conditions</key>
+            <label>Findings and services recorded</label>
+            <kind>conditionBreakdown</kind>
+        </section>
+    </sections>
+
+    <conditionConcepts>
+        <conditionConcept>
+            <name>MNR H1 Sickler</name>
+            <label>Sickler</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H2 Age 18-35 yrs</name>
+            <label>Age 18-35 yrs</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H3 Height below150 cm or 5 ft</name>
+            <label>Height &lt;150 cm or 5 ft</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H7 EVD Survivor</name>
+            <label>EVD Survivor</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H9 Multiple Delivery</name>
+            <label>Multiple Delivery</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H10 Still Birth</name>
+            <label>Still Birth</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H11 Miscarriages</name>
+            <label>Miscarriages</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H12 Induced Abortion</name>
+            <label>Induced Abortion</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H13 Previous C/S</name>
+            <label>Previous C/S</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H14 Prolong/Obstructed Labour</name>
+            <label>Prolong/Obstructed Labour</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H15 APH</name>
+            <label>APH</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H16 PPH</name>
+            <label>PPH</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H17 Retained Placenta</name>
+            <label>Retained Placenta</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H18 Eclamptic FIT</name>
+            <label>Eclamptic FIT</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H19 Death of Child within 7 days</name>
+            <label>Death of Child within 7 days</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H20 Cough above 4 weeks</name>
+            <label>Cough above 4 weeks</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H21 High Puerperial Fever</name>
+            <label>High Puerperial Fever</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H22 Breech Delivery</name>
+            <label>Breech Delivery</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H23 Ectopic Pregnancy</name>
+            <label>Ectopic Pregnancy</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR H24 Diabetes</name>
+            <label>Diabetes</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP4 Screen with BP (if 130/90 and above refer)</name>
+            <label>Screen with BP (if 130/90 and above refer)</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP5 Oedema</name>
+            <label>Oedema</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP6 Pitting Oedema</name>
+            <label>Pitting Oedema</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP7 Urine Albumin</name>
+            <label>Urine Albumin</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP8 Disability</name>
+            <label>Disability</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP9 Unusually thin Patient</name>
+            <label>Unusually thin Patient</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP10 Unusually large Abdomen</name>
+            <label>Unusually large Abdomen</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP11 Severe Pallor / Anaemia</name>
+            <label>Severe Pallor / Anaemia</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP12 Vaginal Bleeding</name>
+            <label>Vaginal Bleeding</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP13 Transverse / Oblique Lie</name>
+            <label>Transverse / Oblique Lie</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP14 Mutiple Pregnancy</name>
+            <label>Mutiple Pregnancy</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP15 Foetal Movements</name>
+            <label>Foetal Movements</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP17 Iron and Folic Acid</name>
+            <label>Iron and Folic Acid</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP18 Multiple Micronutrient Suplement (MMS)</name>
+            <label>Multiple Micronutrient Suplement (MMS)</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP19 Intermittent preventive therapy (IPTp) malaria</name>
+            <label>Intermittent preventive therapy (IPTp) malaria</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP20 Screen with Ultrasound Scan</name>
+            <label>Screen with Ultrasound Scan</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP23 Mother's Delivery Kit</name>
+            <label>Mother's Delivery Kit</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP24 LLINs given at ANC</name>
+            <label>LLINs given at ANC</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP25 Albendazole</name>
+            <label>Albendazole</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP26 Tested for Syphilis</name>
+            <label>Tested for Syphilis</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP27 Tested for HIV</name>
+            <label>Tested for HIV</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP28 HIV results Received</name>
+            <label>HIV results Received</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP29 Refer for eMTCT</name>
+            <label>Refer for eMTCT</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP30 ARV Treatment Started</name>
+            <label>ARV Treatment Started</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP31 Haemoglobin (below12g/dl)</name>
+            <label>Haemoglobin (&lt;12g/dl)</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PP32 Screen for Hepatitis B</name>
+            <label>Screen for Hepatitis B</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D1 Normal Duration (0-12hrs)</name>
+            <label>Normal Duration (0-12hrs)</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D2 Cephalic Presentation</name>
+            <label>Cephalic Presentation</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D8 Bleeding (500mls or more)</name>
+            <label>Bleeding (500mls or more)</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D9 Breech Delivery</name>
+            <label>Breech Delivery</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D12 Mother Survived Delivery</name>
+            <label>Mother Survived Delivery</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D13 Live Birth</name>
+            <label>Live Birth</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D14 (If NO to D13) Macerated still birth</name>
+            <label>(If NO to D13) Macerated still birth</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D15 (If NO to D13) Fresh still birth</name>
+            <label>(If NO to D13) Fresh still birth</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D16 State of baby - normal?</name>
+            <label>State of baby - normal?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D17 Gestational age 36wks or less</name>
+            <label>Gestational age 36wks or less</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D18 Multiple birth</name>
+            <label>Multiple birth</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D21 Birth weight under 2.5kg</name>
+            <label>Birth weight under 2.5kg</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D23 Delayed crying</name>
+            <label>Delayed crying</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D24 Difficult Breathing</name>
+            <label>Difficult Breathing</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D25 If YES at D23/D24 new born resuscitated?</name>
+            <label>If YES at D23/D24 new born resuscitated?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D26 Live born breastfed within 1 hrs.</name>
+            <label>Live born breastfed within 1 hrs.</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D27 Baby alive after 24 hrs?</name>
+            <label>Baby alive after 24 hrs?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D28 Baby referred to Doctor</name>
+            <label>Baby referred to Doctor</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D29 Neverapine syrup administered to baby - if HIV exposed</name>
+            <label>Neverapine syrup administered to baby - if HIV exposed</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D30 Partograph/Labour Care Guide was used</name>
+            <label>Partograph/Labour Care Guide was used</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D31 Initiation to Kangaroo Mother Care</name>
+            <label>Initiation to Kangaroo Mother Care</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR D32 Immediate Skin to Skin Care</name>
+            <label>Immediate Skin to Skin Care</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR M1 Is Mother alive 24 hrs after delivery</name>
+            <label>Is Mother alive 24 hrs after delivery</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR M4 Placenta and Membrane complete</name>
+            <label>Placenta and Membrane complete</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR M5 Has there been excessive IPH (15mls or more)</name>
+            <label>Has there been excessive IPH (15mls or more)</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR M6 Was expulsion of placenta difficult?</name>
+            <label>Was expulsion of placenta difficult?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR M7 Post-Partum Haemorrage?</name>
+            <label>Post-Partum Haemorrage?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR M8 Is lochia offensive?</name>
+            <label>Is lochia offensive?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR M9 Is BP 130/90 and above?</name>
+            <label>Is BP 130/90 and above?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR M12 Has lactation been established?</name>
+            <label>Has lactation been established?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR M13 Does mother eat normally?</name>
+            <label>Does mother eat normally?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR M14 Number of Td doses taken so far</name>
+            <label>Number of Td doses taken so far</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR M15 Has there been education about family planning?</name>
+            <label>Has there been education about family planning?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR M16 Acceptance with a Method</name>
+            <label>Acceptance with a Method</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR M18 Is mother referred to Doctor?</name>
+            <label>Is mother referred to Doctor?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR M20 If yes, has the Incharge/doctor been informed?</name>
+            <label>If yes, has the Incharge/doctor been informed?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PR1 Mother alive</name>
+            <label>Mother alive</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PR6 Condition of breast good?</name>
+            <label>Condition of breast good?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PR7 Vaginal Bleeding?</name>
+            <label>Vaginal Bleeding?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PR8 Sepsis?</name>
+            <label>Sepsis?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PR9 Eclampsia?</name>
+            <label>Eclampsia?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PR10 Albuminuria present?</name>
+            <label>Albuminuria present?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PR11 Involution of uterus normal?</name>
+            <label>Involution of uterus normal?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PR12 Fever present?</name>
+            <label>Fever present?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PR13 Anaemia?</name>
+            <label>Anaemia?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PR14 Persistent cough?</name>
+            <label>Persistent cough?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR PR15 Refer to Doctor?</name>
+            <label>Refer to Doctor?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN1 Baby alive?</name>
+            <label>Baby alive?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN4 Death registered</name>
+            <label>Death registered</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN5 New Born - Birth registered?</name>
+            <label>New Born - Birth registered?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN7 Fever present?</name>
+            <label>Fever present?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN10 Breastfeeding?</name>
+            <label>Breastfeeding?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN11 If yes to NN10, is it exclusive?</name>
+            <label>If yes to NN10, is it exclusive?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN12 Sucking ability normal?</name>
+            <label>Sucking ability normal?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN13 Congenital defect?</name>
+            <label>Congenital defect?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN15 Any perinatal illness?</name>
+            <label>Any perinatal illness?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN17 Neonatal Sepsis?</name>
+            <label>Neonatal Sepsis?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN18 Diarrhoea?</name>
+            <label>Diarrhoea?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN19 Jaundice?</name>
+            <label>Jaundice?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN20 Cord Healing Satisfactory?</name>
+            <label>Cord Healing Satisfactory?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN21 Scalp Injuries?</name>
+            <label>Scalp Injuries?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN22 Bone Injuries?</name>
+            <label>Bone Injuries?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN23 Nerve Injuries?</name>
+            <label>Nerve Injuries?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN24 Visual Injuries?</name>
+            <label>Visual Injuries?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR NN25 Referred to Doctor?</name>
+            <label>Referred to Doctor?</label>
+        </conditionConcept>
+    </conditionConcepts>
+
+</reportMapping>

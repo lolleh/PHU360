@@ -1,0 +1,518 @@
+{
+  "U5 ACT AL-12 or ASAQ 3 for 1 to 5 years": {
+    "name_uuid": "6f5cf726-4613-5e31-b535-91194bbc718b",
+    "uuid": "2b3f7553-a340-50d4-aa7d-1e7fd05925b0"
+  },
+  "U5 ACT AL-6 or ASAQ 3 for 2 to 11 months": {
+    "name_uuid": "bc375031-1328-5c42-b561-122b7f042ba0",
+    "uuid": "997fdc29-233c-5b68-9291-e3863cf0ce6c"
+  },
+  "U5 Address chiefdom or village": {
+    "name_uuid": "0b0e5572-39e8-54ee-a71f-295d2e82f084",
+    "uuid": "0a15e860-75e6-5f0f-8bdd-d667b5a9f444"
+  },
+  "U5 Age in months": {
+    "name_uuid": "fdd80b0d-ac9e-5d92-b5a9-fa6028c8882b",
+    "uuid": "648ae2de-bdb8-5181-959d-3311ad8ec21c"
+  },
+  "U5 Albendazole 400mg": {
+    "name_uuid": "57d6957f-8f51-5234-b706-47282f45fd9f",
+    "uuid": "447b29f8-30d7-56f3-b0d0-e22bb58c94ff"
+  },
+  "U5 Albendazole received in last 6 months age 12 to 23 months": {
+    "name_uuid": "02227099-7db7-51c6-8ade-03c08ebd050f",
+    "uuid": "e229fac7-def2-5eef-bc92-71b13eecde98"
+  },
+  "U5 Albendazole received in last 6 months age 24 to 59 months": {
+    "name_uuid": "a830b316-bae2-5478-a27c-bd59f3c9d697",
+    "uuid": "39a12c02-1b37-5e31-94f6-21d6ea5578d0"
+  },
+  "U5 Amoxicillin 250mg": {
+    "name_uuid": "60a88566-e38b-58fd-905c-21e9ed74fbe3",
+    "uuid": "530d4101-49e6-5403-b503-dfa6d452f2f3"
+  },
+  "U5 Appetite test failed": {
+    "name_uuid": "681bcdf5-183d-51aa-acc5-577375ed1948",
+    "uuid": "3e7472df-d9b6-58e9-9137-ff6b4abbbf40"
+  },
+  "U5 Appetite test passed": {
+    "name_uuid": "e240b482-42dc-5b17-8d94-e35178452a14",
+    "uuid": "5341e334-6962-5040-af17-53b5c08f5622"
+  },
+  "U5 Artesunate 60mg per ml injection": {
+    "name_uuid": "a8a3eed0-a569-53db-b5b4-07960a24ec8b",
+    "uuid": "a4723bda-0c8f-5190-b0d5-63401e7e0ae5"
+  },
+  "U5 Blood film negative": {
+    "name_uuid": "c93b38eb-983e-5fbd-8ae6-42af081fa335",
+    "uuid": "e3db92bb-fb63-5de4-a1ff-fa8f912935ce"
+  },
+  "U5 Blood film not done": {
+    "name_uuid": "f19bfa6f-29ae-57d0-81df-e70ff5c76a59",
+    "uuid": "3f1f321a-0ee8-576e-ab8f-0f728bcf9b57"
+  },
+  "U5 Blood film positive": {
+    "name_uuid": "0d6d3dcf-dae3-5b6b-83ea-0beac1bb0dd7",
+    "uuid": "e946baad-025d-59e2-823e-0b97093b77f3"
+  },
+  "U5 Blood in stool": {
+    "name_uuid": "ccee7e56-43e6-59d4-8168-165e0cde5132",
+    "uuid": "f1c8d548-a2b0-5d0e-a07f-7b422eb82950"
+  },
+  "U5 Breathing rate (per minute)": {
+    "name_uuid": "d8625f38-7032-5852-826e-b59c3ea0144a",
+    "uuid": "399f765b-1ab2-590d-8e39-0ec9696a21a7"
+  },
+  "U5 Chest indrawing": {
+    "name_uuid": "e4533a00-c69c-5e91-84cf-2ab74ebd0c9b",
+    "uuid": "219ae317-7e62-59bc-8dea-c9f1383433ad"
+  },
+  "U5 Child HIV RDT negative": {
+    "name_uuid": "e0a5f559-bb4a-53e6-b200-5237381d0746",
+    "uuid": "81b46e1e-2bb5-5ce7-9b7b-99017593c480"
+  },
+  "U5 Child HIV RDT positive": {
+    "name_uuid": "800ba161-be60-5dde-8a3f-76b114068f7a",
+    "uuid": "d4fcdbff-1fd7-5011-863e-0fe337c0bafa"
+  },
+  "U5 Child HIV RDT unknown": {
+    "name_uuid": "7a170989-d861-5b66-9605-5761c34a764e",
+    "uuid": "c25eb0ae-eb55-5d9d-9738-014b0b94d77c"
+  },
+  "U5 Classified as diarrhoea": {
+    "name_uuid": "66680f57-a7d7-5382-b312-e943f1bf67b3",
+    "uuid": "9b7baabe-9406-57dc-b5aa-0cfdc2e6417f"
+  },
+  "U5 Classified as ear problem": {
+    "name_uuid": "1c4e283c-e5bf-5c4a-be7a-8c3d86f98e81",
+    "uuid": "2b92d547-944b-59df-a437-417064a5e77a"
+  },
+  "U5 Classified as fever": {
+    "name_uuid": "5a086264-e648-5c14-b76f-783fa271a2dd",
+    "uuid": "47c31b49-663c-5588-a11c-1df2ee5ec735"
+  },
+  "U5 Classified as malaria": {
+    "name_uuid": "c68b2ae7-7053-596b-9f23-441bf42be708",
+    "uuid": "9cc83d37-408c-5749-8567-441da9125a50"
+  },
+  "U5 Classified as measles": {
+    "name_uuid": "9e603152-19bf-53a2-bddc-c7877d36df71",
+    "uuid": "f863b815-1697-5c6a-b2c6-842638c4c5a8"
+  },
+  "U5 Classified as other": {
+    "name_uuid": "e47d06ba-f197-53bc-9932-55d900efff17",
+    "uuid": "eb9b0f2b-a978-588a-8a43-91cef57e7930"
+  },
+  "U5 Classified as pneumonia or severe respiratory illness": {
+    "name_uuid": "aca6c3cd-0142-5d31-8b06-da5e1786fecc",
+    "uuid": "8d24d647-a515-5482-8beb-c57aad397d05"
+  },
+  "U5 Classified as severe acute malnutrition": {
+    "name_uuid": "f8a700b5-e16b-5e2e-ab45-2a8b61b31204",
+    "uuid": "3c544cd0-1691-575a-bfd6-d5f8f98687a3"
+  },
+  "U5 Continued breastfeeding 6 to 23 months": {
+    "name_uuid": "2e3a0b1e-b673-5216-a4fc-5ca81acf2765",
+    "uuid": "f8c96388-d221-5d13-a0f7-59084cf58ad1"
+  },
+  "U5 Convulsing now": {
+    "name_uuid": "10bee26c-f662-5d5c-b2d1-5c1f3d1895d5",
+    "uuid": "5b701f8e-5549-540b-b614-7070b2495e7f"
+  },
+  "U5 Cough or difficult breathing": {
+    "name_uuid": "a456f4de-12a3-5b80-bc75-e8f3bf4decce",
+    "uuid": "0967c2d9-add9-56ad-814c-038b0dfd4d0d"
+  },
+  "U5 Cough or runny nose or red eyes": {
+    "name_uuid": "d7493b60-0653-5fa5-84f2-8600104c99d5",
+    "uuid": "47eea1bf-302b-5ed1-9677-6ecc39403e88"
+  },
+  "U5 Counselled on feeding": {
+    "name_uuid": "a3314980-ad0e-538d-a9c1-31da3460bb80",
+    "uuid": "7a2abb91-6e99-53da-a52c-6300a96f8e09"
+  },
+  "U5 Counselled on fluids": {
+    "name_uuid": "a5ded6f4-8e76-52aa-8e09-8ba1607611d5",
+    "uuid": "e85ffb45-a353-50e6-a1af-0841dd7f9635"
+  },
+  "U5 Counselled on when to return": {
+    "name_uuid": "8f837733-6551-5659-aeee-6fd87360b4e0",
+    "uuid": "81ed8348-8487-530c-91a9-2b2919f6e765"
+  },
+  "U5 Diarrhoea": {
+    "name_uuid": "de8e5a87-134b-5d05-8c3d-acd3989359c6",
+    "uuid": "6ca44519-9c52-5f58-ab68-484cb7a7b189"
+  },
+  "U5 Died": {
+    "name_uuid": "396e6dd7-902f-5f6c-9206-8b1e5d11074c",
+    "uuid": "5a3404e7-5249-5ae2-98b2-5378f87553ed"
+  },
+  "U5 Duration of cough or breathing problem (days)": {
+    "name_uuid": "682b94bf-1acd-58d5-b159-dae0e430520d",
+    "uuid": "486e4ad4-5a34-50cd-9610-ae5b78809ea5"
+  },
+  "U5 Duration of diarrhoea (days)": {
+    "name_uuid": "59d4d4e9-1b36-5ef9-9194-d9ecefe01497",
+    "uuid": "04f87c11-24f6-5d63-a3b7-a19fefb3b43e"
+  },
+  "U5 Duration of ear problem (days)": {
+    "name_uuid": "5cc132af-cbf7-5874-b36c-fa5a8c5e85bd",
+    "uuid": "e41783d7-7be5-5750-8896-a552b78825c0"
+  },
+  "U5 Duration of fever (days)": {
+    "name_uuid": "6e3ba135-5761-566d-b4dd-6edae5aa6cb2",
+    "uuid": "af475cf6-48c2-5b3a-9343-b269f8d5599d"
+  },
+  "U5 Eager or thirsty": {
+    "name_uuid": "c71a208b-c0b5-5f05-9540-448725cecff1",
+    "uuid": "e747c60b-fcc5-523f-b594-4fe7ca25f5ed"
+  },
+  "U5 Ear discharge": {
+    "name_uuid": "4b5307b4-213b-5a8f-87bf-65703a466672",
+    "uuid": "1bac7316-3d35-5c80-a79d-d05a5f31660b"
+  },
+  "U5 Ear pain": {
+    "name_uuid": "d594b70c-646d-5840-8574-f621b3faee37",
+    "uuid": "0d055491-eb01-50bc-b431-790e9768cdad"
+  },
+  "U5 Ear problem": {
+    "name_uuid": "5503cfca-9199-59e1-a3e9-1b2d6e1c7173",
+    "uuid": "81c311c1-4394-565e-982e-ccde5a1bb5e9"
+  },
+  "U5 Exclusive breastfeeding under 6 months": {
+    "name_uuid": "9f5514de-4bc7-5dcf-ba23-75c756bcee1d",
+    "uuid": "f08c6531-a027-5b00-ab18-a98edaa0e214"
+  },
+  "U5 Fast breathing": {
+    "name_uuid": "39fe812d-b2df-5e39-a788-e9ceb8d5825c",
+    "uuid": "597350e3-169b-56b6-841d-6c5ff85525d5"
+  },
+  "U5 Fever": {
+    "name_uuid": "4b7fa460-76bb-5996-b30b-d907e625619c",
+    "uuid": "7c764e58-4024-5d84-acff-5eacf6eb1b6d"
+  },
+  "U5 Follow up": {
+    "name_uuid": "1d534073-1789-5aff-9834-f055d797b6d4",
+    "uuid": "74672f58-b0a4-523f-984e-162bb1d0d9fc"
+  },
+  "U5 Follow up date": {
+    "name_uuid": "4df71a94-45c8-5071-82e0-95c49f1cbb42",
+    "uuid": "9b2ad628-6150-533b-a8a4-5cfad5f93a71"
+  },
+  "U5 Generalised rash of measles": {
+    "name_uuid": "6da77678-daa0-5213-8ca5-b127365ae6c5",
+    "uuid": "c175904e-6126-531d-9918-0fb29a573536"
+  },
+  "U5 Has disability": {
+    "name_uuid": "8f2a1495-1c6b-57e1-a2ae-2381686fc640",
+    "uuid": "8fa7ae4b-ec44-56d9-8648-cb8f7e74bd90"
+  },
+  "U5 Hearing": {
+    "name_uuid": "132eeb06-f548-531f-bf62-15f775c6b060",
+    "uuid": "e06be1e3-b63a-5166-bcea-ad70cba95281"
+  },
+  "U5 Height or length (cm)": {
+    "name_uuid": "1f5d49dd-afd5-510d-a04e-035e3ed6bfe5",
+    "uuid": "09928eae-c330-5eb5-b633-88b346843488"
+  },
+  "U5 History of convulsion": {
+    "name_uuid": "0e1662d4-60b8-5a64-b218-6b5292733b09",
+    "uuid": "ea195b7d-6bb4-580a-917a-9c1e3694d374"
+  },
+  "U5 Immunisation completed": {
+    "name_uuid": "1231de4f-fc36-58a7-868e-14e53533f8a0",
+    "uuid": "4fbfbe13-ac84-51d2-99e7-282defbadb98"
+  },
+  "U5 Immunisation not started": {
+    "name_uuid": "80b30dc4-a22d-5781-b393-9613e048f01d",
+    "uuid": "f5628b66-09c7-54d0-be8b-dfa6dbef0417"
+  },
+  "U5 Immunisation not up to date": {
+    "name_uuid": "6c7b4745-0b26-5c76-9919-38a9399f0add",
+    "uuid": "55e7cdff-fa1a-529d-8a7d-e4f6f25a21bb"
+  },
+  "U5 Immunisation up to date": {
+    "name_uuid": "4829db5b-bbb6-5423-851a-0719d1d9484c",
+    "uuid": "04fffb25-f9cb-52fe-a320-cd61ddc5a874"
+  },
+  "U5 Improved": {
+    "name_uuid": "d6e62d10-26fb-540a-8500-05c35db05074",
+    "uuid": "3c4be42c-768b-5b46-a8ae-1df79177a0e4"
+  },
+  "U5 Learning": {
+    "name_uuid": "208cac55-efa0-59af-9656-073ec734d45c",
+    "uuid": "5a2b5e34-d59d-5552-8315-8a5513f56fed"
+  },
+  "U5 Lethargic or unconscious": {
+    "name_uuid": "6c61fc0d-266c-5794-a580-f82bc3210392",
+    "uuid": "415456c1-f4af-5924-b3d5-6cbdc9af2199"
+  },
+  "U5 MUAC (cm)": {
+    "name_uuid": "57c27a30-c9de-5c4d-a8f0-0e55f519c04e",
+    "uuid": "f9ad48f3-4972-5650-8765-1983b80ee602"
+  },
+  "U5 MUAC 11.5 to 12.5 cm": {
+    "name_uuid": "70ebc649-1aa5-57d3-8172-31110751f6c6",
+    "uuid": "d1ea72a7-9617-5bc5-9388-fcded9e1afb1"
+  },
+  "U5 MUAC 12.5 cm and above": {
+    "name_uuid": "e450bfde-6544-5c65-aa8c-3e556cdc2feb",
+    "uuid": "f74da10e-1597-5499-a687-185be92c42b0"
+  },
+  "U5 MUAC below 11.5 cm": {
+    "name_uuid": "db8f1e22-60e8-5947-87ba-7290fce1d6f1",
+    "uuid": "2b2f7b0e-01a5-5721-bd78-0ee3bb43e863"
+  },
+  "U5 Malaria RDT negative": {
+    "name_uuid": "07072b37-d65f-5ae3-b4fd-d9ca82f639b2",
+    "uuid": "0d3f4c75-53ad-582a-9f04-245979a59574"
+  },
+  "U5 Malaria RDT not done": {
+    "name_uuid": "9ca3f1e2-11c6-5b30-8a2f-07ae95d3ef16",
+    "uuid": "5019e47a-1723-55e0-abc5-8b5b204b809f"
+  },
+  "U5 Malaria RDT positive": {
+    "name_uuid": "3ab7183a-c452-5b5d-8744-d5e67a62970f",
+    "uuid": "bdf79fd5-2f7f-5d36-be9a-9461b8cc859e"
+  },
+  "U5 Malaria treated after 24 hours of onset": {
+    "name_uuid": "90b0a785-35cc-5169-9fae-43a44fc2ffa3",
+    "uuid": "b38588ee-b366-57b2-a501-ad8431970d56"
+  },
+  "U5 Malaria treated within 24 hours of onset": {
+    "name_uuid": "7257811d-f9ee-5c52-a13c-46d6464f61c1",
+    "uuid": "126cdb1d-3993-50cc-a570-8150c2e5a0c6"
+  },
+  "U5 Measles in the last three months": {
+    "name_uuid": "05bbccc0-0dfc-5603-932e-e8f4edc1572c",
+    "uuid": "6c556002-a8fa-500f-94ae-9fc2ce623086"
+  },
+  "U5 Mother HIV RDT negative": {
+    "name_uuid": "71c75b5d-2974-53eb-b986-eb135f279231",
+    "uuid": "305a9a75-8567-57d4-9e82-d387d27acfc4"
+  },
+  "U5 Mother HIV RDT positive": {
+    "name_uuid": "6a4381cc-ec79-5f5c-b990-6d24066107c0",
+    "uuid": "1f1cab7f-fa54-5958-a181-fc0d882a7e1a"
+  },
+  "U5 Mother HIV RDT unknown": {
+    "name_uuid": "889976b4-656c-5f86-89d1-bdf49c8fb77f",
+    "uuid": "d44ee674-abde-5d6e-9581-031ce0bc25eb"
+  },
+  "U5 Mouth ulcer or discharging eyes or corneal clouding": {
+    "name_uuid": "91136bff-3698-5d93-abb6-33754cf0bdec",
+    "uuid": "a994d9b2-c539-50d8-818e-dddf9133730e"
+  },
+  "U5 Multiple": {
+    "name_uuid": "bc7de2d6-f517-5ced-8bb6-9e405dd1b0cb",
+    "uuid": "a9add65a-e92a-5301-8aa7-0bb89a148200"
+  },
+  "U5 Name of referral health facility": {
+    "name_uuid": "853f975d-7adf-5df1-8a0a-aece0a9e8ded",
+    "uuid": "7b27fbe0-3cb0-5b42-ab33-4ffb99937938"
+  },
+  "U5 New": {
+    "name_uuid": "ce260940-9e0e-5587-a154-47b461e284d9",
+    "uuid": "2d2dee3a-4522-5280-9949-c0ba9b316a26"
+  },
+  "U5 No": {
+    "name_uuid": "fbe2d8b2-7829-5426-9e4c-5ae6e77a4f55",
+    "uuid": "131d3222-ff5a-5df9-97f7-87d3ea28ef9b"
+  },
+  "U5 Not applicable": {
+    "name_uuid": "5d09f69a-ff79-51f4-b1f0-9b46054ab953",
+    "uuid": "0325bf32-d68e-5a01-8df9-4c1a2c863420"
+  },
+  "U5 ORS sachet": {
+    "name_uuid": "2cd0da8b-6aff-5373-aa0f-3fbfc2987277",
+    "uuid": "85b467c3-4962-508c-b446-3f347d7f8d28"
+  },
+  "U5 Other drug": {
+    "name_uuid": "db491083-b705-598f-bea2-3de387f43044",
+    "uuid": "e3284b97-5660-542e-b6dd-c43f2e67d71a"
+  },
+  "U5 Other problems": {
+    "name_uuid": "2256274d-247d-533b-aad9-697f8efb6c66",
+    "uuid": "2a5925f1-c5e9-5e0b-97d5-4e4635b7aa54"
+  },
+  "U5 Outcome": {
+    "name_uuid": "f9694ac1-2aba-5d68-83b1-6fec9e09f3e0",
+    "uuid": "d9bd1f6c-18b0-59eb-b567-26db8b437468"
+  },
+  "U5 Oxygen saturation (percent)": {
+    "name_uuid": "e505f86e-5cff-5fd0-82a1-10a2e6cd79e5",
+    "uuid": "f323cde4-e331-5f22-9b32-3c7cd433456a"
+  },
+  "U5 Oxygen therapy": {
+    "name_uuid": "ebd9b307-22da-5690-b44b-faa2348cd9c0",
+    "uuid": "58abaa8e-87b2-55e0-9e6c-f4984476e0ce"
+  },
+  "U5 Palmar pallor": {
+    "name_uuid": "22ab3731-647a-5cf3-a52b-e7ac41a39a1b",
+    "uuid": "a79ab850-af2e-56b6-8632-955da37fbf30"
+  },
+  "U5 Paracetamol 100mg": {
+    "name_uuid": "b8945eec-6ec6-53aa-b033-90de23fd1bfb",
+    "uuid": "874a5af1-35c9-51d7-a693-e7ad64ba7937"
+  },
+  "U5 Physical": {
+    "name_uuid": "ead1e6bb-402e-501c-be03-f17f6d1e2480",
+    "uuid": "9bac2e78-200f-574b-b007-9fd7d453682c"
+  },
+  "U5 Pitting oedema both feet 6 months and over": {
+    "name_uuid": "a18b3118-3b90-56f0-ad89-eb4d87008bbb",
+    "uuid": "f69f6035-67fa-566e-a786-80a00a5b5fef"
+  },
+  "U5 Pitting oedema both feet under 6 months": {
+    "name_uuid": "10254ced-8ad1-508a-a394-222823042ef5",
+    "uuid": "cb825d79-20ec-5e1a-bcd4-43b6562b0131"
+  },
+  "U5 Pneumonia or fever": {
+    "name_uuid": "cf7bed84-ae1a-57f7-abb4-cda6e65bd2bb",
+    "uuid": "791695dc-4ab7-50ea-8352-da7986bb0231"
+  },
+  "U5 Pre-referral treatment provided": {
+    "name_uuid": "3b0d288f-f4ec-590a-871f-7160ded55bd7",
+    "uuid": "eb36b3d6-f004-5032-8393-253d0e24d75a"
+  },
+  "U5 Presenting complaint": {
+    "name_uuid": "ff895add-1e04-59b1-b079-e8c5dd5d6b50",
+    "uuid": "8f0be8a3-2474-56e7-8eda-3174b267a721"
+  },
+  "U5 Primary classification": {
+    "name_uuid": "7f87a8bc-029e-5211-9c26-c59c4663aad7",
+    "uuid": "1f76f1bb-f6d8-528e-a9be-270f1b18874e"
+  },
+  "U5 Rectal artesunate suppository": {
+    "name_uuid": "e8b6ed5d-24d4-5350-a49e-39bd087402be",
+    "uuid": "7ea85bc9-4f08-5f2f-891b-09c3aa381b19"
+  },
+  "U5 Referred to health facility": {
+    "name_uuid": "85c65f75-cf07-5c68-81be-f4b0bfaf0545",
+    "uuid": "a0aa66ef-02c3-5065-9c84-e9ddcf3397cb"
+  },
+  "U5 Remarks": {
+    "name_uuid": "32b45e85-21f0-5f42-baef-313e8d40b913",
+    "uuid": "e0836698-d86e-5b1f-9ebb-4f2bdfc61d7a"
+  },
+  "U5 Restless or irritable": {
+    "name_uuid": "15db70b1-c60c-58fb-a955-aeb1824d0b7d",
+    "uuid": "5fed55de-9c2f-5881-bd38-a247c88d7a8d"
+  },
+  "U5 Screened for disability": {
+    "name_uuid": "f0d8ba1d-5ee5-5df8-ad14-70baa26d437d",
+    "uuid": "40e4e1aa-25ed-58cb-95e8-d54684a11ab9"
+  },
+  "U5 Severe palmar pallor": {
+    "name_uuid": "e9c745bc-a787-548b-bc28-e588fa44ec3a",
+    "uuid": "57721780-2947-5a04-8b1f-26dd25f7110f"
+  },
+  "U5 Skin pinch going back": {
+    "name_uuid": "aa08f0d3-a8c4-5b34-b28a-96d516c8372f",
+    "uuid": "31bb5096-6a5f-58c1-b688-4afc982150a4"
+  },
+  "U5 Speech": {
+    "name_uuid": "b9149a2f-58be-5357-b51a-481ec2ddbf61",
+    "uuid": "3b5e24c5-c5fc-5742-8e17-eedfeaadca90"
+  },
+  "U5 Stiff neck or bulging fontanelle": {
+    "name_uuid": "1f3ffee1-4262-5784-ab4f-c06011c62269",
+    "uuid": "cbc60206-a85a-5ed3-9b9e-8416ed5c05d5"
+  },
+  "U5 Stridor": {
+    "name_uuid": "c0eddf34-9838-5896-af2f-e82b256ce4e5",
+    "uuid": "564ded8f-6c7e-5405-abce-5732a232a0d5"
+  },
+  "U5 Sunken eyes": {
+    "name_uuid": "85502268-a48d-53ea-96b6-2ae80ac990f7",
+    "uuid": "ef0b5eb4-cf66-550f-afa5-dc5287c33d34"
+  },
+  "U5 Temperature (C)": {
+    "name_uuid": "8de67e0d-3832-526b-8954-595b563c7d08",
+    "uuid": "43d9b799-471e-56ad-82cc-f7050ae524ec"
+  },
+  "U5 Treatment given": {
+    "name_uuid": "d891d884-0028-51a3-a0e9-45e5ef34f326",
+    "uuid": "b9de52b3-a1c6-5017-8490-a0b88e5f7e1e"
+  },
+  "U5 Type of disability": {
+    "name_uuid": "e2da05d3-198d-51de-861e-89ddd0de16d0",
+    "uuid": "c446846d-cf31-5a7a-8aca-2b6a1b939bc9"
+  },
+  "U5 Type of visit": {
+    "name_uuid": "39b43f63-40d3-56e7-969d-c75ae17c1a75",
+    "uuid": "3e796477-b1e3-5b9f-a98c-bcc312858b4b"
+  },
+  "U5 Unable to drink or breastfeed": {
+    "name_uuid": "330265e8-afdb-50dc-8962-edf67b8fce53",
+    "uuid": "6acaa24d-5ef9-5509-b149-95d0cf0002b7"
+  },
+  "U5 Unchanged": {
+    "name_uuid": "dcb86053-7770-5497-a615-92783245566b",
+    "uuid": "0c4e6dd5-2bfc-5b7d-b536-9ed3903b12b2"
+  },
+  "U5 Visible severe wasting": {
+    "name_uuid": "b1258aa6-e940-5840-be0d-008271cc017a",
+    "uuid": "6ecf3cd3-639d-5066-b98c-3675e38e29be"
+  },
+  "U5 Visual": {
+    "name_uuid": "ba5cc28b-0893-5a1b-855e-405ddef50d16",
+    "uuid": "24b1ff62-c39f-5476-b50d-16d9753d30e5"
+  },
+  "U5 Vitamin A received in last 6 months age 12 to 59 months": {
+    "name_uuid": "f9751ab5-95ae-5370-89ee-2dc02f7f41dd",
+    "uuid": "58db6658-e361-5152-928d-ad89ae8f5e3a"
+  },
+  "U5 Vitamin A received in last 6 months age 6 to 11 months": {
+    "name_uuid": "adbb0675-dd42-51d7-9e3d-3aadb5d171eb",
+    "uuid": "ea12e24b-0df7-54dd-a573-14a5c8004844"
+  },
+  "U5 Vomiting everything": {
+    "name_uuid": "ed459d50-3d2f-5c34-bfbf-dc94c0f5106a",
+    "uuid": "1cb7f690-1811-54c5-9fa9-bd7829e446b4"
+  },
+  "U5 WAZ": {
+    "name_uuid": "b0d2978b-894d-5e99-b3dc-8254762659ce",
+    "uuid": "afd0558f-acca-5e7f-9eff-0dca3c20b8e9"
+  },
+  "U5 WHZ": {
+    "name_uuid": "2dcda5a0-9619-531b-bc96-dcd384a62c8e",
+    "uuid": "c3189a02-8469-5219-a42f-51fbad104955"
+  },
+  "U5 WHZ below minus 3": {
+    "name_uuid": "e45adc31-9b58-5ccc-90eb-2c348038c0be",
+    "uuid": "64763a8b-0571-529a-9e97-091f00d66dd6"
+  },
+  "U5 WHZ between minus 3 and minus 2": {
+    "name_uuid": "845cabc4-8bf6-5819-aa3e-6a62b427c076",
+    "uuid": "b6578527-367e-582e-8c67-75cddce05017"
+  },
+  "U5 WHZ minus 2 and above": {
+    "name_uuid": "3801ed2b-8292-5769-8da5-4c4256f057bc",
+    "uuid": "e50babbf-9e80-557e-93fe-61d9c3f04a97"
+  },
+  "U5 Watery diarrhoea or dysentery": {
+    "name_uuid": "af71248a-c537-5043-949d-329d07dfef32",
+    "uuid": "c623e5d0-4556-5125-8954-bb33b0027596"
+  },
+  "U5 Weak to drink": {
+    "name_uuid": "12498e7a-a33f-59e4-be1a-4bb000451894",
+    "uuid": "03039484-eb50-54e9-b55c-a03ce57cd3c9"
+  },
+  "U5 Weight (kg)": {
+    "name_uuid": "e2b3478a-2363-5abe-8190-57b09ef06158",
+    "uuid": "a6af75de-a010-5dd5-97f7-f029f80f3033"
+  },
+  "U5 Worse": {
+    "name_uuid": "54dfdcde-0c4f-5da7-a6ee-bfaf5372e523",
+    "uuid": "0a08267b-3fc9-56bb-8842-0e6efdf9a387"
+  },
+  "U5 Yes": {
+    "name_uuid": "9df7df44-065c-5615-b261-c5f152206aab",
+    "uuid": "dbb4beed-7b24-512b-bb9b-f42ae6735e0a"
+  },
+  "U5 Zinc sulphate 20mg": {
+    "name_uuid": "fd2ab281-3c5f-5912-99b7-6fd66d897756",
+    "uuid": "a05702be-0e45-5b93-bbce-653d3c2ac320"
+  }
+}

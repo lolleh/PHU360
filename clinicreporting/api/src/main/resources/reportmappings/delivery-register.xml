@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    This Source Code Form is subject to the terms of the Mozilla Public License,
+    v. 2.0. If a copy of the MPL was not distributed with this file, You can
+    obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
+    the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+
+    Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
+    graphic logo is a trademark of OpenMRS Inc.
+
+-->
+
+<reportMapping>
+
+    <!-- The key the reportApi request carries and this file's name. -->
+    <key>delivery-register</key>
+    <label>Delivery Register</label>
+    <table>phu360_report_delivery</table>
+
+    <mapped>true</mapped>
+
+    <!-- The register's own encounter type, resolved to an id per
+         installation by ReportCatalog. -->
+    <encounterTypes>
+        <encounterType>Delivery Register</encounterType>
+    </encounterTypes>
+
+    <indicators>
+        <indicator>
+            <key>encounters</key>
+            <label>Visits recorded</label>
+            <kind>encounterCount</kind>
+        </indicator>
+        <indicator>
+            <key>clients</key>
+            <label>Clients seen</label>
+            <kind>distinctPatients</kind>
+        </indicator>
+        <indicator>
+            <key>meanAge</key>
+            <label>Mean age (months)</label>
+            <kind>meanAgeMonths</kind>
+        </indicator>
+        <indicator>
+            <key>uterotonic</key>
+            <label>Uterotonic given after birth</label>
+            <kind>codedRate</kind>
+            <concept>MNR DR22 Uterotonic given immediately after birth? (Oxytocin / Misoprostol)</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>newbornAlive</key>
+            <label>Newborn alive</label>
+            <kind>codedRate</kind>
+            <concept>MNR DR25 New born condition - Alive</concept>
+            <answer>Yes</answer>
+        </indicator>
+        <indicator>
+            <key>meanBirthWeight</key>
+            <label>Mean birth weight (kg)</label>
+            <kind>numericMean</kind>
+            <concept>MNR DR27 New born condition - Weight (kg)</concept>
+        </indicator>
+        <indicator>
+            <key>meanApgar</key>
+            <label>Mean APGAR</label>
+            <kind>numericMean</kind>
+            <concept>MNR DR28 New born condition - APGAR Score</concept>
+        </indicator>
+    </indicators>
+
+    <sections>
+        <section>
+            <key>ageBands</key>
+            <label>Clients by age band</label>
+            <kind>ageBreakdown</kind>
+        </section>
+        <section>
+            <key>dr3</key>
+            <label>Marital Status</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR DR3 Marital Status</concept>
+        </section>
+        <section>
+            <key>dr5</key>
+            <label>Disability</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR DR5 Disability</concept>
+        </section>
+        <section>
+            <key>dr26</key>
+            <label>New born condition - Sex</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR DR26 New born condition - Sex</concept>
+        </section>
+        <section>
+            <key>dr13</key>
+            <label>Safe Termination of Pregnancy - Method Used</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR DR13 Safe Termination of Pregnancy - Method Used</concept>
+        </section>
+        <section>
+            <key>dr14</key>
+            <label>Post-Abortion Care (PAC) - PAC Type</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR DR14 Post-Abortion Care (PAC) - PAC Type</concept>
+        </section>
+        <section>
+            <key>dr19</key>
+            <label>Delivery type</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR DR19 Delivery type</concept>
+        </section>
+        <section>
+            <key>dr20</key>
+            <label>Delivery outcome</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR DR20 Delivery outcome</concept>
+        </section>
+        <section>
+            <key>dr47</key>
+            <label>Place of delivery</label>
+            <kind>codedBreakdown</kind>
+            <concept>MNR DR47 Place of delivery</concept>
+        </section>
+        <section>
+            <key>conditions</key>
+            <label>Findings and services recorded</label>
+            <kind>conditionBreakdown</kind>
+        </section>
+    </sections>
+
+    <conditionConcepts>
+        <conditionConcept>
+            <name>MNR DR22 Uterotonic given immediately after birth? (Oxytocin / Misoprostol)</name>
+            <label>Uterotonic given immediately after birth? (Oxytocin / Misoprostol)</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR DR23 Heat-stable Carbetocin (HSC)</name>
+            <label>Heat-stable Carbetocin (HSC)</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR DR24 Tranexamic Acid (TXA)</name>
+            <label>Tranexamic Acid (TXA)</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR DR21 Partograph / Labour Care Guide used?</name>
+            <label>Partograph / Labour Care Guide used?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR DR25 New born condition - Alive</name>
+            <label>New born condition - Alive</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR DR29 New born condition - Breast feeding initiated within one hour after birth</name>
+            <label>New born condition - Breast feeding initiated within one hour after birth</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR DR30 New born condition - Brachial Plexus Injuries</name>
+            <label>New born condition - Brachial Plexus Injuries</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR DR31 New born condition - Fracture clavicle</name>
+            <label>New born condition - Fracture clavicle</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR DR32 New born condition - Hypoxic ischemic encephalopathy</name>
+            <label>New born condition - Hypoxic ischemic encephalopathy</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR DR33 New born condition - Other birth injuries</name>
+            <label>New born condition - Other birth injuries</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR DR36 Oxygen given?</name>
+            <label>Oxygen given?</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR DR37 Post Abortion Family Planning - Counselled on family planning before discharge</name>
+            <label>Post Abortion Family Planning - Counselled on family planning before discharge</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR DR38 Post Abortion Family Planning - Accepted and received family planning before discharge</name>
+            <label>Post Abortion Family Planning - Accepted and received family planning before discharge</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR DR40 Post-Partum Family Planning - Counselled on family planning before discharge</name>
+            <label>Post-Partum Family Planning - Counselled on family planning before discharge</label>
+        </conditionConcept>
+        <conditionConcept>
+            <name>MNR DR41 Post-Partum Family Planning - Accepted and received family planning before discharge</name>
+            <label>Post-Partum Family Planning - Accepted and received family planning before discharge</label>
+        </conditionConcept>
+    </conditionConcepts>
+
+</reportMapping>

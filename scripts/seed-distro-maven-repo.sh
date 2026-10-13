@@ -37,6 +37,7 @@ PATCHED_PIHCORE="$ROOT_DIR/openmrs-image/pihcore-2.2.0-SNAPSHOT.omod"
 PATCHED_CLINICREPORTING="$ROOT_DIR/openmrs-image/clinicreporting-1.0.0-SNAPSHOT.omod"
 PATCHED_REPORTINGUI="$ROOT_DIR/openmrs-image/reportingui-1.15.0-SNAPSHOT.omod"
 PATCHED_COREAPPS="$ROOT_DIR/openmrs-image/coreapps-4.0.0-SNAPSHOT.omod"
+PATCHED_APPFRAMEWORK="$ROOT_DIR/openmrs-image/appframework-2.20.0-SNAPSHOT.omod"
 
 # The OpenMRS SDK asks interactively for anonymous usage stats on first run,
 # which stalls automated builds. Disable it up front.
@@ -90,6 +91,9 @@ bash "$ROOT_DIR/scripts/patch-reportingui-module.sh"
 
 echo "==> Patching coreapps module (Gender / Reg Facility filters on patient search)"
 bash "$ROOT_DIR/scripts/patch-coreapps-module.sh"
+
+echo "==> Patching appframework module (null-safe require evaluation)"
+bash "$ROOT_DIR/scripts/patch-appframework-module.sh"
 
 install_file() {
   local file="$1" group="$2" artifact="$3" version="$4" packaging="$5"
@@ -148,6 +152,9 @@ for m in "${OMODS[@]}"; do
   fi
   if [[ "$name" == "coreapps" && -f "$PATCHED_COREAPPS" ]]; then
     file="$PATCHED_COREAPPS"
+  fi
+  if [[ "$name" == "appframework" && -f "$PATCHED_APPFRAMEWORK" ]]; then
+    file="$PATCHED_APPFRAMEWORK"
   fi
   if [[ "$type" == "jar" ]]; then
     ext="jar"

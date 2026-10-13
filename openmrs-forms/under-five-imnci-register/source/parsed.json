@@ -1,0 +1,484 @@
+{
+  "source": "source/under5-register-imnci.xlsx",
+  "sheet": "2 Month-5 Years Register",
+  "banner": [
+    "UNDER FIVE REGISTER FOR PHUs: AGE 2 MONTH-5 YEARS",
+    "District: Facility Name: Facility Type: Chiefdom/Zone Year: 20 yy Month: mm In Facility: Outreach:"
+  ],
+  "wide_header_rows": "3-7",
+  "page_header_rows": "6-16",
+  "page_header_period": 11,
+  "page_header_copies": 6,
+  "identical_copies": false,
+  "rows_differing_between_copies": [
+    32,
+    43,
+    54,
+    65,
+    76
+  ],
+  "columns": [
+    {
+      "column": 1,
+      "letter": "A",
+      "header": "Date",
+      "labels": [
+        "Date",
+        "S. No",
+        "S.No"
+      ]
+    },
+    {
+      "column": 2,
+      "letter": "B",
+      "header": "Name",
+      "labels": [
+        "Name",
+        "Address",
+        "Chiefdom/Village",
+        "Chiefdom:",
+        "Village:"
+      ]
+    },
+    {
+      "column": 3,
+      "letter": "C",
+      "header": "Age (Months)",
+      "labels": [
+        "Age (Months)",
+        "……Month"
+      ]
+    },
+    {
+      "column": 4,
+      "letter": "D",
+      "header": "Sex (M/F)",
+      "labels": [
+        "Sex (M/F)",
+        "F",
+        "M"
+      ]
+    },
+    {
+      "column": 5,
+      "letter": "E",
+      "header": "Screened for disability (Y/N)",
+      "labels": [
+        "Screened for disability (Y/N)"
+      ]
+    },
+    {
+      "column": 6,
+      "letter": "F",
+      "header": "Disability (Y/N/NA)",
+      "labels": [
+        "Disability (Y/N/NA)"
+      ]
+    },
+    {
+      "column": 7,
+      "letter": "G",
+      "header": "Disability Type (Physical, Visual, Speech, Hearing, Learning, Multiple)",
+      "labels": [
+        "Disability Type (Physical, Visual, Speech, Hearing, Learning, Multiple)"
+      ]
+    },
+    {
+      "column": 8,
+      "letter": "H",
+      "header": "Temp./ Anthropometry (C)",
+      "labels": [
+        "Temp./ Anthropometry (C)",
+        "Temp.",
+        "Weight",
+        "Height /",
+        "Length"
+      ]
+    },
+    {
+      "column": 9,
+      "letter": "I",
+      "header": "MUAC (CM) 6M-59M",
+      "labels": [
+        "MUAC (CM) 6M-59M"
+      ]
+    },
+    {
+      "column": 10,
+      "letter": "J",
+      "header": "WHZ 2M-59M",
+      "labels": [
+        "WHZ 2M-59M"
+      ]
+    },
+    {
+      "column": 11,
+      "letter": "K",
+      "header": "WAZ 2M-36M",
+      "labels": [
+        "WAZ 2M-36M"
+      ]
+    },
+    {
+      "column": 12,
+      "letter": "L",
+      "header": "Presenting complaint (The childs problems)",
+      "labels": [
+        "Presenting complaint (The childs problems)"
+      ]
+    },
+    {
+      "column": 13,
+      "letter": "M",
+      "header": "Exclusive breast feeding (if child <6 months)",
+      "labels": [
+        "Exclusive breast feeding (if child <6 months)",
+        "Yes",
+        "No",
+        "N/A"
+      ]
+    },
+    {
+      "column": 14,
+      "letter": "N",
+      "header": "Continued breast feeding (if child 6-23 months)",
+      "labels": [
+        "Continued breast feeding (if child 6-23 months)",
+        "Yes",
+        "No",
+        "N/A"
+      ]
+    },
+    {
+      "column": 15,
+      "letter": "O",
+      "header": "Type of visit",
+      "labels": [
+        "Type of visit",
+        "New",
+        "Follow up"
+      ]
+    },
+    {
+      "column": 16,
+      "letter": "P",
+      "header": "Circle on or write the signs found in the sick child",
+      "labels": [
+        "Circle on or write the signs found in the sick child",
+        "General Danger Signs (check all)",
+        "Unable to drink or breastfeed",
+        "Vomiting everything",
+        "History of convulsion",
+        "Convulsing now",
+        "Lethargic or unconscious"
+      ]
+    },
+    {
+      "column": 17,
+      "letter": "Q",
+      "header": "Cough or difficult breathing",
+      "labels": [
+        "Cough or difficult breathing",
+        "Yes No",
+        "…….. days",
+        "Breathing ……./minute",
+        "Fast breathing",
+        "Chest indrawing",
+        "Stridor",
+        "Oxygen saturation .......%",
+        "N/A"
+      ]
+    },
+    {
+      "column": 18,
+      "letter": "R",
+      "header": "Diarrhoea",
+      "labels": [
+        "Diarrhoea",
+        "Yes No",
+        "Days",
+        "Blood in stool",
+        "Lethargic or unconscious",
+        "Restless/irritable",
+        "Sunken eyes",
+        "Weak to drink",
+        "Eager/thirsty",
+        "Skin pinch going back",
+        "Slowly Very slowly"
+      ]
+    },
+    {
+      "column": 19,
+      "letter": "S",
+      "header": "Fever",
+      "labels": [
+        "Fever",
+        "Yes No",
+        "Days",
+        "RDT' Not done/ Negative/ Positive",
+        "Microscopy Not done/ Negative/ Positive",
+        "Measles in the last three months",
+        "Stiff neck/Bulging fontanelle",
+        "Generalized rash of measles",
+        "cough/ runny nose /red eyes",
+        "mouth ulcer/ pus draining eyes/ corneal clouding"
+      ]
+    },
+    {
+      "column": 20,
+      "letter": "T",
+      "header": "Ear Problem",
+      "labels": [
+        "Ear Problem",
+        "Yes No",
+        "Ear pain",
+        "Ear discharge",
+        "…. Days"
+      ]
+    },
+    {
+      "column": 21,
+      "letter": "U",
+      "header": "Malnutrition or Anaemia (check all)",
+      "labels": [
+        "Malnutrition or Anaemia (check all)",
+        "< 6 months",
+        "Pitting oedema of both feet",
+        "Visible Severe wasting",
+        "≥ 6 Months",
+        "MUAC<11.5/ 11.5-12.5/ ≥ 12.5 cm",
+        "WHZ <-3, b/n -3 and -2, ≥ -2",
+        "Pneumonia/Fever",
+        "Watery diarrhoea / dysentery",
+        "Appetite test Pass / Fail",
+        "palmar pallor/Severe palmar pallor"
+      ]
+    },
+    {
+      "column": 22,
+      "letter": "V",
+      "header": "HIV/AIDS (RDT)",
+      "labels": [
+        "HIV/AIDS (RDT)",
+        "Mother",
+        "Positive",
+        "Negative",
+        "Unknown",
+        "Child"
+      ]
+    },
+    {
+      "column": 23,
+      "letter": "W",
+      "header": "Immunisation status /≤2 years/",
+      "labels": [
+        "Immunisation status /≤2 years/",
+        "Completed",
+        "Up to date",
+        "Not up to date",
+        "Not started"
+      ]
+    },
+    {
+      "column": 25,
+      "letter": "Y",
+      "header": "Vitamin A /Age ≥6 Months/",
+      "labels": [
+        "Vitamin A /Age ≥6 Months/",
+        "Albendazole /Age ≥2 Years/",
+        "Within last 6 months - Vitamin A received? Y / N",
+        "6-11m_____",
+        "12-59m____",
+        "Within last 6 months Albendazole received? Y / N",
+        "12-23m_____",
+        "24-59m____"
+      ]
+    },
+    {
+      "column": 26,
+      "letter": "Z",
+      "header": "Other Problems",
+      "labels": [
+        "Other Problems"
+      ]
+    },
+    {
+      "column": 27,
+      "letter": "AA",
+      "header": "Disease Classification",
+      "labels": [
+        "Disease Classification"
+      ]
+    },
+    {
+      "column": 28,
+      "letter": "AB",
+      "header": "Treatment given",
+      "labels": [
+        "Treatment given",
+        "Medicine"
+      ]
+    },
+    {
+      "column": 29,
+      "letter": "AC",
+      "header": "If classified malaria",
+      "labels": [
+        "If classified malaria",
+        "Treated within 24 hrs of onset"
+      ]
+    },
+    {
+      "column": 30,
+      "letter": "AD",
+      "header": "Treated after 24 hrs of onset",
+      "labels": [
+        "Treated after 24 hrs of onset"
+      ]
+    },
+    {
+      "column": 31,
+      "letter": "AE",
+      "header": "Counsel mother",
+      "labels": [
+        "Counsel mother",
+        "On feeding",
+        "On fluids",
+        "On when to return"
+      ]
+    },
+    {
+      "column": 32,
+      "letter": "AF",
+      "header": "If referred, name of health facility",
+      "labels": [
+        "If referred, name of health facility"
+      ]
+    },
+    {
+      "column": 33,
+      "letter": "AG",
+      "header": "If referred, pre-referral treatment provided",
+      "labels": [
+        "If referred, pre-referral treatment provided"
+      ]
+    },
+    {
+      "column": 34,
+      "letter": "AH",
+      "header": "Follow up date",
+      "labels": [
+        "Follow up date"
+      ]
+    },
+    {
+      "column": 35,
+      "letter": "AI",
+      "header": "Outcome",
+      "labels": [
+        "Outcome",
+        "Improved",
+        "The same",
+        "Worse",
+        "Died"
+      ]
+    },
+    {
+      "column": 36,
+      "letter": "AJ",
+      "header": "Drug(s) Provided (No.)",
+      "labels": [
+        "Drug(s) Provided (No.)",
+        "Albendazole 400mg"
+      ]
+    },
+    {
+      "column": 37,
+      "letter": "AK",
+      "header": "Amoxicillin 250mg",
+      "labels": [
+        "Amoxicillin 250mg"
+      ]
+    },
+    {
+      "column": 38,
+      "letter": "AL",
+      "header": "ACT (AL-6 Tab Blister or ASAQ -3 Tab (2-11 mos) Blister*)",
+      "labels": [
+        "ACT (AL-6 Tab Blister or ASAQ -3 Tab (2-11 mos) Blister*)"
+      ]
+    },
+    {
+      "column": 39,
+      "letter": "AM",
+      "header": "ACT (AL-12 Tab Blister or ASAQ -3 Tab (1-5 yrs) Blister*)",
+      "labels": [
+        "ACT (AL-12 Tab Blister or ASAQ -3 Tab (1-5 yrs) Blister*)"
+      ]
+    },
+    {
+      "column": 40,
+      "letter": "AN",
+      "header": "(ORS) Sachet",
+      "labels": [
+        "(ORS) Sachet"
+      ]
+    },
+    {
+      "column": 41,
+      "letter": "AO",
+      "header": "Paracetamol 100mg",
+      "labels": [
+        "Paracetamol 100mg"
+      ]
+    },
+    {
+      "column": 42,
+      "letter": "AP",
+      "header": "Zinc Sulphate 20mg",
+      "labels": [
+        "Zinc Sulphate 20mg"
+      ]
+    },
+    {
+      "column": 43,
+      "letter": "AQ",
+      "header": "Rectal Artesunate suppository",
+      "labels": [
+        "Rectal Artesunate suppository"
+      ]
+    },
+    {
+      "column": 44,
+      "letter": "AR",
+      "header": "Artesunate 60mg/ml Inj, 1ml, Vial",
+      "labels": [
+        "Artesunate 60mg/ml Inj, 1ml, Vial"
+      ]
+    },
+    {
+      "column": 45,
+      "letter": "AS",
+      "header": "Oxigen Therapy",
+      "labels": [
+        "Oxigen Therapy"
+      ]
+    },
+    {
+      "column": 46,
+      "letter": "AT",
+      "header": "Other (Specify)",
+      "labels": [
+        "Other (Specify)"
+      ]
+    },
+    {
+      "column": 47,
+      "letter": "AU",
+      "header": "Remarks",
+      "labels": [
+        "Remarks"
+      ]
+    }
+  ]
+}

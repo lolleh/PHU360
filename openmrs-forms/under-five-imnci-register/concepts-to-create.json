@@ -1,0 +1,776 @@
+[
+  {
+    "name": "U5 Type of visit",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Visit"
+  },
+  {
+    "name": "U5 New",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Visit"
+  },
+  {
+    "name": "U5 Follow up",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Visit"
+  },
+  {
+    "name": "U5 Age in months",
+    "datatype": "Numeric",
+    "conceptClass": "Misc",
+    "section": "Child"
+  },
+  {
+    "name": "U5 Address chiefdom or village",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Child"
+  },
+  {
+    "name": "U5 Screened for disability",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Disability screening"
+  },
+  {
+    "name": "U5 Yes",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Disability screening"
+  },
+  {
+    "name": "U5 No",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Disability screening"
+  },
+  {
+    "name": "U5 Has disability",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Disability screening"
+  },
+  {
+    "name": "U5 Not applicable",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Disability screening"
+  },
+  {
+    "name": "U5 Type of disability",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Disability screening"
+  },
+  {
+    "name": "U5 Physical",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Disability screening"
+  },
+  {
+    "name": "U5 Visual",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Disability screening"
+  },
+  {
+    "name": "U5 Speech",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Disability screening"
+  },
+  {
+    "name": "U5 Hearing",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Disability screening"
+  },
+  {
+    "name": "U5 Learning",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Disability screening"
+  },
+  {
+    "name": "U5 Multiple",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Disability screening"
+  },
+  {
+    "name": "U5 Temperature (C)",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Anthropometry"
+  },
+  {
+    "name": "U5 Weight (kg)",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Anthropometry"
+  },
+  {
+    "name": "U5 Height or length (cm)",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Anthropometry"
+  },
+  {
+    "name": "U5 MUAC (cm)",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Anthropometry"
+  },
+  {
+    "name": "U5 WHZ",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Anthropometry"
+  },
+  {
+    "name": "U5 WAZ",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Anthropometry"
+  },
+  {
+    "name": "U5 Exclusive breastfeeding under 6 months",
+    "datatype": "Coded",
+    "conceptClass": "Finding",
+    "section": "Feeding and presenting problem"
+  },
+  {
+    "name": "U5 Continued breastfeeding 6 to 23 months",
+    "datatype": "Coded",
+    "conceptClass": "Finding",
+    "section": "Feeding and presenting problem"
+  },
+  {
+    "name": "U5 Presenting complaint",
+    "datatype": "Text",
+    "conceptClass": "Finding",
+    "section": "Feeding and presenting problem"
+  },
+  {
+    "name": "U5 Other problems",
+    "datatype": "Text",
+    "conceptClass": "Finding",
+    "section": "Feeding and presenting problem"
+  },
+  {
+    "name": "U5 Unable to drink or breastfeed",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "General danger signs (check all)"
+  },
+  {
+    "name": "U5 Vomiting everything",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "General danger signs (check all)"
+  },
+  {
+    "name": "U5 History of convulsion",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "General danger signs (check all)"
+  },
+  {
+    "name": "U5 Convulsing now",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "General danger signs (check all)"
+  },
+  {
+    "name": "U5 Lethargic or unconscious",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "General danger signs (check all)"
+  },
+  {
+    "name": "U5 Cough or difficult breathing",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Cough or difficult breathing"
+  },
+  {
+    "name": "U5 Duration of cough or breathing problem (days)",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Cough or difficult breathing"
+  },
+  {
+    "name": "U5 Breathing rate (per minute)",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Cough or difficult breathing"
+  },
+  {
+    "name": "U5 Fast breathing",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Cough or difficult breathing"
+  },
+  {
+    "name": "U5 Chest indrawing",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Cough or difficult breathing"
+  },
+  {
+    "name": "U5 Stridor",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Cough or difficult breathing"
+  },
+  {
+    "name": "U5 Oxygen saturation (percent)",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Cough or difficult breathing"
+  },
+  {
+    "name": "U5 Diarrhoea",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Diarrhoea"
+  },
+  {
+    "name": "U5 Duration of diarrhoea (days)",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Diarrhoea"
+  },
+  {
+    "name": "U5 Blood in stool",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Diarrhoea"
+  },
+  {
+    "name": "U5 Restless or irritable",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Diarrhoea"
+  },
+  {
+    "name": "U5 Sunken eyes",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Diarrhoea"
+  },
+  {
+    "name": "U5 Weak to drink",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Diarrhoea"
+  },
+  {
+    "name": "U5 Eager or thirsty",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Diarrhoea"
+  },
+  {
+    "name": "U5 Skin pinch going back",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Diarrhoea"
+  },
+  {
+    "name": "U5 Fever",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Fever"
+  },
+  {
+    "name": "U5 Duration of fever (days)",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Fever"
+  },
+  {
+    "name": "U5 Measles in the last three months",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Fever"
+  },
+  {
+    "name": "U5 Stiff neck or bulging fontanelle",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Fever"
+  },
+  {
+    "name": "U5 Generalised rash of measles",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Fever"
+  },
+  {
+    "name": "U5 Cough or runny nose or red eyes",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Fever"
+  },
+  {
+    "name": "U5 Mouth ulcer or discharging eyes or corneal clouding",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Fever"
+  },
+  {
+    "name": "U5 Malaria RDT not done",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malaria tests"
+  },
+  {
+    "name": "U5 Malaria RDT negative",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malaria tests"
+  },
+  {
+    "name": "U5 Malaria RDT positive",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malaria tests"
+  },
+  {
+    "name": "U5 Blood film not done",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malaria tests"
+  },
+  {
+    "name": "U5 Blood film negative",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malaria tests"
+  },
+  {
+    "name": "U5 Blood film positive",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malaria tests"
+  },
+  {
+    "name": "U5 Malaria treated within 24 hours of onset",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malaria tests"
+  },
+  {
+    "name": "U5 Malaria treated after 24 hours of onset",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malaria tests"
+  },
+  {
+    "name": "U5 Ear problem",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Ear problem"
+  },
+  {
+    "name": "U5 Ear pain",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Ear problem"
+  },
+  {
+    "name": "U5 Duration of ear problem (days)",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Ear problem"
+  },
+  {
+    "name": "U5 Ear discharge",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Ear problem"
+  },
+  {
+    "name": "U5 Pitting oedema both feet under 6 months",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malnutrition or anaemia (check all)"
+  },
+  {
+    "name": "U5 Pitting oedema both feet 6 months and over",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malnutrition or anaemia (check all)"
+  },
+  {
+    "name": "U5 Visible severe wasting",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malnutrition or anaemia (check all)"
+  },
+  {
+    "name": "U5 MUAC below 11.5 cm",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malnutrition or anaemia (check all)"
+  },
+  {
+    "name": "U5 MUAC 11.5 to 12.5 cm",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malnutrition or anaemia (check all)"
+  },
+  {
+    "name": "U5 MUAC 12.5 cm and above",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malnutrition or anaemia (check all)"
+  },
+  {
+    "name": "U5 WHZ below minus 3",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malnutrition or anaemia (check all)"
+  },
+  {
+    "name": "U5 WHZ between minus 3 and minus 2",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malnutrition or anaemia (check all)"
+  },
+  {
+    "name": "U5 WHZ minus 2 and above",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malnutrition or anaemia (check all)"
+  },
+  {
+    "name": "U5 Pneumonia or fever",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malnutrition or anaemia (check all)"
+  },
+  {
+    "name": "U5 Watery diarrhoea or dysentery",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malnutrition or anaemia (check all)"
+  },
+  {
+    "name": "U5 Appetite test passed",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malnutrition or anaemia (check all)"
+  },
+  {
+    "name": "U5 Appetite test failed",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malnutrition or anaemia (check all)"
+  },
+  {
+    "name": "U5 Palmar pallor",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malnutrition or anaemia (check all)"
+  },
+  {
+    "name": "U5 Severe palmar pallor",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Malnutrition or anaemia (check all)"
+  },
+  {
+    "name": "U5 Mother HIV RDT positive",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "HIV / AIDS (RDT)"
+  },
+  {
+    "name": "U5 Mother HIV RDT negative",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "HIV / AIDS (RDT)"
+  },
+  {
+    "name": "U5 Mother HIV RDT unknown",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "HIV / AIDS (RDT)"
+  },
+  {
+    "name": "U5 Child HIV RDT positive",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "HIV / AIDS (RDT)"
+  },
+  {
+    "name": "U5 Child HIV RDT negative",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "HIV / AIDS (RDT)"
+  },
+  {
+    "name": "U5 Child HIV RDT unknown",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "HIV / AIDS (RDT)"
+  },
+  {
+    "name": "U5 Immunisation completed",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Immunisation status (2 years and under)"
+  },
+  {
+    "name": "U5 Immunisation up to date",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Immunisation status (2 years and under)"
+  },
+  {
+    "name": "U5 Immunisation not up to date",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Immunisation status (2 years and under)"
+  },
+  {
+    "name": "U5 Immunisation not started",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Immunisation status (2 years and under)"
+  },
+  {
+    "name": "U5 Vitamin A received in last 6 months age 6 to 11 months",
+    "datatype": "Coded",
+    "conceptClass": "Finding",
+    "section": "Vitamin A (6 months and over) and Albendazole (2 years and over)"
+  },
+  {
+    "name": "U5 Vitamin A received in last 6 months age 12 to 59 months",
+    "datatype": "Coded",
+    "conceptClass": "Finding",
+    "section": "Vitamin A (6 months and over) and Albendazole (2 years and over)"
+  },
+  {
+    "name": "U5 Albendazole received in last 6 months age 12 to 23 months",
+    "datatype": "Coded",
+    "conceptClass": "Finding",
+    "section": "Vitamin A (6 months and over) and Albendazole (2 years and over)"
+  },
+  {
+    "name": "U5 Albendazole received in last 6 months age 24 to 59 months",
+    "datatype": "Coded",
+    "conceptClass": "Finding",
+    "section": "Vitamin A (6 months and over) and Albendazole (2 years and over)"
+  },
+  {
+    "name": "U5 Primary classification",
+    "datatype": "Coded",
+    "conceptClass": "Finding",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Classified as severe acute malnutrition",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Classified as pneumonia or severe respiratory illness",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Classified as diarrhoea",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Classified as malaria",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Classified as fever",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Classified as ear problem",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Classified as measles",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Classified as other",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Treatment given",
+    "datatype": "Text",
+    "conceptClass": "Finding",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Counselled on feeding",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Counselled on fluids",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Counselled on when to return",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Referred to health facility",
+    "datatype": "Boolean",
+    "conceptClass": "Finding",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Name of referral health facility",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Pre-referral treatment provided",
+    "datatype": "Text",
+    "conceptClass": "Finding",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Follow up date",
+    "datatype": "Datetime",
+    "conceptClass": "Finding",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Outcome",
+    "datatype": "Coded",
+    "conceptClass": "Misc",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Improved",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Unchanged",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Worse",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Died",
+    "datatype": "N/A",
+    "conceptClass": "Misc",
+    "section": "Classification, treatment and outcome"
+  },
+  {
+    "name": "U5 Albendazole 400mg",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Drugs provided (No.)"
+  },
+  {
+    "name": "U5 Amoxicillin 250mg",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Drugs provided (No.)"
+  },
+  {
+    "name": "U5 ACT AL-6 or ASAQ 3 for 2 to 11 months",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Drugs provided (No.)"
+  },
+  {
+    "name": "U5 ACT AL-12 or ASAQ 3 for 1 to 5 years",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Drugs provided (No.)"
+  },
+  {
+    "name": "U5 ORS sachet",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Drugs provided (No.)"
+  },
+  {
+    "name": "U5 Paracetamol 100mg",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Drugs provided (No.)"
+  },
+  {
+    "name": "U5 Zinc sulphate 20mg",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Drugs provided (No.)"
+  },
+  {
+    "name": "U5 Rectal artesunate suppository",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Drugs provided (No.)"
+  },
+  {
+    "name": "U5 Artesunate 60mg per ml injection",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Drugs provided (No.)"
+  },
+  {
+    "name": "U5 Oxygen therapy",
+    "datatype": "Numeric",
+    "conceptClass": "Finding",
+    "section": "Drugs provided (No.)"
+  },
+  {
+    "name": "U5 Other drug",
+    "datatype": "Text",
+    "conceptClass": "Finding",
+    "section": "Drugs provided (No.)"
+  },
+  {
+    "name": "U5 Remarks",
+    "datatype": "Text",
+    "conceptClass": "Misc",
+    "section": "Remarks"
+  }
+]

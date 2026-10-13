@@ -71,6 +71,15 @@ mvn -q org.apache.maven.plugins:maven-install-plugin:3.1.2:install-file \
   -DgroupId="org.openmrs.module" -DartifactId="coreapps-omod" \
   -Dversion="4.0.0-SNAPSHOT" -Dpackaging=omod -DgeneratePom=true
 
+echo "==> Patch appframework module (null-safe require evaluation)"
+bash "$ROOT_DIR/scripts/patch-appframework-module.sh"
+# Same staging as reportingui/coreapps: install the patched omod so the SDK
+# resolves it (omod.appframework.type=omod) instead of the stock .jar.
+mvn -q org.apache.maven.plugins:maven-install-plugin:3.1.2:install-file \
+  -Dfile="$ROOT_DIR/openmrs-image/appframework-2.20.0-SNAPSHOT.omod" \
+  -DgroupId="org.openmrs.module" -DartifactId="appframework-omod" \
+  -Dversion="2.20.0-SNAPSHOT" -Dpackaging=omod -DgeneratePom=true
+
 echo "==> Build distro (OpenMRS SDK build-distro)"
 # The SDK writes its extraction into target/distro and does NOT clean it between
 # runs, so edits to the content package/config would silently not take effect.
@@ -89,6 +98,11 @@ cp -a "$ROOT_DIR/openmrs-image/spa/." "$ROOT_DIR/distro/target/distro/web/openmr
 echo "==> Brand printed ID card / labels (MOH + HEAP logos)"
 bash "$ROOT_DIR/scripts/brand-zpl.sh"
 
+# After brand-zpl: both scripts rewrite the pihcore omod. Keep the pihcore
+# visit-action patch last so it is not overwritten by the branding swap.
+echo "==> Remove retired visit actions from pihcore (forms in content/exclusions.txt)"
+bash "$ROOT_DIR/scripts/patch-pihcore-visit-actions.sh"
+
 echo "==> Package DHMT KPI dashboard into the webapp"
 bash "$ROOT_DIR/scripts/embed-dashboard-war.sh"
 
@@ -99,6 +113,7 @@ echo "    modules                  : $(find "$WEB_DIR/openmrs_modules" -name '*.
 echo "    clinicreporting omod        : $([ -f "$ROOT_DIR/openmrs-image/clinicreporting-1.0.0-SNAPSHOT.omod" ] && echo present || echo MISSING)"
 echo "    reportingui omod         : $([ -f "$ROOT_DIR/openmrs-image/reportingui-1.15.0-SNAPSHOT.omod" ] && echo present || echo MISSING)"
 echo "    coreapps omod            : $([ -f "$ROOT_DIR/openmrs-image/coreapps-4.0.0-SNAPSHOT.omod" ] && echo present || echo MISSING)"
+echo "    appframework omod        : $([ -f "$ROOT_DIR/openmrs-image/appframework-2.20.0-SNAPSHOT.omod" ] && echo present || echo MISSING)"
 echo "    config files             : $(find "$WEB_DIR/openmrs_config" -type f | wc -l)"
 echo "    spa                      : $(find "$WEB_DIR/openmrs_spa" -type f | wc -l)"
 echo "    dispensing theme link    : $(grep -c 'dispensing-labs-theme' "$WEB_DIR/openmrs_spa/index.html" 2>/dev/null || echo MISSING)"
