@@ -1,0 +1,21 @@
+[
+  {
+    "id": "patientreferral",
+    "label": "Patient Referral",
+    "description": "patientreferral.referral.app.description",
+    "order": 70,
+    "requiredPrivilege": "View Patient Referrals",
+    "extensions": [
+      {
+        "id": "patientreferral.homepageLink",
+        "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+        "type": "link",
+        "label": "Patient Referral",
+        "url": "module/patientreferral/referrals.htm",
+        "icon": "icon-share-alt",
+        "order": 70,
+        "requiredPrivilege": "View Patient Referrals"
+      }
+    ]
+  }
+]
