@@ -161,6 +161,18 @@ for c in CustomAppLoaderFactory.class 'CustomAppLoaderFactory$ReportCategory.cla
 done
 ( cd "$WD" && rm -f "$TMP/$API_JAR_NAME" && "$(command -v jar)" cf "$TMP/$API_JAR_NAME" . )
 cp "$TMP/$API_JAR_NAME" "$TMP/omod/$API_JAR_IN_OMOD"
+
+# pihcore requires owa 2.0.0 but only owa 1.15.0 ships in this distro; owa
+# 2.0.0 does not exist as an omod in any Maven repo, so pihcore can never start.
+# Relax the requirement to the version we actually ship.
+CONFIG_XML="$TMP/omod/config.xml"
+if [[ -f "$CONFIG_XML" ]]; then
+  perl -i -0pe 's/<require_module version="2\.0\.0">\s+org\.openmrs\.module\.owa/<require_module version="1.15.0">\n            org.openmrs.module.owa/' "$CONFIG_XML"
+  # pihcore declares require_version 2.8.11-SNAPSHOT but this distro ships
+  # OpenMRS core 2.8.9; relax to match.
+  perl -i -pe 's/<require_version>2\.8\.11-SNAPSHOT<\/require_version>/<require_version>2.8.9<\/require_version>/' "$CONFIG_XML"
+fi
+
 ( cd "$TMP/omod" && rm -f "$OMOD" && "$(command -v zip)" -q -r -X "$OMOD" . )
 sync
 

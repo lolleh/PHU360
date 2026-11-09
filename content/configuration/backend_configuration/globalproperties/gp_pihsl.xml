@@ -60,5 +60,10 @@
             <property>haiti.checkIn.reasonsForVisit</property>
             <value>PIH:CLINICAL,PIH:ID card only,PIH:Lab only,PIH:Pharmacy only,PIH:Procedure only,PIH:Request scheduled appointment,PIH:Social assistance and psychosocial support,PIH:OTHER</value>
         </globalProperty>
+        <!-- Authentication UI / Login Location -->
+        <globalProperty>
+            <property>authenticationui.showLoginLocations</property>
+            <value>false</value>
+        </globalProperty>
     </globalProperties>
 </config>

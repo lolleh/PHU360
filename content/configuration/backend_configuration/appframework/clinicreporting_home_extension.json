@@ -13,7 +13,7 @@
     "id": "clinicreporting.programs",
     "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
     "type": "link",
-    "label": "Programme Dashboards",
+    "label": "Program Dashboards",
     "url": "module/clinicreporting/programs.htm",
     "icon": "fas fa-fw fa-chart-pie",
     "requiredPrivilege": "View Reports",

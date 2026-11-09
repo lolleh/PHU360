@@ -32,9 +32,9 @@ python3 "$ROOT_DIR/branding/zpl/rasterize.py" --out-java "$BUILD/gen-src/Generat
 echo "==> Prepare compile classpath"
 unzip -o -q "$WEB_DIR/openmrs_core/openmrs.war" 'WEB-INF/lib/*.jar' -d "$BUILD/war"
 cp "$BUILD"/war/WEB-INF/lib/*.jar "$BUILD/lib/"
-unzip -o -q -j "$WEB_DIR/openmrs_modules/emrapi-3.5.0-SNAPSHOT.omod" \
-  'lib/emrapi-api-3.5.0-SNAPSHOT.jar' -d "$BUILD/emrapi-jar"
-(cd "$BUILD/emrapi" && unzip -o -q "$BUILD/emrapi-jar/emrapi-api-3.5.0-SNAPSHOT.jar")
+unzip -o -q -j "$WEB_DIR/openmrs_modules/emrapi-3.5.1.omod" \
+  'lib/emrapi-api-3.5.1.jar' -d "$BUILD/emrapi-jar"
+(cd "$BUILD/emrapi" && unzip -o -q "$BUILD/emrapi-jar/emrapi-api-3.5.1.jar")
 CP="$BUILD/lib/*:$BUILD/emrapi"
 
 echo "==> Compile replacement ZplCardTemplate"

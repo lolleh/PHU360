@@ -78,6 +78,99 @@ OpenMRS distribution for Sierra Leone PHUs (Falaba, Mongo Bendugu, Sinkunia) wit
 - `OPENMRS_HUB_PIH_CONFIG`: hub profile (default `sierraLeone,sierraLeone-hub`)
 - Sync agent env: `SYNC_SITE_CODE`, `SYNC_LOCAL_BASE_URL`, `SYNC_HUB_BASE_URL`, credentials, `SYNC_POLL_INTERVAL_MS`, `SYNC_PAGE_SIZE`
 
+## Dashboards: making changes and building indicators
+
+PHU360 has two reporting dashboards:
+
+| Dashboard | URL | How it's configured |
+|-----------|-----|---------------------|
+| Facility Reporting Dashboard | `moduleResources/clinicreporting/index.html` (app link: "PHU360 Reporting Dashboard") | Static HTML + JS calling the clinicreporting REST API; KPI cards, charts and tables are defined in the page and its JS |
+| Program Dashboards | `module/clinicreporting/programs.htm` and `dashboard.htm?program=<uuid>` | JSON definition file (`program-indicators.json`) — editable without rebuild or restart |
+
+### Facility Reporting Dashboard
+
+The Facility Reporting Dashboard shows facility-wide KPIs and charts: encounters, patient visits, new registrations, conditions recorded, plus service volume trend, encounters by type/location/age/sex, and an encounters-by-type table.
+
+**To change indicators, charts, KPI cards, or styling:**
+
+1. Edit `clinicreporting/omod/src/main/webapp/resources/index.html` — page markup (KPI cards, chart canvas elements, table).
+2. Edit `clinicreporting/omod/src/main/webapp/resources/js/app.js` — JavaScript that fetches data from the REST API and renders charts/KPIs.
+3. Edit `clinicreporting/omod/src/main/webapp/resources/styles/reports.css` and `resources/css/styles.css` — styling.
+4. Rebuild the module: `./scripts/build-clinicreporting-module.sh`
+5. Rebuild the distro: `./scripts/build-distro.sh --online`
+6. Rebuild the image and restart: `docker compose build openmrs && docker compose up -d openmrs`
+
+**To add a new report type:** report types are driven by the clinicreporting module's REST layer, not by editing the static page. New report types require changes to the module's Java/REST controllers.
+
+### Program Dashboards
+
+The Program Dashboards list programmes and show per-programme indicators over a date range, with a prior-period comparison for every tile. They are separate pages from OpenMRS's own programme list (which links to enrolment forms) — this is intentionally a different job.
+
+**To add or edit indicators (no rebuild, no restart):**
+
+1. Copy the bundled definition file to the module config directory:
+   ```bash
+   cp clinicreporting/api/src/main/resources/program-indicators.json \
+     <openmrs-webapp>/WEB-INF/module-config/clinicreporting/program-indicators.json
+   ```
+   On the running Docker container this path is `/openmrs/data/module-config/clinicreporting/program-indicators.json`.
+
+2. Edit the copy. Each programme entry needs a UUID (find it in **Administration → Manage Programs**) and a list of indicators:
+   ```json
+   {
+     "programs": [
+       {
+         "uuid": "<program-uuid>",
+         "name": "Program Name",
+         "shortName": "SHORT",
+         "description": "Description",
+         "indicators": [
+           {
+             "id": "active",
+             "label": "Active clients",
+             "metric": "activeEnrollments",
+             "chart": "none"
+           }
+         ]
+       }
+     ]
+   }
+   ```
+
+3. Save the file and reload the page — the file is re-read when it changes. An invalid file is reported rather than silently ignored.
+
+4. Available metrics:
+
+   | Metric | Figure | Needs |
+   |--------|--------|-------|
+   | `activeEnrollments` | Patients holding an enrolment overlapping the period | — |
+   | `newEnrollments` | Patients whose enrolment began inside the period | — |
+   | `completedEnrollments` | Patients whose enrolment was completed inside the period | — |
+   | `enrolledByGender` | Active enrolment split by recorded gender | — |
+   | `enrolledByAgeBand` | Active enrolment split into age bands | — |
+   | `enrollmentsByMonth` | New enrolments per month (trend line) | — |
+   | `encounters` | Encounters belonging to the programme's patients | — |
+   | `patientsWithObservation` | Patients with at least one recorded observation | `concepts` |
+   | `observationCount` | Observation rows | `concepts` |
+   | `lowValueCount` | Observation rows whose numeric value is under `valueBelow` | `concepts`, `valueBelow` |
+   | `averageValue` | Mean numeric value | `concepts` |
+   | `valueDistribution` | Observations split by coded answer | `concepts` |
+   | `positiveRate` | Numerator patients ÷ denominator patients | `concepts`, `denominatorConcepts` |
+   | `enrolledCoverageRate` | Numerator patients ÷ programme active enrolment | `concepts` |
+
+   Concepts are named by name (not UUID) so definitions are portable across OpenMRS distributions. Use `{"uuid": "..."}` when the server is known. A chart may be `none`, `bar`, `hbar`, `line` or `doughnut`. `target` is optional; `higherIsBetter` defaults to `true`.
+
+5. To add indicators for a new programme, find its UUID in **Administration → Manage Programs**, add a new entry to the `programs` array.
+
+**To bundle changes into the image:**
+
+Edit `clinicreporting/api/src/main/resources/program-indicators.json` (the bundled starting point), then:
+```bash
+./scripts/build-clinicreporting-module.sh
+./scripts/build-distro.sh --online
+docker compose build openmrs && docker compose up -d openmrs
+```
+
 ## Sync model (B2 thin synchronizer)
 - **Hub**: 4th OpenMRS instance at district (no agent). Relays via fhir2.
 - **Spoke agents**: Spring Boot (Java 17), poll local fhir2 `_lastUpdated` with watermarks; `PUT /{ResourceType}/{uuid}` for idempotency.

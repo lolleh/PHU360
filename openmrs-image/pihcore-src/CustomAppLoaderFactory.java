@@ -614,7 +614,7 @@ implements AppFrameworkFactory {
         }
         if (enabledCategories.contains((Object)ReportCategory.DATA_EXPORT)) {
             this.extensions.add(CustomAppLoaderUtil.extension((String)"reportingui.dataExports.adHoc", (String)"reportingui.adHocAnalysis.label", null, (String)"link", (String)"reportingui/adHocManage.page", (String)"App: reportingui.adHocAnalysis", null, (String)"org.openmrs.module.reportingui.reports.dataexport", (int)9999, null));
-            CustomAppLoaderUtil.addFeatureToggleToExtension((Extension)this.findExtensionById("reportingui.dataExports.adHoc"), (String)"reporting_adHocAnalysis");
+            ((Extension)this.findExtensionById("reportingui.dataExports.adHoc")).setFeatureToggle("reporting_adHocAnalysis");
         }
     }
 
