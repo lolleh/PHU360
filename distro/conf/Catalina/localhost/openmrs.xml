@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Context descriptor for the OpenMRS webapp.
+  Tomcat applies conf/Catalina/localhost/*.xml in preference to
+  META-INF/context.xml, so this guarantees the RewriteValve is installed
+  and /openmrs/login.htm is redirected to the styled O3 SPA login page.
+-->
+<Context antiJARLocking="true" reloadable="false" useHttpOnly="false" docBase="openmrs.war">
+  <Valve className="org.apache.catalina.valves.rewrite.RewriteValve" />
+</Context>

@@ -18,12 +18,21 @@ COPY target/distro/web/openmrs_core/openmrs.war /openmrs/distribution/openmrs_co
 RUN set -e && \
   rm -rf /tmp/openmrs-warp && mkdir -p /tmp/openmrs-warp && \
   cd /tmp/openmrs-warp && \
-  unzip -q /openmrs/distribution/openmrs_core/openmrs.war && \
+  jar xf /openmrs/distribution/openmrs_core/openmrs.war && \
   sed -i 's|<welcome-file>index.htm</welcome-file>|<welcome-file>spa/index.html</welcome-file>|' WEB-INF/web.xml && \
   sed -i 's|</Context>|  <Valve className="org.apache.catalina.valves.rewrite.RewriteValve" />\n</Context>|' META-INF/context.xml && \
-  printf 'RewriteRule ^/openmrs/login\\.htm$ /openmrs/spa/ [R]\n' > WEB-INF/rewrite.config && \
-  zip -q -r /openmrs/distribution/openmrs_core/openmrs.war . && \
+  printf 'RewriteRule ^/$ spa/index.html [R]\nRewriteRule login /openmrs/spa/index.html [R]\n' > WEB-INF/rewrite.config && \
+  jar cf /tmp/openmrs-warp/openmrs.war . && \
+  cp -f /tmp/openmrs-warp/openmrs.war /openmrs/distribution/openmrs_core/openmrs.war && \
   cd / && rm -rf /tmp/openmrs-warp
+
+# Apply the rewrite valve through a context descriptor. Tomcat applies
+# conf/Catalina/localhost/*.xml in preference to META-INF/context.xml, so this
+# makes the SPA redirect (root -> /openmrs/spa/index.html) reliable even if the
+# WAR-baked META-INF/context.xml is not honoured for some reason.
+# COPY runs as root (build RUN steps run as uid=1001, which cannot write to
+# root-owned conf/), so the descriptor is dropped in directly.
+COPY conf/Catalina/localhost/openmrs.xml /usr/local/tomcat/conf/Catalina/localhost/openmrs.xml
 
 COPY target/distro/web/openmrs-distro.properties /openmrs/distribution/
 COPY target/distro/web/openmrs_modules /openmrs/distribution/openmrs_modules
