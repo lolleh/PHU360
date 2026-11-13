@@ -86,6 +86,20 @@ echo "==> Build distro (OpenMRS SDK build-distro)"
 rm -rf "$ROOT_DIR/distro/target/distro"
 mvn "${OFFLINE[@]}" -q -pl distro package
 
+echo "==> Patch openmrs.war web.xml: bypass InitializationFilter (setup wizard stuck)"
+WAR_FILE="$ROOT_DIR/distro/target/distro/web/openmrs_core/openmrs.war"
+WAR_TMP="$(mktemp -d)"
+unzip -q "$WAR_FILE" -d "$WAR_TMP"
+WEB_XML="$WAR_TMP/WEB-INF/web.xml"
+if grep -q 'InitializationFilter' "$WEB_XML"; then
+  echo "    Changing InitializationFilter URL pattern to never match"
+  sed -i '/<filter-name>InitializationFilter<\/filter-name>/{n;s|<url-pattern>\*/</url-pattern>|<url-pattern>__none_init_filter__</url-pattern>|}' "$WEB_XML"
+else
+  echo "    InitializationFilter not found (already patched)"
+fi
+( cd "$WAR_TMP" && zip -qr "$WAR_FILE" . )
+rm -rf "$WAR_TMP"
+
 echo "==> Overlay tracked SPA shell files (openmrs-image/spa -> openmrs_spa)"
 # openmrs_spa is extracted from the branded SPA zip in ~/.m2, which is only
 # written by the seed script. The seed script is skipped once content/build
